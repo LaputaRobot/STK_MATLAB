@@ -1,0 +1,2589 @@
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.100, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9823, communication volume: 74.
+
+ - Balance:
+     constraint #0:  1.058 out of 0.463
+
+ - Most overweight partition:
+     pid: 5, actual: 1600, desired: 1512, ratio: 1.06.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO13: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO24']
+LEO36: ['LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO67']
+LEO31: ['LEO21', 'LEO22', 'LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO49']
+LEO33: ['LEO23', 'LEO33', 'LEO42', 'LEO43', 'LEO53']
+LEO51: ['LEO51', 'LEO52', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82']
+LEO73: ['LEO54', 'LEO55', 'LEO56', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO59: ['LEO58', 'LEO59', 'LEO68', 'LEO69']
+LEO79: ['LEO77', 'LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  317.30
+max_con_loads:   60.81
+avg_setup_time: 192.43
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.100, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 10968, communication volume: 85.
+
+ - Balance:
+     constraint #0:  1.190 out of 0.463
+
+ - Most overweight partition:
+     pid: 3, actual: 1800, desired: 1512, ratio: 1.19.
+
+ - Subdomain connectivity: max: 6, min: 4, avg: 5.00
+
+ - There are 2 non-contiguous partitions.
+   Total components after removing the cut edges: 12,
+   max components: 3 for pid: 3.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51']
+LEO13: ['LEO13', 'LEO14', 'LEO24']
+LEO15: ['LEO15', 'LEO34', 'LEO69']
+LEO78: ['LEO16', 'LEO17', 'LEO26', 'LEO27', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO58', 'LEO67', 'LEO68', 'LEO77', 'LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88']
+LEO59: ['LEO21', 'LEO22', 'LEO48', 'LEO59']
+LEO33: ['LEO23', 'LEO32', 'LEO33', 'LEO42', 'LEO43']
+LEO73: ['LEO25', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO62: ['LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+sum_con_loads:  340.04
+max_con_loads:   58.93
+avg_setup_time: 239.92
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.200, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 10210, communication volume: 73.
+
+ - Balance:
+     constraint #0:  1.124 out of 0.463
+
+ - Most overweight partition:
+     pid: 2, actual: 1700, desired: 1512, ratio: 1.12.
+
+ - Subdomain connectivity: max: 6, min: 2, avg: 3.75
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO23: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23']
+LEO14: ['LEO14', 'LEO15', 'LEO24', 'LEO25']
+LEO37: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO57', 'LEO67']
+LEO33: ['LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO53']
+LEO51: ['LEO51', 'LEO52', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+LEO73: ['LEO54', 'LEO55', 'LEO56', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO59: ['LEO58', 'LEO59', 'LEO68', 'LEO69']
+LEO79: ['LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO87', 'LEO88']
+sum_con_loads:  325.03
+max_con_loads:   68.98
+avg_setup_time: 215.08
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.200, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 10395, communication volume: 78.
+
+ - Balance:
+     constraint #0:  1.124 out of 0.463
+
+ - Most overweight partition:
+     pid: 3, actual: 1700, desired: 1512, ratio: 1.12.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.00
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO23: ['LEO11', 'LEO12', 'LEO13', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO28', 'LEO29']
+LEO14: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO37']
+LEO41: ['LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO61']
+LEO33: ['LEO32', 'LEO33', 'LEO43', 'LEO53', 'LEO63']
+LEO55: ['LEO34', 'LEO35', 'LEO36', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO84', 'LEO85']
+LEO72: ['LEO52', 'LEO62', 'LEO71', 'LEO72', 'LEO73', 'LEO81', 'LEO82', 'LEO83', 'LEO89']
+LEO59: ['LEO58', 'LEO59', 'LEO68', 'LEO69']
+LEO79: ['LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88']
+sum_con_loads:  328.77
+max_con_loads:   54.89
+avg_setup_time: 208.36
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.300, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 10405, communication volume: 74.
+
+ - Balance:
+     constraint #0:  1.256 out of 0.463
+
+ - Most overweight partition:
+     pid: 0, actual: 1900, desired: 1512, ratio: 1.26.
+
+ - Subdomain connectivity: max: 7, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO39: ['LEO11', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO13: ['LEO12', 'LEO13', 'LEO14', 'LEO15']
+LEO43: ['LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO43', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO66', 'LEO67']
+LEO33: ['LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO51']
+LEO62: ['LEO52', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+LEO59: ['LEO58', 'LEO59', 'LEO68', 'LEO69']
+LEO73: ['LEO63', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO79: ['LEO77', 'LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88']
+sum_con_loads:  328.69
+max_con_loads:   75.10
+avg_setup_time: 230.54
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.300, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9788, communication volume: 74.
+
+ - Balance:
+     constraint #0:  1.190 out of 0.463
+
+ - Most overweight partition:
+     pid: 1, actual: 1800, desired: 1512, ratio: 1.19.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO39: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO23: ['LEO13', 'LEO14', 'LEO23']
+LEO25: ['LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO57', 'LEO67']
+LEO33: ['LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO53']
+LEO51: ['LEO51', 'LEO52', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+LEO73: ['LEO54', 'LEO55', 'LEO56', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO59: ['LEO58', 'LEO59', 'LEO68', 'LEO69']
+LEO79: ['LEO77', 'LEO78', 'LEO79', 'LEO87', 'LEO88']
+sum_con_loads:  316.57
+max_con_loads:   68.98
+avg_setup_time: 213.83
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.400, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9020, communication volume: 83.
+
+ - Balance:
+     constraint #0:  1.388 out of 0.463
+
+ - Most overweight partition:
+     pid: 1, actual: 2100, desired: 1512, ratio: 1.39.
+
+ - Subdomain connectivity: max: 6, min: 2, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO48: ['LEO11', 'LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO58']
+LEO33: ['LEO12', 'LEO13', 'LEO23', 'LEO33', 'LEO34']
+LEO14: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO41: ['LEO21', 'LEO22', 'LEO31', 'LEO32', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO59']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO74: ['LEO44', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO69: ['LEO61', 'LEO67', 'LEO68', 'LEO69', 'LEO76', 'LEO77', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  301.15
+max_con_loads:   56.17
+avg_setup_time: 195.16
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.400, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9020, communication volume: 83.
+
+ - Balance:
+     constraint #0:  1.388 out of 0.463
+
+ - Most overweight partition:
+     pid: 1, actual: 2100, desired: 1512, ratio: 1.39.
+
+ - Subdomain connectivity: max: 6, min: 2, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO48: ['LEO11', 'LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO58']
+LEO33: ['LEO12', 'LEO13', 'LEO23', 'LEO33', 'LEO34']
+LEO14: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO41: ['LEO21', 'LEO22', 'LEO31', 'LEO32', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO59']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO74: ['LEO44', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO69: ['LEO61', 'LEO67', 'LEO68', 'LEO69', 'LEO76', 'LEO77', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  301.15
+max_con_loads:   56.17
+avg_setup_time: 195.16
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.500, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9520, communication volume: 77.
+
+ - Balance:
+     constraint #0:  1.388 out of 0.463
+
+ - Most overweight partition:
+     pid: 0, actual: 2100, desired: 1512, ratio: 1.39.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO48: ['LEO11', 'LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49', 'LEO58']
+LEO23: ['LEO12', 'LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO24']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO57', 'LEO66', 'LEO67', 'LEO68']
+LEO33: ['LEO21', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO53']
+LEO51: ['LEO51', 'LEO52', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+LEO73: ['LEO54', 'LEO55', 'LEO56', 'LEO63', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85']
+LEO69: ['LEO59', 'LEO69']
+LEO79: ['LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88']
+sum_con_loads:  311.28
+max_con_loads:   72.00
+avg_setup_time: 214.11
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.500, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9444, communication volume: 77.
+
+ - Balance:
+     constraint #0:  1.455 out of 0.463
+
+ - Most overweight partition:
+     pid: 0, actual: 2200, desired: 1512, ratio: 1.45.
+
+ - Subdomain connectivity: max: 7, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO48: ['LEO11', 'LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49', 'LEO58']
+LEO13: ['LEO12', 'LEO13', 'LEO14']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO67', 'LEO68']
+LEO33: ['LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO31', 'LEO32', 'LEO33', 'LEO41']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO71', 'LEO72', 'LEO81', 'LEO82', 'LEO89']
+LEO51: ['LEO51', 'LEO59', 'LEO61', 'LEO69']
+LEO74: ['LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO66', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO79: ['LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO87', 'LEO88']
+sum_con_loads:  309.39
+max_con_loads:   70.42
+avg_setup_time: 212.09
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.600, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8744, communication volume: 80.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 2, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.00
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO61']
+LEO23: ['LEO12', 'LEO13', 'LEO14', 'LEO23', 'LEO24', 'LEO33']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO58: ['LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO58', 'LEO59']
+LEO69: ['LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO86', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  295.69
+max_con_loads:   57.56
+avg_setup_time: 193.13
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.600, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8744, communication volume: 80.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 2, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.00
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO61']
+LEO23: ['LEO12', 'LEO13', 'LEO14', 'LEO23', 'LEO24', 'LEO33']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO58: ['LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO58', 'LEO59']
+LEO69: ['LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO86', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  295.69
+max_con_loads:   57.56
+avg_setup_time: 193.13
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.700, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8388, communication volume: 79.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 1, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO61']
+LEO23: ['LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO24', 'LEO32', 'LEO33']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO59: ['LEO48', 'LEO58', 'LEO59']
+LEO74: ['LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO74', 'LEO75', 'LEO76', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO69: ['LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO86', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  288.62
+max_con_loads:   57.56
+avg_setup_time: 190.56
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.700, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8388, communication volume: 79.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 1, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 6, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO61']
+LEO23: ['LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO24', 'LEO32', 'LEO33']
+LEO35: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO59: ['LEO48', 'LEO58', 'LEO59']
+LEO74: ['LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO74', 'LEO75', 'LEO76', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO69: ['LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO86', 'LEO87']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  288.62
+max_con_loads:   57.56
+avg_setup_time: 190.56
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.800, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8189, communication volume: 72.
+
+ - Balance:
+     constraint #0:  1.785 out of 0.463
+
+ - Most overweight partition:
+     pid: 6, actual: 2700, desired: 1512, ratio: 1.79.
+
+ - Subdomain connectivity: max: 7, min: 2, avg: 4.00
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO39: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO28', 'LEO29', 'LEO38', 'LEO39']
+LEO33: ['LEO13', 'LEO22', 'LEO23', 'LEO24', 'LEO32', 'LEO33', 'LEO34']
+LEO14: ['LEO14', 'LEO15']
+LEO47: ['LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO85', 'LEO86', 'LEO87']
+LEO51: ['LEO31', 'LEO41', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+LEO73: ['LEO73', 'LEO74', 'LEO83', 'LEO84']
+sum_con_loads:  284.52
+max_con_loads:   62.84
+avg_setup_time: 186.98
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.800, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8189, communication volume: 72.
+
+ - Balance:
+     constraint #0:  1.785 out of 0.463
+
+ - Most overweight partition:
+     pid: 6, actual: 2700, desired: 1512, ratio: 1.79.
+
+ - Subdomain connectivity: max: 7, min: 2, avg: 4.00
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO39: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO28', 'LEO29', 'LEO38', 'LEO39']
+LEO33: ['LEO13', 'LEO22', 'LEO23', 'LEO24', 'LEO32', 'LEO33', 'LEO34']
+LEO14: ['LEO14', 'LEO15']
+LEO47: ['LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO85', 'LEO86', 'LEO87']
+LEO51: ['LEO31', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO82']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+LEO73: ['LEO73', 'LEO74', 'LEO83', 'LEO84']
+sum_con_loads:  284.52
+max_con_loads:   62.84
+avg_setup_time: 187.08
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.900, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8594, communication volume: 77.
+
+ - Balance:
+     constraint #0:  1.719 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 2600, desired: 1512, ratio: 1.72.
+
+ - Subdomain connectivity: max: 7, min: 2, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO48', 'LEO49', 'LEO51']
+LEO13: ['LEO13', 'LEO14']
+LEO37: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO66', 'LEO67', 'LEO68', 'LEO76', 'LEO77', 'LEO87']
+LEO33: ['LEO23', 'LEO24', 'LEO32', 'LEO33', 'LEO34', 'LEO42', 'LEO43', 'LEO53']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO84', 'LEO85', 'LEO86']
+LEO62: ['LEO52', 'LEO61', 'LEO62', 'LEO63', 'LEO69', 'LEO71', 'LEO72', 'LEO73', 'LEO81', 'LEO82', 'LEO83', 'LEO88', 'LEO89']
+LEO59: ['LEO58', 'LEO59']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  292.76
+max_con_loads:   66.60
+avg_setup_time: 192.81
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.900, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8594, communication volume: 77.
+
+ - Balance:
+     constraint #0:  1.719 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 2600, desired: 1512, ratio: 1.72.
+
+ - Subdomain connectivity: max: 7, min: 2, avg: 4.25
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO48', 'LEO49', 'LEO51']
+LEO13: ['LEO13', 'LEO14']
+LEO37: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO66', 'LEO67', 'LEO68', 'LEO76', 'LEO77', 'LEO87']
+LEO33: ['LEO23', 'LEO24', 'LEO32', 'LEO33', 'LEO34', 'LEO42', 'LEO43', 'LEO53']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO84', 'LEO85', 'LEO86']
+LEO62: ['LEO52', 'LEO61', 'LEO62', 'LEO63', 'LEO69', 'LEO71', 'LEO72', 'LEO73', 'LEO81', 'LEO82', 'LEO83', 'LEO88', 'LEO89']
+LEO59: ['LEO58', 'LEO59']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  292.76
+max_con_loads:   66.60
+avg_setup_time: 192.81
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.000, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8260, communication volume: 75.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 4, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 5, min: 4, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO18', 'LEO19', 'LEO21', 'LEO28', 'LEO29', 'LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO42', 'LEO48', 'LEO49', 'LEO51']
+LEO33: ['LEO13', 'LEO22', 'LEO23', 'LEO24', 'LEO32', 'LEO33', 'LEO34']
+LEO15: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO82', 'LEO83']
+LEO74: ['LEO44', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO76', 'LEO84', 'LEO85', 'LEO86']
+LEO59: ['LEO58', 'LEO59']
+LEO61: ['LEO61', 'LEO69']
+LEO79: ['LEO66', 'LEO67', 'LEO68', 'LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  286.04
+max_con_loads:   56.25
+avg_setup_time: 183.53
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.000, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8260, communication volume: 75.
+
+ - Balance:
+     constraint #0:  1.587 out of 0.463
+
+ - Most overweight partition:
+     pid: 4, actual: 2400, desired: 1512, ratio: 1.59.
+
+ - Subdomain connectivity: max: 5, min: 4, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO38', 'LEO39', 'LEO41', 'LEO42', 'LEO48', 'LEO49', 'LEO51']
+LEO33: ['LEO12', 'LEO13', 'LEO23', 'LEO24', 'LEO33', 'LEO34']
+LEO15: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47', 'LEO57']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO82', 'LEO83']
+LEO74: ['LEO44', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO76', 'LEO84', 'LEO85', 'LEO86']
+LEO59: ['LEO58', 'LEO59']
+LEO61: ['LEO61', 'LEO69']
+LEO79: ['LEO66', 'LEO67', 'LEO68', 'LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  286.04
+max_con_loads:   56.25
+avg_setup_time: 184.05
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.100, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9289, communication volume: 78.
+
+ - Balance:
+     constraint #0:  2.050 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 3100, desired: 1512, ratio: 2.05.
+
+ - Subdomain connectivity: max: 5, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO33: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO51']
+LEO14: ['LEO14', 'LEO15', 'LEO24', 'LEO25', 'LEO34', 'LEO35']
+LEO48: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO56', 'LEO57', 'LEO66', 'LEO67']
+LEO43: ['LEO43', 'LEO44', 'LEO45', 'LEO53', 'LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO75']
+LEO62: ['LEO52', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO74']
+LEO69: ['LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO79: ['LEO71', 'LEO79', 'LEO81', 'LEO89']
+LEO78: ['LEO76', 'LEO77', 'LEO78', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88']
+sum_con_loads:  306.45
+max_con_loads:   76.93
+avg_setup_time: 222.49
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.100, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 9289, communication volume: 78.
+
+ - Balance:
+     constraint #0:  2.050 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 3100, desired: 1512, ratio: 2.05.
+
+ - Subdomain connectivity: max: 5, min: 3, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO33: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO51']
+LEO14: ['LEO14', 'LEO15', 'LEO24', 'LEO25', 'LEO34', 'LEO35']
+LEO48: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO56', 'LEO57', 'LEO66', 'LEO67']
+LEO43: ['LEO43', 'LEO44', 'LEO45', 'LEO53', 'LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO75']
+LEO62: ['LEO52', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO74']
+LEO69: ['LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO79: ['LEO71', 'LEO79', 'LEO81', 'LEO89']
+LEO78: ['LEO76', 'LEO77', 'LEO78', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88']
+sum_con_loads:  306.45
+max_con_loads:   76.93
+avg_setup_time: 222.49
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.200, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7513, communication volume: 71.
+
+ - Balance:
+     constraint #0:  1.917 out of 0.463
+
+ - Most overweight partition:
+     pid: 4, actual: 2900, desired: 1512, ratio: 1.92.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 3.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO27', 'LEO28', 'LEO29', 'LEO37', 'LEO38']
+LEO33: ['LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO32', 'LEO33']
+LEO51: ['LEO21', 'LEO31', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO61', 'LEO69']
+LEO34: ['LEO24', 'LEO25', 'LEO26', 'LEO34', 'LEO35']
+LEO58: ['LEO36', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO58', 'LEO59', 'LEO67', 'LEO68']
+LEO62: ['LEO43', 'LEO44', 'LEO45', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO79: ['LEO71', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  270.87
+max_con_loads:   65.39
+avg_setup_time: 196.88
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.200, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7513, communication volume: 71.
+
+ - Balance:
+     constraint #0:  1.917 out of 0.463
+
+ - Most overweight partition:
+     pid: 4, actual: 2900, desired: 1512, ratio: 1.92.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 3.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO27', 'LEO28', 'LEO29', 'LEO37', 'LEO38']
+LEO33: ['LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO32', 'LEO33']
+LEO51: ['LEO21', 'LEO31', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO61', 'LEO69']
+LEO34: ['LEO24', 'LEO25', 'LEO26', 'LEO34', 'LEO35']
+LEO58: ['LEO36', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO58', 'LEO59', 'LEO67', 'LEO68']
+LEO62: ['LEO43', 'LEO44', 'LEO45', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO79: ['LEO71', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  270.87
+max_con_loads:   65.39
+avg_setup_time: 196.88
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.300, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7514, communication volume: 68.
+
+ - Balance:
+     constraint #0:  2.182 out of 0.463
+
+ - Most overweight partition:
+     pid: 5, actual: 3300, desired: 1512, ratio: 2.18.
+
+ - Subdomain connectivity: max: 6, min: 0, avg: 3.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47']
+LEO33: ['LEO13', 'LEO14', 'LEO23', 'LEO33']
+LEO41: ['LEO21', 'LEO22', 'LEO31', 'LEO32', 'LEO38', 'LEO39', 'LEO41', 'LEO48', 'LEO49', 'LEO51', 'LEO61', 'LEO69']
+LEO34: ['LEO24', 'LEO34']
+LEO62: ['LEO42', 'LEO43', 'LEO44', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO59: ['LEO57', 'LEO58', 'LEO59', 'LEO66', 'LEO67', 'LEO68']
+LEO79: ['LEO71', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  270.95
+max_con_loads:   69.24
+avg_setup_time: 200.03
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.300, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7514, communication volume: 68.
+
+ - Balance:
+     constraint #0:  2.182 out of 0.463
+
+ - Most overweight partition:
+     pid: 5, actual: 3300, desired: 1512, ratio: 2.18.
+
+ - Subdomain connectivity: max: 6, min: 0, avg: 3.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47']
+LEO33: ['LEO13', 'LEO14', 'LEO23', 'LEO33']
+LEO41: ['LEO21', 'LEO22', 'LEO31', 'LEO32', 'LEO38', 'LEO39', 'LEO41', 'LEO48', 'LEO49', 'LEO51', 'LEO61', 'LEO69']
+LEO34: ['LEO24', 'LEO34']
+LEO62: ['LEO42', 'LEO43', 'LEO44', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO59: ['LEO57', 'LEO58', 'LEO59', 'LEO66', 'LEO67', 'LEO68']
+LEO79: ['LEO71', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  270.95
+max_con_loads:   69.24
+avg_setup_time: 200.03
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.400, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6838, communication volume: 68.
+
+ - Balance:
+     constraint #0:  2.380 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 3600, desired: 1512, ratio: 2.38.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 3.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 6,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO23: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO32', 'LEO33', 'LEO37']
+LEO51: ['LEO31', 'LEO38', 'LEO39', 'LEO41', 'LEO48', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO74: ['LEO34', 'LEO44', 'LEO54', 'LEO64', 'LEO74']
+LEO77: ['LEO35', 'LEO36', 'LEO45', 'LEO46', 'LEO47', 'LEO55', 'LEO56', 'LEO57', 'LEO65', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO62: ['LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO71', 'LEO72', 'LEO73']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  257.43
+max_con_loads:   66.44
+avg_setup_time: 214.80
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.400, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6282, communication volume: 68.
+
+ - Balance:
+     constraint #0:  2.314 out of 0.463
+
+ - Most overweight partition:
+     pid: 6, actual: 3500, desired: 1512, ratio: 2.31.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 6,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.069 MB
+******************************************************************************
+LEO57: ['LEO11', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO58', 'LEO66', 'LEO67', 'LEO68', 'LEO77', 'LEO86', 'LEO87']
+LEO23: ['LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO33', 'LEO34', 'LEO35']
+LEO51: ['LEO21', 'LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO59', 'LEO61', 'LEO69']
+LEO62: ['LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO82', 'LEO83']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO76', 'LEO84', 'LEO85']
+LEO79: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+sum_con_loads:  246.35
+max_con_loads:   65.59
+avg_setup_time: 189.89
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.500, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7223, communication volume: 74.
+
+ - Balance:
+     constraint #0:  2.446 out of 0.463
+
+ - Most overweight partition:
+     pid: 6, actual: 3700, desired: 1512, ratio: 2.45.
+
+ - Subdomain connectivity: max: 6, min: 0, avg: 3.50
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO46: ['LEO11', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO67', 'LEO76', 'LEO77']
+LEO33: ['LEO12', 'LEO13', 'LEO22', 'LEO23', 'LEO24', 'LEO33', 'LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO82', 'LEO83']
+LEO14: ['LEO14', 'LEO15']
+LEO51: ['LEO21', 'LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO74: ['LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO74', 'LEO75', 'LEO84', 'LEO85', 'LEO86']
+LEO71: ['LEO71', 'LEO81', 'LEO87', 'LEO88', 'LEO89']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  265.34
+max_con_loads:   81.23
+avg_setup_time: 227.34
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.500, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7236, communication volume: 75.
+
+ - Balance:
+     constraint #0:  2.446 out of 0.463
+
+ - Most overweight partition:
+     pid: 6, actual: 3700, desired: 1512, ratio: 2.45.
+
+ - Subdomain connectivity: max: 6, min: 0, avg: 3.50
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 7,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO36: ['LEO11', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO46', 'LEO47', 'LEO48', 'LEO56', 'LEO57', 'LEO67', 'LEO77']
+LEO33: ['LEO12', 'LEO13', 'LEO22', 'LEO23', 'LEO24', 'LEO33', 'LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO82', 'LEO83']
+LEO14: ['LEO14', 'LEO15']
+LEO51: ['LEO21', 'LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO74: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO64', 'LEO65', 'LEO66', 'LEO74', 'LEO75', 'LEO76', 'LEO84', 'LEO85', 'LEO86']
+LEO71: ['LEO71', 'LEO81', 'LEO87', 'LEO88', 'LEO89']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  265.60
+max_con_loads:   81.23
+avg_setup_time: 228.18
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.600, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6796, communication volume: 61.
+
+ - Balance:
+     constraint #0:  2.579 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 3900, desired: 1512, ratio: 2.58.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO37: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO67', 'LEO77']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO53']
+LEO61: ['LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO78', 'LEO79', 'LEO81']
+LEO62: ['LEO52', 'LEO62', 'LEO63', 'LEO64', 'LEO72', 'LEO73', 'LEO74', 'LEO82', 'LEO83', 'LEO84']
+LEO87: ['LEO65', 'LEO66', 'LEO75', 'LEO76', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  256.56
+max_con_loads:   78.90
+avg_setup_time: 237.87
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.600, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6769, communication volume: 63.
+
+ - Balance:
+     constraint #0:  2.512 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 3800, desired: 1512, ratio: 2.51.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO37: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO57', 'LEO66', 'LEO67', 'LEO76', 'LEO77']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43']
+LEO61: ['LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO78', 'LEO79', 'LEO81']
+LEO62: ['LEO52', 'LEO53', 'LEO54', 'LEO62', 'LEO63', 'LEO64', 'LEO72', 'LEO73', 'LEO74', 'LEO82', 'LEO83', 'LEO84']
+LEO87: ['LEO55', 'LEO56', 'LEO65', 'LEO75', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  255.89
+max_con_loads:   77.54
+avg_setup_time: 235.50
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.700, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6828, communication volume: 76.
+
+ - Balance:
+     constraint #0:  2.645 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4000, desired: 1512, ratio: 2.64.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 3.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 6,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO48: ['LEO11', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO67', 'LEO77']
+LEO43: ['LEO12', 'LEO13', 'LEO23', 'LEO33', 'LEO42', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73', 'LEO74']
+LEO14: ['LEO14', 'LEO15', 'LEO24', 'LEO25', 'LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66']
+LEO51: ['LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO71: ['LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO82']
+LEO87: ['LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  257.20
+max_con_loads:   81.86
+avg_setup_time: 239.65
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.700, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6456, communication volume: 75.
+
+ - Balance:
+     constraint #0:  2.645 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4000, desired: 1512, ratio: 2.64.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 2.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 6,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO37: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO46', 'LEO47', 'LEO48', 'LEO57', 'LEO67']
+LEO33: ['LEO13', 'LEO14', 'LEO22', 'LEO23', 'LEO33', 'LEO43', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO51: ['LEO21', 'LEO31', 'LEO32', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO34: ['LEO24', 'LEO25', 'LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66']
+LEO79: ['LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO86', 'LEO87', 'LEO88']
+LEO74: ['LEO74', 'LEO75', 'LEO76', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO89']
+sum_con_loads:  249.79
+max_con_loads:   81.86
+avg_setup_time: 234.96
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.800, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7792, communication volume: 57.
+
+ - Balance:
+     constraint #0:  2.777 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4200, desired: 1512, ratio: 2.78.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO33: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO33', 'LEO38', 'LEO39', 'LEO41', 'LEO49', 'LEO51']
+LEO43: ['LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO42', 'LEO43', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO62', 'LEO63', 'LEO64', 'LEO65']
+LEO59: ['LEO58', 'LEO59']
+LEO69: ['LEO61', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO86', 'LEO87']
+LEO72: ['LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO88', 'LEO89']
+sum_con_loads:  276.54
+max_con_loads:   84.00
+avg_setup_time: 298.41
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.800, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 7847, communication volume: 65.
+
+ - Balance:
+     constraint #0:  2.711 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4100, desired: 1512, ratio: 2.71.
+
+ - Subdomain connectivity: max: 5, min: 0, avg: 3.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 6,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO31: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO51', 'LEO61']
+LEO43: ['LEO15', 'LEO16', 'LEO17', 'LEO25', 'LEO26', 'LEO27', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO42', 'LEO43', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO66']
+LEO39: ['LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO59: ['LEO58', 'LEO59', 'LEO69']
+LEO78: ['LEO67', 'LEO68', 'LEO77', 'LEO78', 'LEO87', 'LEO88']
+LEO72: ['LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO89']
+sum_con_loads:  277.75
+max_con_loads:   86.71
+avg_setup_time: 284.71
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.900, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6021, communication volume: 52.
+
+ - Balance:
+     constraint #0:  2.843 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4300, desired: 1512, ratio: 2.84.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63']
+LEO14: ['LEO14', 'LEO15']
+LEO59: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO85', 'LEO86', 'LEO87']
+LEO34: ['LEO24', 'LEO34']
+LEO71: ['LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO88', 'LEO89']
+sum_con_loads:  241.33
+max_con_loads:   88.35
+avg_setup_time: 269.81
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=2.900, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6021, communication volume: 52.
+
+ - Balance:
+     constraint #0:  2.843 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4300, desired: 1512, ratio: 2.84.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63']
+LEO14: ['LEO14', 'LEO15']
+LEO59: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO85', 'LEO86', 'LEO87']
+LEO34: ['LEO24', 'LEO34']
+LEO71: ['LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO88', 'LEO89']
+sum_con_loads:  241.33
+max_con_loads:   88.35
+avg_setup_time: 269.81
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.000, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6101, communication volume: 63.
+
+ - Balance:
+     constraint #0:  2.975 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4500, desired: 1512, ratio: 2.98.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO25: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61']
+LEO39: ['LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO72: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO88', 'LEO89']
+LEO69: ['LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO76', 'LEO77', 'LEO86', 'LEO87']
+sum_con_loads:  242.79
+max_con_loads:   90.64
+avg_setup_time: 287.33
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.000, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6101, communication volume: 63.
+
+ - Balance:
+     constraint #0:  2.975 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4500, desired: 1512, ratio: 2.98.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO25: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61']
+LEO39: ['LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO72: ['LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO88', 'LEO89']
+LEO69: ['LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO76', 'LEO77', 'LEO86', 'LEO87']
+sum_con_loads:  242.79
+max_con_loads:   90.64
+avg_setup_time: 287.33
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.100, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6601, communication volume: 60.
+
+ - Balance:
+     constraint #0:  3.041 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4600, desired: 1512, ratio: 3.04.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 2.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62']
+LEO63: ['LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87']
+LEO69: ['LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO71: ['LEO71', 'LEO72', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO88', 'LEO89']
+sum_con_loads:  252.72
+max_con_loads:   91.16
+avg_setup_time: 314.86
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.100, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6601, communication volume: 60.
+
+ - Balance:
+     constraint #0:  3.041 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4600, desired: 1512, ratio: 3.04.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 2.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19']
+LEO33: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62']
+LEO63: ['LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87']
+LEO69: ['LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69']
+LEO71: ['LEO71', 'LEO72', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO88', 'LEO89']
+sum_con_loads:  252.72
+max_con_loads:   91.16
+avg_setup_time: 314.86
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.200, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5930, communication volume: 54.
+
+ - Balance:
+     constraint #0:  3.174 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4800, desired: 1512, ratio: 3.17.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 2.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.071 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO71', 'LEO72']
+LEO14: ['LEO14', 'LEO15']
+LEO59: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO65', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO75', 'LEO76', 'LEO77']
+LEO73: ['LEO63', 'LEO64', 'LEO73', 'LEO74', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  239.54
+max_con_loads:   93.74
+avg_setup_time: 338.25
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.200, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5694, communication volume: 54.
+
+ - Balance:
+     constraint #0:  3.174 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4800, desired: 1512, ratio: 3.17.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 1.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 2.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.071 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO71', 'LEO72']
+LEO14: ['LEO14', 'LEO15']
+LEO59: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO65', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO75', 'LEO76', 'LEO77', 'LEO81', 'LEO82', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO73: ['LEO63', 'LEO64', 'LEO73', 'LEO74', 'LEO83', 'LEO84']
+LEO79: ['LEO78', 'LEO79']
+sum_con_loads:  234.84
+max_con_loads:   93.74
+avg_setup_time: 336.32
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.300, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 6612, communication volume: 52.
+
+ - Balance:
+     constraint #0:  3.240 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4900, desired: 1512, ratio: 3.24.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 1.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO23: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO37', 'LEO38', 'LEO39', 'LEO48']
+LEO51: ['LEO31', 'LEO32', 'LEO33', 'LEO34', 'LEO35', 'LEO36', 'LEO41', 'LEO42', 'LEO43', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO49', 'LEO51', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO61', 'LEO62', 'LEO67', 'LEO71', 'LEO72', 'LEO76', 'LEO77', 'LEO81', 'LEO82', 'LEO87', 'LEO88', 'LEO89']
+LEO63: ['LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO75', 'LEO85', 'LEO86']
+LEO79: ['LEO68', 'LEO69', 'LEO78', 'LEO79']
+LEO73: ['LEO73', 'LEO74', 'LEO83', 'LEO84']
+sum_con_loads:  253.07
+max_con_loads:  110.45
+avg_setup_time: 216.05
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.300, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5433, communication volume: 48.
+
+ - Balance:
+     constraint #0:  3.240 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 4900, desired: 1512, ratio: 3.24.
+
+ - Subdomain connectivity: max: 3, min: 0, avg: 1.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 4,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO14: ['LEO14', 'LEO15']
+LEO47: ['LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87']
+LEO61: ['LEO58', 'LEO59', 'LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO88', 'LEO89']
+sum_con_loads:  229.58
+max_con_loads:   92.65
+avg_setup_time: 317.02
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.400, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 4982, communication volume: 41.
+
+ - Balance:
+     constraint #0:  3.372 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5100, desired: 1512, ratio: 3.37.
+
+ - Subdomain connectivity: max: 2, min: 0, avg: 0.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 3,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO33: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63']
+LEO49: ['LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO56', 'LEO57', 'LEO58', 'LEO59']
+LEO72: ['LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO61', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  220.52
+max_con_loads:   92.96
+avg_setup_time: 354.35
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.400, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5583, communication volume: 64.
+
+ - Balance:
+     constraint #0:  3.372 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5100, desired: 1512, ratio: 3.37.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 0.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO14: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO27', 'LEO37']
+LEO59: ['LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49', 'LEO58', 'LEO59']
+LEO71: ['LEO24', 'LEO25', 'LEO26', 'LEO34', 'LEO35', 'LEO36', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO71', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO87', 'LEO88', 'LEO89']
+LEO74: ['LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+sum_con_loads:  232.58
+max_con_loads:   94.02
+avg_setup_time: 340.68
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.500, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5146, communication volume: 61.
+
+ - Balance:
+     constraint #0:  3.438 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5200, desired: 1512, ratio: 3.44.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO15: ['LEO11', 'LEO12', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO27', 'LEO28', 'LEO29']
+LEO52: ['LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72']
+LEO34: ['LEO24', 'LEO25', 'LEO26', 'LEO34', 'LEO35', 'LEO44', 'LEO45']
+LEO61: ['LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO57', 'LEO58', 'LEO59', 'LEO61', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO74: ['LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+sum_con_loads:  223.58
+max_con_loads:   95.61
+avg_setup_time: 388.12
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.500, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5183, communication volume: 60.
+
+ - Balance:
+     constraint #0:  3.438 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5200, desired: 1512, ratio: 3.44.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.070 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO62', 'LEO63', 'LEO72']
+LEO15: ['LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO27', 'LEO28', 'LEO29']
+LEO34: ['LEO24', 'LEO25', 'LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56']
+LEO61: ['LEO26', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO57', 'LEO58', 'LEO59', 'LEO61', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO74: ['LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+sum_con_loads:  224.33
+max_con_loads:   95.61
+avg_setup_time: 388.45
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.600, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5059, communication volume: 65.
+
+ - Balance:
+     constraint #0:  3.570 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5400, desired: 1512, ratio: 3.57.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.072 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO63', 'LEO71', 'LEO72', 'LEO73']
+LEO69: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO57', 'LEO58', 'LEO59', 'LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO39: ['LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO34: ['LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO64', 'LEO65', 'LEO66', 'LEO75', 'LEO76']
+LEO74: ['LEO74', 'LEO84']
+sum_con_loads:  222.24
+max_con_loads:   95.02
+avg_setup_time: 397.73
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.600, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 4992, communication volume: 64.
+
+ - Balance:
+     constraint #0:  3.570 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5400, desired: 1512, ratio: 3.57.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.072 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO63', 'LEO71', 'LEO72', 'LEO73']
+LEO69: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO57', 'LEO58', 'LEO59', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+LEO39: ['LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49']
+LEO34: ['LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56']
+LEO74: ['LEO64', 'LEO65', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+sum_con_loads:  220.93
+max_con_loads:   95.02
+avg_setup_time: 393.20
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.700, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5490, communication volume: 45.
+
+ - Balance:
+     constraint #0:  3.504 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5300, desired: 1512, ratio: 3.50.
+
+ - Subdomain connectivity: max: 3, min: 0, avg: 1.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 4,
+   max components: 1 for pid: 3.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.073 MB
+******************************************************************************
+LEO31: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO33', 'LEO36', 'LEO37', 'LEO41', 'LEO46', 'LEO47', 'LEO49', 'LEO51', 'LEO57', 'LEO58', 'LEO59']
+LEO53: ['LEO34', 'LEO35', 'LEO42', 'LEO43', 'LEO44', 'LEO45', 'LEO52', 'LEO53', 'LEO54', 'LEO55', 'LEO56', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO82', 'LEO83', 'LEO84', 'LEO85']
+LEO39: ['LEO38', 'LEO39', 'LEO48']
+LEO79: ['LEO61', 'LEO67', 'LEO68', 'LEO69', 'LEO71', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  230.51
+max_con_loads:   97.48
+avg_setup_time: 529.44
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.700, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 4828, communication volume: 42.
+
+ - Balance:
+     constraint #0:  3.636 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5500, desired: 1512, ratio: 3.64.
+
+ - Subdomain connectivity: max: 2, min: 0, avg: 0.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 3,
+   max components: 1 for pid: 3.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.073 MB
+******************************************************************************
+LEO52: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO31', 'LEO32', 'LEO33', 'LEO34', 'LEO41', 'LEO42', 'LEO43', 'LEO44', 'LEO51', 'LEO52', 'LEO53', 'LEO54', 'LEO61', 'LEO62', 'LEO71', 'LEO72']
+LEO59: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO68', 'LEO69', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87']
+LEO79: ['LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO88', 'LEO89']
+sum_con_loads:  217.67
+max_con_loads:   98.50
+avg_setup_time: 865.23
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.800, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5839, communication volume: 57.
+
+ - Balance:
+     constraint #0:  3.769 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5700, desired: 1512, ratio: 3.77.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 1.75
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.074 MB
+******************************************************************************
+LEO41: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22', 'LEO23', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO33', 'LEO36', 'LEO37', 'LEO41', 'LEO42', 'LEO43', 'LEO46', 'LEO47', 'LEO49', 'LEO51', 'LEO52', 'LEO53', 'LEO57', 'LEO58', 'LEO59']
+LEO63: ['LEO24', 'LEO25', 'LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO56', 'LEO63', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85', 'LEO86']
+LEO39: ['LEO38', 'LEO39', 'LEO48']
+LEO61: ['LEO61', 'LEO62', 'LEO69', 'LEO71', 'LEO72', 'LEO79', 'LEO81', 'LEO82', 'LEO89']
+LEO78: ['LEO66', 'LEO67', 'LEO68', 'LEO77', 'LEO78', 'LEO87', 'LEO88']
+sum_con_loads:  237.52
+max_con_loads:  102.32
+avg_setup_time: 210.85
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.800, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 5390, communication volume: 67.
+
+ - Balance:
+     constraint #0:  3.702 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5600, desired: 1512, ratio: 3.70.
+
+ - Subdomain connectivity: max: 4, min: 0, avg: 2.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 5,
+   max components: 1 for pid: 1.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.074 MB
+******************************************************************************
+LEO51: ['LEO11', 'LEO12', 'LEO13', 'LEO21', 'LEO22', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO71', 'LEO72', 'LEO79', 'LEO81', 'LEO82']
+LEO15: ['LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO26', 'LEO27', 'LEO36', 'LEO37', 'LEO46', 'LEO47', 'LEO56', 'LEO57', 'LEO66', 'LEO67', 'LEO68', 'LEO77', 'LEO78']
+LEO59: ['LEO18', 'LEO19', 'LEO28', 'LEO29', 'LEO38', 'LEO39', 'LEO48', 'LEO49', 'LEO58', 'LEO59', 'LEO69']
+LEO63: ['LEO24', 'LEO25', 'LEO34', 'LEO35', 'LEO44', 'LEO45', 'LEO54', 'LEO55', 'LEO63', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO83', 'LEO84', 'LEO85']
+LEO87: ['LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  228.68
+max_con_loads:  100.24
+avg_setup_time: 213.57
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.900, no2hop=NO, minconn=NO, contig=YES, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+	***Cannot bisect a graph with 0 vertices!
+	***You are trying to partition a graph into too many parts!
+ - Edgecut: 6171, communication volume: 45.
+
+ - Balance:
+     constraint #0:  3.835 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5800, desired: 1512, ratio: 3.83.
+
+ - Subdomain connectivity: max: 3, min: 0, avg: 1.00
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 4,
+   max components: 1 for pid: 3.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.073 MB
+******************************************************************************
+LEO31: ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO23', 'LEO27', 'LEO28', 'LEO29', 'LEO31', 'LEO32', 'LEO33', 'LEO37', 'LEO38', 'LEO39', 'LEO41', 'LEO42', 'LEO49', 'LEO51', 'LEO59', 'LEO61', 'LEO69']
+LEO21: ['LEO21', 'LEO22']
+LEO43: ['LEO24', 'LEO25', 'LEO26', 'LEO34', 'LEO35', 'LEO36', 'LEO43', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO53', 'LEO54']
+LEO72: ['LEO52', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO62', 'LEO63', 'LEO64', 'LEO65', 'LEO66', 'LEO67', 'LEO68', 'LEO71', 'LEO72', 'LEO73', 'LEO74', 'LEO75', 'LEO76', 'LEO77', 'LEO78', 'LEO79', 'LEO81', 'LEO82', 'LEO83', 'LEO84', 'LEO85', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  244.05
+max_con_loads:  102.28
+avg_setup_time: 235.27
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: May 24 2022, 02:51:17)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/6715, #Vertices: 72, #Edges: 127, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=3.900, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+	***Cannot bisect a graph with 0 vertices!
+	***You are trying to partition a graph into too many parts!
+ - Edgecut: 5543, communication volume: 57.
+
+ - Balance:
+     constraint #0:  3.835 out of 0.463
+
+ - Most overweight partition:
+     pid: 7, actual: 5800, desired: 1512, ratio: 3.83.
+
+ - Subdomain connectivity: max: 3, min: 0, avg: 1.25
+
+ - There are 0 non-contiguous partitions.
+   Total components after removing the cut edges: 4,
+   max components: 1 for pid: 3.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.001 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.073 MB
+******************************************************************************
+LEO14: ['LEO11', 'LEO12', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO22']
+LEO51: ['LEO13', 'LEO23', 'LEO31', 'LEO32', 'LEO33', 'LEO41', 'LEO42', 'LEO43', 'LEO51', 'LEO52', 'LEO53', 'LEO61', 'LEO62', 'LEO69', 'LEO71', 'LEO72', 'LEO79', 'LEO81', 'LEO82']
+LEO59: ['LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39', 'LEO44', 'LEO45', 'LEO46', 'LEO47', 'LEO48', 'LEO49', 'LEO54', 'LEO55', 'LEO56', 'LEO57', 'LEO58', 'LEO59', 'LEO63', 'LEO64', 'LEO65', 'LEO73', 'LEO74', 'LEO75', 'LEO83', 'LEO84', 'LEO85']
+LEO78: ['LEO66', 'LEO67', 'LEO68', 'LEO76', 'LEO77', 'LEO78', 'LEO86', 'LEO87', 'LEO88', 'LEO89']
+sum_con_loads:  231.65
+max_con_loads:  103.65
+avg_setup_time: 245.71
