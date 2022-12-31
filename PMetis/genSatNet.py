@@ -11,18 +11,25 @@ import matplotlib.pyplot as plt
 from networkx import Graph, path_weight
 from config import *
 from util import *
-from metis import *
 
 
 def apply_placement_assignment(graph, pair_load, pair_path_delay, result):
+    """
+    将划分结果应用于各交换机, 并计算各控制器的控制器负载
+    :param graph: graph
+    :param pair_load: peer-peer load
+    :param pair_path_delay: peer-peer path and delay
+    :param result: partition result
+    :return: each controller load
+    """
     con_loads = {}
     for con in result:
         con_load = 0
         for sw in result[con]:
             graph.nodes[sw]['controller'] = con
+            graph.nodes[sw]['real_load'] = graph.nodes[sw]['load']
             con_load += graph.nodes[sw]['load']
         for sw in result[con]:
-            # print('get sw {} inter-domain load'.format(sw))
             for pair in pair_load:
                 if pair_load[pair] != 0:
                     path = pair_path_delay[pair][0]
@@ -31,6 +38,7 @@ def apply_placement_assignment(graph, pair_load, pair_path_delay, result):
                         if sw_index > 0 and graph.nodes[sw]['controller'] != graph.nodes[path[sw_index - 1]][
                             'controller']:
                             con_load += pair_load[pair]
+                            graph.nodes[sw]['real_load'] += pair_load[pair]
         con_loads[con] = con_load
         for sw in result[con]:
             graph.nodes[sw]['con_load'] = con_load
@@ -39,24 +47,17 @@ def apply_placement_assignment(graph, pair_load, pair_path_delay, result):
 
 def get_avg_flow_setup_time(graph, pair_load, pair_path_delay):
     '''
-    获取所有流量对的安装时延的平均值
-
+    获取所有流量对安装时延的加权平均值
     :param graph: 图
-    :param pair_load: 流量对
-    :param pair_path_delay: 节点间的时延
+    :param pair_load: peer-peer load
+    :param pair_path_delay:  peer-peer path and delay
     :return: 流安装时延的平均值
     '''
     all_pairs_setup_time = 0
-    len_sum=0
-    len_num=0
     for pair in pair_load:
         if pair_load[pair] != 0:
-            # print('get pair {}'.format(pair))
             setup_time = pair_path_delay[pair][1]
             path = pair_path_delay[pair][0]
-            len_sum+=len(path)
-            len_num+=1
-            # print('get pair path {}'.format(path))
             same_con_switches = []
             for node_index in range(len(path)):
                 sw = path[node_index]
@@ -65,24 +66,26 @@ def get_avg_flow_setup_time(graph, pair_load, pair_path_delay):
                     con_process_delay = max(0, 1 / (100 - graph.nodes[path[node_index]]['con_load']) * 1000)
                     setup_time += (propagation_delay + con_process_delay)
                     same_con_switches = [sw]
-                    # print('packet in at {}, delay={}+{}'.format(sw, propagation_delay, con_process_delay))
                 if node_index == len(path) - 1 or graph.nodes[sw]['controller'] != graph.nodes[path[node_index + 1]][
                     'controller']:
                     install_rule_time = max(
                         [pair_path_delay[(sw, graph.nodes[sw]['controller'])][1] for sw in same_con_switches])
                     setup_time += install_rule_time
                     same_con_switches = []
-                    # print('install rule at {}, delay={}'.format(sw, install_rule_time))
                 else:
                     same_con_switches.append(sw)
-                    # print('go through {}'.format(sw))
-            # print('pair {} load {} path {} time {}'.format(pair, pair_load[pair], path, setup_time))
             all_pairs_setup_time += setup_time * pair_load[pair]
-    # print(len_sum/len_num)
     return all_pairs_setup_time / sum(pair_load.values())
 
 
-def get_link_load(graph: Graph, pair_load, pair_path_delay):
+def get_edge_load(graph: Graph, pair_load, pair_path_delay):
+    """
+    获取图中每条边上通过的负载, 双向的
+    :param graph: graph
+    :param pair_load:
+    :param pair_path_delay:
+    :return: each edge load
+    """
     edge_loads = {}
     edges = list(graph.edges)
     load_sum = 0
@@ -105,6 +108,11 @@ def get_link_load(graph: Graph, pair_load, pair_path_delay):
 
 
 def greedy_alg1(graph: Graph):
+    """
+    以贪心算法, 按边权重结合节点, 效果不行
+    :param graph:
+    :return:
+    """
     # con_cap = 80
     areas = []
     chosen_node = []
@@ -225,31 +233,31 @@ def deployInArea(G, pair_load, pair_path_delay, link_load, assign):
             if copy_graph.nodes[nei]['controller'] != copy_graph.nodes[node]['controller']:
                 node_loads[node] += link_load[(nei, node)]
     new_result = {}
-    sum_min_delay=0
+    sum_min_delay = 0
     for con in assign:
         area = assign[con]
         min_delay_con = None
         min_delay = 10000
         for newCon in area:
-            all_delay = 0
+            weighted_delay = 0
             for sw in area:
                 if newCon != sw:
-                    all_delay += node_loads[sw] * pair_path_delay[(sw, newCon)][1]
-            if all_delay < min_delay:
-                min_delay = all_delay
+                    weighted_delay += node_loads[sw] * pair_path_delay[(sw, newCon)][1]
+            if weighted_delay < min_delay:
+                min_delay = weighted_delay
                 min_delay_con = newCon
         # print('{} all delay: {}'.format(min_delay_con,min_delay))
-        sum_min_delay+=min_delay
+        sum_min_delay += min_delay
         new_result[min_delay_con] = area
     # print('*'*20,'node loads','*'*20, '\n',exch(node_loads))
     # print('sum_min_delay {}'.format(sum_min_delay))
     # logger.info('*' * 20, 'Final Assignment', '*' * 20)
     # return new_result
-    return new_result,sum_min_delay,node_loads
+    return new_result, sum_min_delay, node_loads
 
 
 def bal_con_assign(initialAssign):
-    startTime = time.time()
+    startTime = t.time()
     iteration = 1
     assign = initialAssign
     conLoads = apply_placement_assignment(G, pair_load, pair_path_delay, assign)
@@ -292,7 +300,7 @@ def bal_con_assign(initialAssign):
         maxConLoad = conLoads[maxCon]
         sumConLoad = sum(conLoads.values())
         #     print('assignment: {}'.format(assign))
-        print('{:^5.2f}, iter{:->3d}'.format(time.time() - startTime, iteration), end=', ')
+        print('{:^5.2f}, iter{:->3d}'.format(t.time() - startTime, iteration), end=', ')
         iteration += 1
         print('SumLoad: {:>7.4f}'.format(sumConLoad), end=', ')
         print('MaxCon: {}, Load: {:>7.4f}'.format(maxCon, maxConLoad))
@@ -530,15 +538,15 @@ if __name__ == '__main__':
     files = os.listdir('topos')
     files.sort(key=lambda x: int(x.split('.')[0]))
     for f in files[:10]:
-        time = int(f.split('.')[0])
-        print(time)
-        G = gen_topology(time)
+        t = int(f.split('.')[0])
+        print(t)
+        G = gen_topology(t)
         # sys.exit(0)
         # linkDelay = dict(sorted([(link, G.edges[link]['delay']) for link in G.edges], key=lambda x: x[1], reverse=False))
         # linkDelay = {link: G.edges[link]['delay'] for link in G.edges}
         pair_load = get_pair_load(G)
         pair_path_delay = get_pair_delay(G)
-        link_load = get_link_load(G, pair_load, pair_path_delay)
+        link_load = get_edge_load(G, pair_load, pair_path_delay)
         assignment = None
         if AssignScheme == 'Greedy':
             assignment = greedy_alg1(G)
@@ -562,37 +570,37 @@ if __name__ == '__main__':
                 f.write(assignment.__str__())
                 f.close()
         elif AssignScheme == 'METIS':
-            metisFile = 'MetisTopos/{}'.format(time)
+            metisFile = 'MetisTopos/{}'.format(t)
             if not os.path.exists(metisFile):
-                genMetisGraph(time)
+                genMetisGraph(t)
             scheme = 'my-0'
-            resultLogFile = 'metisResult1/{}/{}'.format(scheme, time)
+            resultLogFile = 'metisResult1/{}/{}'.format(scheme, t)
             f = open(resultLogFile, 'w')
             f.close()
-            logger = logging.getLogger('{}'.format(time))
+            logger = logging.getLogger('{}'.format(t))
             logger.setLevel(logging.INFO)
             f_handler = logging.FileHandler(resultLogFile)
             logger.addHandler(f_handler)
             for ufactor in range(100, 3000, 100):
                 for contig in ['-contig', '']:
-                    for p in range(8,9):
-                    # cmd = 'gpmetis {} 8 -ufactor={} {} |tee -a {}'.format(metisFile, ufactor, contig, resultLogFile)
-                        cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p,ufactor, contig, resultLogFile)
+                    for p in range(8, 9):
+                        cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p, ufactor, contig,
+                                                                               resultLogFile)
                         os.system(cmd)
-                    # resultFile = '{}.part.8'.format(metisFile)
-                        resultFile = '{}.part.{}'.format(metisFile,p)
-                    # f = open('metisResult.txt', 'r')
-                    # lines = f.readlines()
-                    # if len(lines) > 1:
-                    #     assignment = eval(lines[0])
-                    #     f.close()
-                    # else:
-                    #     f = open('metisResult.txt', 'w')
-                    #     assignment = readMetisResult()
-                    #     f.write(assignment.__str__())
-                    #     f.close()
+                        # resultFile = '{}.part.8'.format(metisFile)
+                        resultFile = '{}.part.{}'.format(metisFile, p)
+                        # f = open('metisResult.txt', 'r')
+                        # lines = f.readlines()
+                        # if len(lines) > 1:
+                        #     assignment = eval(lines[0])
+                        #     f.close()
+                        # else:
+                        #     f = open('metisResult.txt', 'w')
+                        #     assignment = readMetisResult()
+                        #     f.write(assignment.__str__())
+                        #     f.close()
                         assignment = readMetisResult(fileName=resultFile)
-                        assignment,_,_ = deployInArea(G, pair_load, pair_path_delay, link_load, assignment)
+                        assignment, _, _ = deployInArea(G, pair_load, pair_path_delay, link_load, assignment)
                         for con in assignment:
                             # print('{}: {}'.format(con, assignment[con]))
                             logger.info('{}: {}'.format(con, assignment[con]))
