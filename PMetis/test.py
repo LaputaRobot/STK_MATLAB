@@ -6,6 +6,7 @@ import time
 
 import networkx as nx
 import numpy.random
+from deprecated.classic import deprecated
 from matplotlib import pyplot as plt
 from networkx import Graph
 from numpy.random import default_rng
@@ -26,6 +27,10 @@ def testNetworkx():
     print(x[1])
     # print(set(list(graph.edges)[0],list(graph.edges)[0]))
 
+
+@deprecated(reason="测试",version="v1.0")
+def deprecatedFun():
+    print("this is deprecated!!!")
 
 def gen_result():
     result = {}
@@ -105,7 +110,8 @@ def testPygMetis():
     pass
 
 if __name__ == '__main__':
-    testPygMetis()
+    deprecatedFun()
+    # testPygMetis()
     # xadj_file = 'xadj.txt'
     # adjncy_file = 'adjncy.txt'
     # where_file = 'where1.txt'

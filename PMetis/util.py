@@ -10,7 +10,7 @@ from graphviz import *
 import matplotlib.pyplot as plt
 import time
 from compareResult import get_min_delay
-from genSatNet import get_link_load, deployInArea, apply_placement_assignment, get_avg_flow_setup_time, getResultGraph
+from genSatNet import get_edge_load, deployInArea, apply_placement_assignment, get_avg_flow_setup_time, getResultGraph
 from getSatLoad import *
 
 
@@ -21,11 +21,12 @@ def get_lbr(loads):
         lbr = 1 - sum([abs(x - avg) for x in loads]) / (4 * avg)
     return lbr, avg
 
+
 def draw_result_with_time(scheme, T, node_style):
     G = gen_topology(T)
     pair_load = get_pair_load(G)
     pair_path_delay = get_pair_delay(G)
-    link_load = get_link_load(G, pair_load, pair_path_delay)
+    link_load = get_edge_load(G, pair_load, pair_path_delay)
     assignment = {}
     src_args, ass, _, _, _ = get_min_delay('metisResult1/{}/{}'.format(scheme, T))
     for a in ass:
@@ -131,14 +132,14 @@ def gen_topology(time):
             src = '{}{}'.format(p_id, s_id)
             srcLEO = 'LEO{}'.format(src)
             if not graph.has_node(srcLEO):
-                graph.add_node(srcLEO, load=getLoad(src, time), controller='', con_load=0)
+                graph.add_node(srcLEO, load=getLoad(src, time), controller='', con_load=0, real_load=0)
             n_s_id = s_id + 1
             if n_s_id > 9:
                 n_s_id %= sat_per_plane
             dst = '{}{}'.format(p_id, n_s_id)
             dstLEO = 'LEO{}'.format(dst)
             if not graph.has_node(dstLEO):
-                graph.add_node(dstLEO, load=getLoad(dst, time), controller='', con_load=0)
+                graph.add_node(dstLEO, load=getLoad(dst, time), controller='', con_load=0, real_load=0)
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
     connections = open('topos/{}.log'.format(time), 'r').readlines()
