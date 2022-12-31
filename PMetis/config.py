@@ -1,8 +1,8 @@
 # AssignScheme = 'SamePlane'
-# AssignScheme = 'BalCon'
+AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
 # AssignScheme = 'METIS'
-AssignScheme = 'PyMETIS'
+# AssignScheme = 'PyMETIS'
 
 MCS = 3
 MSSLS = 24

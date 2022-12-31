@@ -10,7 +10,7 @@ from graphviz import *
 import matplotlib.pyplot as plt
 import time
 from compareResult import get_min_delay
-from genSatNet import get_edge_load, deployInArea, apply_placement_assignment, get_avg_flow_setup_time, getResultGraph
+from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, get_result_graph
 from getSatLoad import *
 
 
@@ -31,13 +31,13 @@ def draw_result_with_time(scheme, T, node_style):
     src_args, ass, _, _, _ = get_min_delay('metisResult1/{}/{}'.format(scheme, T))
     for a in ass:
         assignment[a.split(':')[0]] = eval(a.split(':')[1])
-    assignment, sum_min_delay, node_loads = deployInArea(G, pair_load, pair_path_delay, link_load, assignment)
+    assignment, sum_min_delay, node_loads = deploy_in_area(G, pair_path_delay, link_load, assignment)
     print('{}-{}'.format(T, scheme))
     for con in assignment:
         # print('{}: {}'.format(con, assignment[con]))
         print('{}: {}'.format(con, assignment[con]))
-    con_loads = apply_placement_assignment(G, pair_load, pair_path_delay, assignment)
-    graph = getResultGraph(G, link_load)
+    con_loads = apply_partition(G, link_load, assignment)
+    graph = get_result_graph(G, link_load)
     print(con_loads)
     # g = getResultGraph()
     # draw_result(g, assignment, node_style='load')
@@ -203,9 +203,10 @@ def get_all_distance():
     return all_dis_dict
 
 
-def get_pair_load(graph: Graph):
+def get_pair_load(graph):
     """
     获取所有两个卫星间的负载
+
     :param graph: 卫星图
     :return: 所有两两卫星间的负载
     """
@@ -222,7 +223,7 @@ def get_pair_load(graph: Graph):
     return all_pairs_load
 
 
-def get_pair_delay(graph: Graph):
+def get_pair_delay(graph):
     """
     获取端到端路径时延
     :param graph: 网络拓扑图
@@ -246,6 +247,45 @@ def get_pair_delay(graph: Graph):
             else:
                 all_src_dst_paths[(src, dst)] = [[src], 0]
     return all_src_dst_paths
+
+
+def get_edge_load(graph, pair_load, pair_path_delay):
+    """
+    获取图中每条边上通过的负载, 双向的
+
+    :param graph: graph
+    :param pair_load:
+    :param pair_path_delay:
+    :return: each edge load
+    """
+    edge_loads = {}
+    edges = list(graph.edges)
+    load_sum = 0
+    for edge in edges:
+        src = edge[0]
+        dst = edge[1]
+        edge_loads[(src, dst)] = 0
+        edge_loads[(dst, src)] = 0
+    for pair in pair_load:
+        if pair_load[pair] != 0:
+            path = pair_path_delay[pair][0]
+            for index in range(len(path) - 1):
+                src = path[index]
+                dst = path[index + 1]
+                # edge_loads[(src, dst)].append([pair, pair_load[pair]])
+                edge_loads[(src, dst)] += pair_load[pair]
+                load_sum += pair_load[pair]
+    # print(load_sum)
+    return edge_loads
+
+
+class Common():
+
+    def __init__(self, graph: Graph):
+        self.graph = graph
+        self.pair_load = get_pair_load(graph)
+        self.pair_path_delay = get_pair_delay(graph)
+        self.link_load = get_edge_load(graph, self.pair_load, self.pair_path_delay)
 
 
 def exch(dicts):

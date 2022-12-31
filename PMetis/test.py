@@ -2,11 +2,11 @@ import copy
 import logging
 import math
 import random
+import sys
 import time
 
 import networkx as nx
 import numpy.random
-from deprecated.classic import deprecated
 from matplotlib import pyplot as plt
 from networkx import Graph
 from numpy.random import default_rng
@@ -28,7 +28,6 @@ def testNetworkx():
     # print(set(list(graph.edges)[0],list(graph.edges)[0]))
 
 
-@deprecated(reason="测试",version="v1.0")
 def deprecatedFun():
     print("this is deprecated!!!")
 
@@ -109,9 +108,21 @@ def test_metis_bi_result(xadj_file, adjncy_file, where_file):
 def testPygMetis():
     pass
 
+class C:
+    def __init__(self,x):
+        self.x=x
+
+    def printx(self):
+        print(self.x)
+
 if __name__ == '__main__':
-    deprecatedFun()
     # testPygMetis()
+    # for path in sys.path:
+    #     print(path)
+    c=C(1)
+    c2=C(2)
+    c.printx()
+    c2.printx()
     # xadj_file = 'xadj.txt'
     # adjncy_file = 'adjncy.txt'
     # where_file = 'where1.txt'
