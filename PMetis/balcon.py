@@ -8,13 +8,11 @@ from PMetis.util import Common
 import networkx as nx
 
 
-def bal_con_assign(common: Common, initial_assign):
+def bal_con_assign(common: Common, initial_assign, logger):
     start_time = time.time()
     iteration = 1
     assign = initial_assign
     g = common.graph
-    pair_load = common.pair_load
-    pair_path_delay = common.pair_path_delay
     con_loads = apply_partition(g, common.link_load, assign)
     max_con = max(con_loads, key=con_loads.get)
     max_con_load = con_loads[max_con]
@@ -54,21 +52,15 @@ def bal_con_assign(common: Common, initial_assign):
         max_con = max(con_loads, key=con_loads.get)
         max_con_load = con_loads[max_con]
         sum_con_load = sum(con_loads.values())
-        #     print('assignment: {}'.format(assign))
-        print('{:^5.2f}, iter{:->3d}'.format(time.time() - start_time, iteration), end=', ')
+        logger.info('{:^5.2f}, iter{:->3d}, '.format(time.time() - start_time, iteration))
         iteration += 1
-        print('SumLoad: {:>7.4f}'.format(sum_con_load), end=', ')
-        print('MaxCon: {}, Load: {:>7.4f}'.format(max_con, max_con_load))
-    # print(lastAssign)
-    # sys.exit(0)
+        logger.info('SumLoad: {:>7.4f}, MaxCon: {}, Load: {:>7.4f} \n'.format(sum_con_load,max_con, max_con_load))
     return last_assign
 
 
 def computeMigrationAl(cluster, assign, srcCon, srcConLoad, common: Common):
     alternatives = []
     g = common.graph
-    pair_load = common.pair_load
-    pair_path_delay = common.pair_path_delay
     for con in assign:
         newAssign = copy.deepcopy(assign)
         for sw in cluster:

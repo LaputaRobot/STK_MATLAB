@@ -1,17 +1,26 @@
-import math
+import logging
 import os
-from pprint import pprint
 
-import matplotlib.axes
-import networkx as nx
-from matplotlib import patches
-from networkx import Graph, path_weight
-from graphviz import *
 import matplotlib.pyplot as plt
-import time
-from compareResult import get_min_delay
-from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, get_result_graph
+import networkx as nx
+from graphviz import *
+from networkx import path_weight
+
 from getSatLoad import *
+
+
+def get_log_handlers(des, file):
+    d = str.split(des, ',')
+    handlers = []
+    if 'f' in d:
+        handler = logging.FileHandler(file)
+        handler.terminator = ''
+        handlers.append(handler)
+    if 's' in d:
+        handler = logging.StreamHandler()
+        handler.terminator = ''
+        handlers.append(handler)
+    return handlers
 
 
 def get_lbr(loads):
@@ -20,39 +29,6 @@ def get_lbr(loads):
     if avg != 0:
         lbr = 1 - sum([abs(x - avg) for x in loads]) / (4 * avg)
     return lbr, avg
-
-
-def draw_result_with_time(scheme, T, node_style):
-    G = gen_topology(T)
-    pair_load = get_pair_load(G)
-    pair_path_delay = get_pair_delay(G)
-    link_load = get_edge_load(G, pair_load, pair_path_delay)
-    assignment = {}
-    src_args, ass, _, _, _ = get_min_delay('metisResult1/{}/{}'.format(scheme, T))
-    for a in ass:
-        assignment[a.split(':')[0]] = eval(a.split(':')[1])
-    assignment, sum_min_delay, node_loads = deploy_in_area(G, pair_path_delay, link_load, assignment)
-    print('{}-{}'.format(T, scheme))
-    for con in assignment:
-        # print('{}: {}'.format(con, assignment[con]))
-        print('{}: {}'.format(con, assignment[con]))
-    con_loads = apply_partition(G, link_load, assignment)
-    graph = get_result_graph(G, link_load)
-    print(con_loads)
-    # g = getResultGraph()
-    # draw_result(g, assignment, node_style='load')
-    # draw_result(g, assignment, node_style='leo')
-    # draw_result(g, assignment, node_style='leo_weight')
-    # draw_result(g, assignment, node_style='load_weight')
-    pair_load = dict(sorted(pair_load.items(), key=lambda x: x[1], reverse=True))
-    avg_setup_t = get_avg_flow_setup_time(G, pair_load, pair_path_delay)
-    # logger.info('con_loads:', con_loads)
-    print('sum_con_loads: {:>7.2f}'.format(sum(con_loads.values())))
-    print('max_con_loads: {:>7.2f}'.format(max(con_loads.values())))
-    print('avg_setup_time: {:>6.2f}'.format(avg_setup_t))
-    print('avg_setup_time: {:>6.2f}'.format(sum_min_delay / sum(con_loads.values())))
-    print('sum_min_delay: {:>6.2f}'.format(sum_min_delay))
-    draw_result(graph, assignment, node_style=node_style, title='{}-{}'.format(T, scheme), node_loads=node_loads)
 
 
 def draw_result(G, assignment, node_style, title='', node_loads=None):
@@ -247,6 +223,13 @@ def get_pair_delay(graph):
             else:
                 all_src_dst_paths[(src, dst)] = [[src], 0]
     return all_src_dst_paths
+
+
+def new_file(path):
+    dirname = os.path.dirname(path)
+    os.makedirs(dirname, exist_ok=True)
+    f = open(path, 'w')
+    f.close()
 
 
 def get_edge_load(graph, pair_load, pair_path_delay):

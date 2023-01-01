@@ -1,9 +1,16 @@
 # AssignScheme = 'SamePlane'
-AssignScheme = 'BalCon'
+# AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
-# AssignScheme = 'METIS'
+AssignScheme = 'METIS'
 # AssignScheme = 'PyMETIS'
 
+Rewrite = True
+# Rewrite = False
+
+LogDestination = 's,f'
+# LogDestination = 's'
+
+# BalCon 算法参数配置
 MCS = 3
 MSSLS = 24
 

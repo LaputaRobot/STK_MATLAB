@@ -1,3 +1,4 @@
+from PMetis.compareResult import get_min_delay
 from PMetis.util import *
 
 
@@ -27,6 +28,28 @@ def apply_partition(graph, link_load, partition):
     return con_loads
 
 
+def deploy_in_area(graph, pair_path_delay, link_load, assign):
+    partition = apply_partition(graph, link_load, assign)
+    new_result = {}
+    sum_min_delay = 0
+    for con in assign:
+        area = assign[con]
+        min_delay_con = None
+        min_delay = 10000
+        for newCon in area:
+            weighted_delay = 0
+            for sw in area:
+                if newCon != sw:
+                    weighted_delay += graph.nodes[sw]['real_load'] * pair_path_delay[(sw, newCon)][1]
+            if weighted_delay < min_delay:
+                min_delay = weighted_delay
+                min_delay_con = newCon
+        # print('{} all delay: {}'.format(min_delay_con,min_delay))
+        sum_min_delay += min_delay
+        new_result[min_delay_con] = area
+    return new_result, sum_min_delay
+
+
 def get_avg_flow_setup_time(graph, pair_load, pair_path_delay):
     '''
     获取所有流量对安装时延的加权平均值
@@ -44,47 +67,19 @@ def get_avg_flow_setup_time(graph, pair_load, pair_path_delay):
             same_con_switches = []
             for node_index in range(len(path)):
                 sw = path[node_index]
+                same_con_switches.append(sw)
                 if node_index == 0 or graph.nodes[sw]['controller'] != graph.nodes[path[node_index - 1]]['controller']:
                     propagation_delay = pair_path_delay[(sw, graph.nodes[sw]['controller'])][1]
                     con_process_delay = max(0, 1 / (100 - graph.nodes[path[node_index]]['con_load']) * 1000)
                     setup_time += (propagation_delay + con_process_delay)
-                    same_con_switches = [sw]
                 if node_index == len(path) - 1 or graph.nodes[sw]['controller'] != graph.nodes[path[node_index + 1]][
                     'controller']:
-                    install_rule_time = max(
-                        [pair_path_delay[(sw, graph.nodes[sw]['controller'])][1] for sw in same_con_switches])
+                    install_rule_time = max([pair_path_delay[(sw, graph.nodes[sw]['controller'])][1] for sw in same_con_switches])
                     setup_time += install_rule_time
                     same_con_switches = []
-                else:
-                    same_con_switches.append(sw)
             all_pairs_setup_time += setup_time * pair_load[pair]
+            # print("{}: {}".format(pair_load[pair],setup_time))
     return all_pairs_setup_time / sum(pair_load.values())
-
-
-def deploy_in_area(graph, pair_path_delay, link_load, assign):
-    apply_partition(graph, link_load, assign)
-    new_result = {}
-    sum_min_delay = 0
-    for con in assign:
-        area = assign[con]
-        min_delay_con = None
-        min_delay = 10000
-        for newCon in area:
-            weighted_delay = 0
-            for sw in area:
-                if newCon != sw:
-                    weighted_delay += graph.nodes[sw]['controller'] * pair_path_delay[(sw, newCon)][1]
-            if weighted_delay < min_delay:
-                min_delay = weighted_delay
-                min_delay_con = newCon
-        # print('{} all delay: {}'.format(min_delay_con,min_delay))
-        sum_min_delay += min_delay
-        new_result[min_delay_con] = area
-    # print('*'*20,'node loads','*'*20, '\n',exch(node_loads))
-    # print('sum_min_delay {}'.format(sum_min_delay))
-    # logger.info('*' * 20, 'Final Assignment', '*' * 20)
-    # return new_result
-    return new_result, sum_min_delay
 
 
 def get_result_graph(G, link_load):
@@ -103,3 +98,46 @@ def get_result_graph(G, link_load):
             graph.add_edge(edge[0], edge[1], delay=G.edges[edge]['delay'],
                            load='{:3.1f}'.format(link_load[(edge[0], edge[1])]))
     return graph
+
+
+def draw_result_with_time(scheme, T, node_style):
+    G = gen_topology(T)
+    pair_load = get_pair_load(G)
+    pair_path_delay = get_pair_delay(G)
+    link_load = get_edge_load(G, pair_load, pair_path_delay)
+    assignment = {}
+    src_args, ass, _, _, _ = get_min_delay('metisResult1/{}/{}'.format(scheme, T))
+    for a in ass:
+        assignment[a.split(':')[0]] = eval(a.split(':')[1])
+    assignment, sum_min_delay = deploy_in_area(G, pair_path_delay, link_load, assignment)
+    print('{}-{}'.format(T, scheme))
+    for con in assignment:
+        # print('{}: {}'.format(con, assignment[con]))
+        print('{}: {}'.format(con, assignment[con]))
+    con_loads = apply_partition(G, link_load, assignment)
+    graph = get_result_graph(G, link_load)
+    print(con_loads)
+    # g = getResultGraph()
+    # draw_result(g, assignment, node_style='load')
+    # draw_result(g, assignment, node_style='leo')
+    # draw_result(g, assignment, node_style='leo_weight')
+    # draw_result(g, assignment, node_style='load_weight')
+    pair_load = dict(sorted(pair_load.items(), key=lambda x: x[1], reverse=True))
+    avg_setup_t = get_avg_flow_setup_time(G, pair_load, pair_path_delay)
+    # logger.info('con_loads:', con_loads)
+    print('sum_con_loads: {:>7.2f}'.format(sum(con_loads.values())))
+    print('max_con_loads: {:>7.2f}'.format(max(con_loads.values())))
+    print('avg_setup_time: {:>6.2f}'.format(avg_setup_t))
+    print('avg_setup_time: {:>6.2f}'.format(sum_min_delay / sum(con_loads.values())))
+    print('sum_min_delay: {:>6.2f}'.format(sum_min_delay))
+
+
+def analysis(common: Common, assignment, logger):
+    assignment, con_loads = deploy_in_area(common.graph, common.pair_path_delay, common.link_load, assignment)
+    con_loads = apply_partition(common.graph, common.link_load, assignment)
+    avg_setup_t = get_avg_flow_setup_time(common.graph, common.pair_load, common.pair_path_delay)
+    for con in assignment:
+        logger.info('{}, {}: {}\n'.format(con,con_loads[con], assignment[con]))
+    logger.info('sum_con_loads: {:>7.2f}\n'.format(sum(con_loads.values())))
+    logger.info('max_con_loads: {:>7.2f}\n'.format(max(con_loads.values())))
+    logger.info('avg_setup_time: {:>6.2f}\n'.format(avg_setup_t))

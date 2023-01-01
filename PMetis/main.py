@@ -1,99 +1,71 @@
 import logging
 import os
+import shutil
 
 from PMetis.PyMetis import run_metis_main, gen_init_graph
-from PMetis.analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time
+from PMetis.analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
 from PMetis.balcon import bal_con_assign
-from PMetis.config import AssignScheme, assignment1, MCS, MSSLS
+from PMetis.config import AssignScheme, assignment1, MCS, MSSLS, Rewrite, assignment2, LogDestination
 from PMetis.greedy import greedy_alg1
 from PMetis.metis import gen_metis_file, read_metis_result
-from PMetis.util import gen_topology, Common
+from PMetis.util import gen_topology, Common, new_file, get_log_handlers
 
 if __name__ == '__main__':
-    # Distance_Dict = get_all_distance()
     files = os.listdir('topos')
     files.sort(key=lambda x: int(x.split('.')[0]))
-    for f in files[:10]:
+    for f in files[:1]:
         t = int(f.split('.')[0])
         print(t)
         G = gen_topology(t)
-        common=Common(G)
-        # sys.exit(0)
-        # linkDelay = dict(sorted([(link, G.edges[link]['delay']) for link in G.edges], key=lambda x: x[1], reverse=False))
-        # linkDelay = {link: G.edges[link]['delay'] for link in G.edges}
-        # pair_load = get_pair_load(G)
-        # pair_path_delay = get_pair_delay(G)
-        # link_load = get_edge_load(G, pair_load, pair_path_delay)
-
+        common = Common(G)
         assignment = None
         if AssignScheme == 'Greedy':
             assignment = greedy_alg1(common)
         elif AssignScheme == 'SamePlane':
             assignment = assignment1
         elif AssignScheme == 'BalCon':
-            # initialAssign = greedy_alg1(G)
-            # initialAssign = readMetisResult()
-            f = open('balconResult.txt', 'r')
-            lines = f.readlines()
-            if len(lines) > 1:
-                mcs = lines[0].split(' ')[0]
-                mssls = lines[0].split(' ')[1]
-                assignment = eval(lines[2])
-                f.close()
-            else:
-                initialAssign = assignment1
-                f = open('balconResult.txt', 'w')
-                assignment = bal_con_assign(common,initialAssign)
-                f.write('{} {}\n'.format(MCS, MSSLS))
+            bal_assign_f = 'balcon/{}/{}-{}.ass'.format(t, MCS, MSSLS)
+            if not os.path.exists(bal_assign_f) or Rewrite:
+                bal_log_f = 'balcon/{}/{}-{}.log'.format(t, MCS, MSSLS)
+                new_file(bal_log_f)
+                logger = logging.getLogger('{}'.format(t))
+                logger.setLevel(logging.INFO)
+                handlers = get_log_handlers(LogDestination, bal_log_f)
+                for handler in handlers:
+                    logger.addHandler(handler)
+                initialAssign = assignment2
+                f = open(bal_assign_f, 'w')
+                assignment = bal_con_assign(common, initialAssign, logger)
                 f.write(assignment.__str__())
                 f.close()
+                analysis(common, assignment, logger)
         elif AssignScheme == 'METIS':
             metisFile = 'MetisTopos/{}'.format(t)
             if not os.path.exists(metisFile):
-                gen_metis_file(t)
-            scheme = 'my-0'
-            resultLogFile = 'metisResult1/{}/{}'.format(scheme, t)
-            f = open(resultLogFile, 'w')
-            f.close()
-            logger = logging.getLogger('{}'.format(t))
-            logger.setLevel(logging.INFO)
-            f_handler = logging.FileHandler(resultLogFile)
-            logger.addHandler(f_handler)
-            for ufactor in range(100, 3000, 100):
-                for contig in ['-contig', '']:
-                    for p in range(8, 9):
-                        cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p, ufactor, contig,
+                gen_metis_file(t, common)
+            scheme = 'src'
+            for p in range(8, 9):
+                for ufactor in range(300, 3000, 100):
+                    for contig in ['-contig', '']:
+                        assignmentFile = 'metis/{}/{}/{}-{}{}.ass'.format(scheme, t, p, ufactor, contig)
+                        if os.path.exists(assignmentFile) and not Rewrite:
+                            continue
+                        resultLogFile = 'metis/{}/{}/{}-{}{}.log'.format(scheme, t, p, ufactor, contig)
+                        new_file(resultLogFile)
+                        logger = logging.getLogger('{}-{}-{}-{}'.format(t, p, ufactor, contig))
+                        logger.setLevel(logging.INFO)
+                        handlers = get_log_handlers(LogDestination, resultLogFile)
+                        for handler in handlers:
+                            logger.addHandler(handler)
+                        # cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p, ufactor, contig,
+                        #                                                        resultLogFile)
+                        cmd = 'gpmetis {} {} -ufactor={} {} > {}'.format(metisFile, p, ufactor, contig,
                                                                                resultLogFile)
-                        os.system(cmd)
-                        # resultFile = '{}.part.8'.format(metisFile)
                         resultFile = '{}.part.{}'.format(metisFile, p)
-                        # f = open('metisResult.txt', 'r')
-                        # lines = f.readlines()
-                        # if len(lines) > 1:
-                        #     assignment = eval(lines[0])
-                        #     f.close()
-                        # else:
-                        #     f = open('metisResult.txt', 'w')
-                        #     assignment = readMetisResult()
-                        #     f.write(assignment.__str__())
-                        #     f.close()
-                        assignment = read_metis_result(file_name=resultFile)
-                        assignment, _, _ = deploy_in_area(G, common.pair_load, common.link_load, assignment)
-                        for con in assignment:
-                            # print('{}: {}'.format(con, assignment[con]))
-                            logger.info('{}: {}'.format(con, assignment[con]))
-                            # logger.info('ok')
-                        con_loads = apply_partition(common.graph,common.link_load, assignment)
-                        # g = getResultGraph(G)
-                        # draw_result(g, assignment, node_style='load')
-                        # draw_result(g, assignment, node_style='leo')
-                        # draw_result(g, assignment, node_style='leo_weight')
-                        # draw_result(g, assignment, node_style='load_weight')
-                        avg_setup_t = get_avg_flow_setup_time(common.graph, common.pair_load, common.pair_path_delay)
-                        # logger.info('con_loads:', con_loads)
-                        logger.info('sum_con_loads: {:>7.2f}'.format(sum(con_loads.values())))
-                        logger.info('max_con_loads: {:>7.2f}'.format(max(con_loads.values())))
-                        logger.info('avg_setup_time: {:>6.2f}'.format(avg_setup_t))
+                        os.system(cmd)
+                        shutil.move(resultFile, assignmentFile)
+                        assignment = read_metis_result(file_name=assignmentFile)
+                        analysis(common, assignment, logger)
         elif AssignScheme == 'PyMETIS':
             graph = gen_init_graph(G, common.link_load)
             run_metis_main(graph)
