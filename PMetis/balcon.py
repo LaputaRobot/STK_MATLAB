@@ -17,12 +17,12 @@ def bal_con_assign(common: Common, initial_assign, logger):
     max_con = max(con_loads, key=con_loads.get)
     max_con_load = con_loads[max_con]
     sum_con_load = sum(con_loads.values())
-    last_sum_con_load = math.inf
-    last_max_con_load = math.inf
-    last_assign = copy.deepcopy(assign)
-    while last_sum_con_load > sum_con_load or last_max_con_load > max_con_load:
-        last_sum_con_load = sum_con_load
-        last_max_con_load = max_con_load
+    sum_con_load_l = math.inf
+    max_con_load_l = math.inf
+    assign_l = copy.deepcopy(assign)
+    while sum_con_load_l > sum_con_load or max_con_load_l > max_con_load:
+        sum_con_load_l = sum_con_load
+        max_con_load_l = max_con_load
         alternatives = []
         start_switches = assign[max_con]
         for sw in start_switches:
@@ -38,15 +38,16 @@ def bal_con_assign(common: Common, initial_assign, logger):
                 break
         best_alter = getBestAl(alternatives)
         new_assign = copy.deepcopy(assign)
-        for node in best_alter['cluster']:
-            controller = getController(new_assign, node)
-            if best_alter['dstCon'] != controller:
-                new_assign[controller].remove(node)
-                new_assign[best_alter['dstCon']].append(node)
+        if best_alter is not None:
+            for node in best_alter['cluster']:
+                controller = getController(new_assign, node)
+                if best_alter['dstCon'] != controller:
+                    new_assign[controller].remove(node)
+                    new_assign[best_alter['dstCon']].append(node)
         tmp = {}
         for val in new_assign.values():
             tmp[val[0]] = val
-        last_assign = copy.deepcopy(assign)
+        assign_l = copy.deepcopy(assign)
         assign = tmp
         con_loads = apply_partition(g, common.link_load, assign)
         max_con = max(con_loads, key=con_loads.get)
@@ -55,7 +56,7 @@ def bal_con_assign(common: Common, initial_assign, logger):
         logger.info('{:^5.2f}, iter{:->3d}, '.format(time.time() - start_time, iteration))
         iteration += 1
         logger.info('SumLoad: {:>7.4f}, MaxCon: {}, Load: {:>7.4f} \n'.format(sum_con_load,max_con, max_con_load))
-    return last_assign
+    return assign_l
 
 
 def computeMigrationAl(cluster, assign, srcCon, srcConLoad, common: Common):

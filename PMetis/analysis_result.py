@@ -1,4 +1,4 @@
-from PMetis.compareResult import get_min_delay
+from PMetis.compareMetisResult import get_min_delay
 from PMetis.util import *
 
 
@@ -29,7 +29,7 @@ def apply_partition(graph, link_load, partition):
 
 
 def deploy_in_area(graph, pair_path_delay, link_load, assign):
-    partition = apply_partition(graph, link_load, assign)
+    apply_partition(graph, link_load, assign)
     new_result = {}
     sum_min_delay = 0
     for con in assign:
@@ -74,12 +74,24 @@ def get_avg_flow_setup_time(graph, pair_load, pair_path_delay):
                     setup_time += (propagation_delay + con_process_delay)
                 if node_index == len(path) - 1 or graph.nodes[sw]['controller'] != graph.nodes[path[node_index + 1]][
                     'controller']:
-                    install_rule_time = max([pair_path_delay[(sw, graph.nodes[sw]['controller'])][1] for sw in same_con_switches])
+                    install_rule_time = max(
+                        [pair_path_delay[(sw, graph.nodes[sw]['controller'])][1] for sw in same_con_switches])
                     setup_time += install_rule_time
                     same_con_switches = []
             all_pairs_setup_time += setup_time * pair_load[pair]
             # print("{}: {}".format(pair_load[pair],setup_time))
     return all_pairs_setup_time / sum(pair_load.values())
+
+
+def analysis(common: Common, assignment, logger):
+    assignment, con_loads = deploy_in_area(common.graph, common.pair_path_delay, common.link_load, assignment)
+    con_loads = apply_partition(common.graph, common.link_load, assignment)
+    avg_setup_t = get_avg_flow_setup_time(common.graph, common.pair_load, common.pair_path_delay)
+    for con in assignment:
+        logger.info('{}: {}: {}\n'.format(con, con_loads[con], assignment[con]))
+    logger.info('sum_con_loads: {:>7.2f}\n'.format(sum(con_loads.values())))
+    logger.info('max_con_loads: {:>7.2f}\n'.format(max(con_loads.values())))
+    logger.info('avg_setup_time: {:>6.2f}\n'.format(avg_setup_t))
 
 
 def get_result_graph(G, link_load):
@@ -130,14 +142,3 @@ def draw_result_with_time(scheme, T, node_style):
     print('avg_setup_time: {:>6.2f}'.format(avg_setup_t))
     print('avg_setup_time: {:>6.2f}'.format(sum_min_delay / sum(con_loads.values())))
     print('sum_min_delay: {:>6.2f}'.format(sum_min_delay))
-
-
-def analysis(common: Common, assignment, logger):
-    assignment, con_loads = deploy_in_area(common.graph, common.pair_path_delay, common.link_load, assignment)
-    con_loads = apply_partition(common.graph, common.link_load, assignment)
-    avg_setup_t = get_avg_flow_setup_time(common.graph, common.pair_load, common.pair_path_delay)
-    for con in assignment:
-        logger.info('{}, {}: {}\n'.format(con,con_loads[con], assignment[con]))
-    logger.info('sum_con_loads: {:>7.2f}\n'.format(sum(con_loads.values())))
-    logger.info('max_con_loads: {:>7.2f}\n'.format(max(con_loads.values())))
-    logger.info('avg_setup_time: {:>6.2f}\n'.format(avg_setup_t))

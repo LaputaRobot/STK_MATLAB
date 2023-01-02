@@ -1,6 +1,7 @@
 import copy
 import logging
 import math
+import os.path
 import random
 import sys
 import time
@@ -116,16 +117,14 @@ class C:
         print(self.x)
 
 if __name__ == '__main__':
-    # testPygMetis()
-    # for path in sys.path:
-    #     print(path)
-    c=C(1)
-    c2=C(2)
-    c.printx()
-    c2.printx()
-    # xadj_file = 'xadj.txt'
-    # adjncy_file = 'adjncy.txt'
-    # where_file = 'where1.txt'
+    l = eval("['1','2','3']")
+    print(len(l))
+    for i in l:
+        print(i)
+    print('4' and '1' in l)
+    # xadj_file = ' xadj.txtxxx'
+    # adjncy_file = 'adjncy.txtxxx'
+    # where_file = 'where.txt'
     # test_metis_bi_result(xadj_file, adjncy_file, where_file=where_file)
     # draw_result_with_time('my', 1330, 'load')
     # draw_result_with_time('src', 1330, 'load')

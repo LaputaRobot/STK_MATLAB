@@ -1,0 +1,45 @@
+******************************************************************************
+METIS 5.0 Copyright 1998-13, Regents of the University of Minnesota
+ (HEAD: , Built on: Dec 17 2022, 08:18:35)
+ size of idx_t: 64bits, real_t: 32bits, idx_t *: 64bits
+
+Graph Information -----------------------------------------------------------
+ Name: MetisTopos/1247, #Vertices: 72, #Edges: 128, #Parts: 8
+
+Options ---------------------------------------------------------------------
+ ptype=kway, objtype=cut, ctype=shem, rtype=greedy, iptype=metisrb
+ dbglvl=0, ufactor=1.600, no2hop=NO, minconn=NO, contig=NO, nooutput=NO
+ seed=-1, niter=10, ncuts=1
+
+Direct k-way Partitioning ---------------------------------------------------
+ - Edgecut: 8908, communication volume: 81.
+
+ - Balance:
+     constraint #0:  1.517 out of 0.552
+
+ - Most overweight partition:
+     pid: 3, actual: 2200, desired: 1450, ratio: 1.52.
+
+ - Subdomain connectivity: max: 5, min: 4, avg: 4.50
+
+ - Each partition is contiguous.
+
+Timing Information ----------------------------------------------------------
+  I/O:          		   0.001 sec
+  Partitioning: 		   0.002 sec   (METIS time)
+  Reporting:    		   0.000 sec
+
+Memory Information ----------------------------------------------------------
+  Max memory used:		   0.071 MB
+******************************************************************************
+LEO29: 30.79520349826613: ['LEO11', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19', 'LEO21', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29', 'LEO35', 'LEO36', 'LEO37', 'LEO45', 'LEO46', 'LEO47', 'LEO55', 'LEO65']
+LEO22: 54.792992776514055: ['LEO12', 'LEO13', 'LEO14', 'LEO22', 'LEO32', 'LEO41', 'LEO42']
+LEO23: 23.227184510734336: ['LEO23', 'LEO24', 'LEO33', 'LEO34', 'LEO43', 'LEO44', 'LEO53', 'LEO54']
+LEO49: 53.04905644590247: ['LEO31', 'LEO38', 'LEO39', 'LEO48', 'LEO49', 'LEO59']
+LEO62: 38.87550912715088: ['LEO51', 'LEO52', 'LEO62', 'LEO63', 'LEO72', 'LEO73']
+LEO57: 25.044806060553697: ['LEO56', 'LEO57', 'LEO58', 'LEO66', 'LEO67', 'LEO75', 'LEO76', 'LEO77', 'LEO85', 'LEO86', 'LEO87']
+LEO69: 46.98574672889918: ['LEO61', 'LEO68', 'LEO69', 'LEO71', 'LEO78', 'LEO79', 'LEO81', 'LEO88', 'LEO89']
+LEO82: 21.983844700702797: ['LEO64', 'LEO74', 'LEO82', 'LEO83', 'LEO84']
+sum_con_loads:  294.75
+max_con_loads:   54.79
+avg_setup_time: 207.78
