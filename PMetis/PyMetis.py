@@ -12,16 +12,24 @@ MatchOrder = 'HE'
 MatchScheme = 'EHEM'
 
 
-def gen_init_graph(graph: Graph, link_loads):
-    new_g = Graph()
-    for node in graph:
-        new_g.add_node('0-{}'.format(node[3:]), val=graph.nodes[node]['load'], innerW=0)
-    for edge in graph.edges:
-        if edge in link_loads:
-            new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]), wei=link_loads[edge])
-        else:
-            new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]), wei=link_loads[(edge[1], edge[0])])
-    return new_g
+class MetisGraph():
+    def __init__(self, graph, link_loads):
+        self.graph = Graph()
+        self.level = 0
+        self.coarser = None
+        self.finer = None
+
+    def init_graph(self, graph, link_loads):
+        new_g = self.graph
+        for node in graph:
+            new_g.add_node('{}'.format(node[3:]), load=graph.nodes[node]['load'], real_load=0,contains=[],belong='')
+        for edge in graph.edges:
+            if edge in link_loads:
+                new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]), wei=link_loads[edge])
+            else:
+                new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]),
+                               wei=link_loads[(edge[1], edge[0])])
+        return new_g
 
 
 def get_other_wei_sum(graph: Graph, node, exclude_edge):
@@ -137,9 +145,10 @@ def get_partition_link_wei(graph: Graph, partition1, partition2):
 
 
 def coarsen_graph(graph: Graph, level=0, coarsen_to=240):
-    flag=True
-    while flag or (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph['finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
-        flag=False
+    flag = True
+    while flag or (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
+        'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
+        flag = False
         print('*' * 30, '第{}次粗化'.format(level), '*' * 30)
         # print(graph.edges(data=True))
         edge_wei = 0
@@ -154,12 +163,12 @@ def coarsen_graph(graph: Graph, level=0, coarsen_to=240):
         match_graph(graph)
         # print(graph.edges(data=True))
         # print(graph.nodes(data=True))
-        level+=1
+        level += 1
         coarse_g = gen_coarse_graph(graph, level)
         print("粗化后节点数 {}".format(coarse_g.number_of_nodes()))
-        graph.graph['coarser']=coarse_g
-        coarse_g.graph['finer']=graph
-        graph=coarse_g
+        graph.graph['coarser'] = coarse_g
+        coarse_g.graph['finer'] = graph
+        graph = coarse_g
     return graph
 
 
@@ -170,15 +179,17 @@ def init_KWay_partitioning(graph: Graph, part_num=8):
 def recursive_part_graph(graph: Graph, part_num=8, iter_num=1):
     pass
 
-def multilevel_bisect(graph:Graph,iter_num=1):
+
+def multilevel_bisect(graph: Graph, iter_num=1):
     for i in range(iter_num):
-        cgraph=coarsen_graph(graph,coarsen_to=20)
+        cgraph = coarsen_graph(graph, coarsen_to=20)
         init_2way_partition(cgraph)
-        refine_2way(graph,cgraph)
+        refine_2way(graph, cgraph)
 
 
-def refine_2way(graph:Graph,cgraph:Graph):
+def refine_2way(graph: Graph, cgraph: Graph):
     pass
+
 
 def init_2way_partition(graph: Graph, iter_num=1):
     sum_val = sum([graph.nodes[node]['val'] for node in graph.nodes])
@@ -196,7 +207,7 @@ def init_2way_partition(graph: Graph, iter_num=1):
         while len(queue) > 0 and partition1_sum_val < sum_val / 2:
             node = queue.popleft()
             partition0.add(node)
-            graph.nodes[node]['p']=0
+            graph.nodes[node]['p'] = 0
             # print('add node {}'.format(node))
             partition1_sum_val += graph.nodes[node]['val']
             neighbors = nx.neighbors(graph, node)
@@ -206,12 +217,12 @@ def init_2way_partition(graph: Graph, iter_num=1):
                     queue.append(nei)
         for node in graph.nodes:
             if node not in partition0:
-                graph.nodes[node]['p']=1
+                graph.nodes[node]['p'] = 1
         # 获取边界节点和切
         cut = 0
         boundary_nodes = [[], []]
         checked_node = set()
-        node_gain={}
+        node_gain = {}
         for node in graph.nodes:
             if node in checked_node:
                 continue
@@ -248,7 +259,8 @@ def init_2way_partition(graph: Graph, iter_num=1):
         print('boundary_nodes: {}'.format(boundary_nodes))
     print(min_cut)
 
-def FM_2WayRefine(graph:Graph,iter_num=5):
+
+def FM_2WayRefine(graph: Graph, iter_num=5):
     pass
 
 

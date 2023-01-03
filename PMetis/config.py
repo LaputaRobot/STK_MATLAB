@@ -4,8 +4,8 @@
 AssignScheme = 'METIS'
 # AssignScheme = 'PyMETIS'
 
-# Rewrite = True
-Rewrite = False
+Rewrite = True
+# Rewrite = False
 
 LogDestination = 's,f'
 # LogDestination = 's'
