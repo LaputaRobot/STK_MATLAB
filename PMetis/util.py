@@ -3,8 +3,8 @@ import os
 
 import matplotlib.pyplot as plt
 import networkx as nx
-from graphviz import *
-from networkx import path_weight
+# from graphviz import *
+from networkx import path_weight, Graph
 
 from getSatLoad import *
 

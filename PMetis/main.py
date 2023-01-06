@@ -2,7 +2,7 @@ import logging
 import os
 import shutil
 
-from PMetis.PyMetis import run_metis_main, gen_init_graph
+from PMetis.PyMetis import run_metis_main
 from PMetis.analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
 from PMetis.balcon import bal_con_assign
 from PMetis.config import AssignScheme, assignment1, MCS, MSSLS, Rewrite, assignment2, LogDestination
@@ -79,6 +79,7 @@ if __name__ == '__main__':
         elif AssignScheme == 'PyMETIS':
             G = gen_topology(t)
             common = Common(G)
-            graph = gen_init_graph(G, common.link_load)
-            run_metis_main(graph)
+            run_metis_main(common)
+
+
             # sys.exit(0)

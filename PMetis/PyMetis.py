@@ -1,6 +1,7 @@
 import collections
 import copy
 import math
+import queue
 import time
 
 import matplotlib.pyplot as plt
@@ -8,42 +9,43 @@ from networkx import Graph
 import networkx as nx
 from numpy.random import default_rng
 
+from PMetis.util import Common
+
 MatchOrder = 'HE'
 MatchScheme = 'EHEM'
 
 
-class MetisGraph():
-    def __init__(self, graph, link_loads):
-        self.graph = Graph()
-        self.level = 0
-        self.coarser = None
-        self.finer = None
-
-    def init_graph(self, graph, link_loads):
-        new_g = self.graph
-        for node in graph:
-            new_g.add_node('{}'.format(node[3:]), load=graph.nodes[node]['load'], real_load=0,contains=[],belong='')
-        for edge in graph.edges:
-            if edge in link_loads:
-                new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]), wei=link_loads[edge])
-            else:
-                new_g.add_edge('0-{}'.format(edge[0][3:]), '0-{}'.format(edge[1][3:]),
-                               wei=link_loads[(edge[1], edge[0])])
-        return new_g
+def gen_init_graph(graph, link_loads):
+    new_g = Graph(level=0)
+    for node in graph:
+        new_g.add_node('{}'.format(node[3:]), load=graph.nodes[node]['load'], real_load=0, contains=[], belong='',
+                       inner_edge_wei=0)
+    for edge in graph.edges:
+        new_g.add_edge('{}'.format(edge[0][3:]), '{}'.format(edge[1][3:]), wei=link_loads[edge])
+    return new_g
 
 
-def get_other_wei_sum(graph: Graph, node, exclude_edge):
+class Ctrl():
+    def __init__(self):
+        self.CoarsenTo = 240
+
+
+def edge_equal(e1, e2):
+    return e1[0] == e2[0] and e1[1] == e2[1]
+
+
+def get_sum_wei_ex(graph: Graph, node, exclude_edge):
     sum = 0
     for edge in graph.edges(node):
-        sum += graph.edges[edge]['wei']
+        if not edge_equal(edge, exclude_edge):
+            sum += graph.edges[edge]['wei']
     return sum
 
 
 def get_match_node_load(graph: Graph, node1, node2):
-    load = graph.nodes[node1]['val'] + graph.nodes[node2]['val']
-    inner_edge = (node1, node2)
-    load += get_other_wei_sum(graph, node1, inner_edge)
-    load += get_other_wei_sum(graph, node2, inner_edge)
+    load = graph.nodes[node1]['load'] + graph.nodes[node2]['load']
+    load += get_sum_wei_ex(graph, node1, (node1, node2))
+    load += get_sum_wei_ex(graph, node2, (node2, node1))
     return load
 
 
@@ -57,21 +59,20 @@ def match_graph(graph: Graph):
         node = list(sorted_unmatched_nodes.keys())[0]
         match_nei, max_wei = get_matched_neighbor(graph, sorted_unmatched_nodes, node)
         if match_nei is not None and max_wei > 0 and get_match_node_load(graph, node, match_nei) < 100:
-            graph.nodes[match_nei]['p'] = index
+            graph.nodes[match_nei]['belong'] = index
             sorted_unmatched_nodes.pop(match_nei)
-        graph.nodes[node]['p'] = index
+        graph.nodes[node]['belong'] = index
         sorted_unmatched_nodes.pop(node)
         index += 1
     new_p = 0
     new_p_dict = {}
     for node in graph.nodes:
-        p = graph.nodes[node]['p']
+        p = graph.nodes[node]['belong']
         if p not in new_p_dict:
             new_p_dict[p] = new_p
             new_p += 1
         p = new_p_dict[p]
-        graph.nodes[node]['p'] = p
-        # print('{}->{}'.format(node,p))
+        graph.nodes[node]['belong'] = p
     return graph
 
 
@@ -80,10 +81,10 @@ def get_node_order_val(graph: Graph, node):
     node_val = 0
     if MatchOrder == 'HE':
         node_val = max([graph.edges[(node, nei)]['wei'] for nei in neighbors])
-    else:
-        node_val = graph.nodes[node]['val']
+    if MatchOrder == 'EHEM':
+        node_val = graph.nodes[node]['load']
         for nei in neighbors:
-            node_val += (graph.nodes[nei]['val'] + graph.edges[(node, nei)]['wei'])
+            node_val += (graph.nodes[nei]['load'] + graph.edges[(node, nei)]['wei'])
     return node_val
 
 
@@ -105,7 +106,7 @@ def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node):
     else:
         for nei in neighbors:
             if nei in sorted_unmatched_nodes:
-                nei_wei = graph.nodes[nei]['val'] + graph.edges[(node, nei)]['wei']
+                nei_wei = graph.nodes[nei]['load'] + graph.edges[(node, nei)]['wei']
                 if match_nei is None or nei_wei > max_wei:
                     match_nei = nei
                     max_wei = nei_wei
@@ -113,62 +114,65 @@ def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node):
 
 
 def gen_coarse_graph(graph: Graph, level):
-    coarse_g = Graph()
+    coarse_g = Graph(level=level + 1)
     partitions = {}
     for node in graph:
-        if graph.nodes[node]['p'] in partitions:
-            partitions[graph.nodes[node]['p']].append(node)
+        if graph.nodes[node]['belong'] in partitions:
+            partitions[graph.nodes[node]['belong']].append(node)
         else:
-            partitions[graph.nodes[node]['p']] = [node]
+            partitions[graph.nodes[node]['belong']] = [node]
     for p in partitions:
-        innerW = sum([graph.nodes[node]['innerW'] for node in partitions[p]])
+        inner_edge_wei = sum([graph.nodes[node]['inner_edge_wei'] for node in partitions[p]])
         if len(partitions[p]) > 1:
-            innerW += graph.edges[(partitions[p][0], partitions[p][1])]['wei']
-        coarse_g.add_node('{}-{}'.format(level, p), nodes=partitions[p],
-                          val=sum([graph.nodes[node]['val'] for node in partitions[p]]), innerW=innerW)
+            inner_edge_wei += graph.edges[(partitions[p][0], partitions[p][1])]['wei']
+        coarse_g.add_node('{}'.format(p), contains=partitions[p],
+                          load=sum([graph.nodes[node]['load'] for node in partitions[p]]),
+                          inner_edge_wei=inner_edge_wei)
     for p1 in partitions:
         for p2 in partitions:
-            if p1 != p2 and not coarse_g.has_edge('{}-{}'.format(level, p1), '{}-{}'.format(level, p2)):
+            if p1 != p2 and not coarse_g.has_edge('{}'.format(p1), '{}'.format(p2)):
                 partition_link_wei = get_partition_link_wei(graph, partitions[p1], partitions[p2])
                 if partition_link_wei >= 0:
-                    coarse_g.add_edge('{}-{}'.format(level, p1), '{}-{}'.format(level, p2), wei=partition_link_wei)
+                    coarse_g.add_edge('{}'.format(p1), '{}'.format(p2), wei=partition_link_wei)
+    graph.graph['coarser'] = coarse_g
+    coarse_g.graph['finer'] = graph
     return coarse_g
 
 
-def get_partition_link_wei(graph: Graph, partition1, partition2):
+def get_partition_link_wei(graph: Graph, from_part, to_part):
     partition_link_wei = -1
-    for n1 in partition1:
-        for n2 in partition2:
+    for n1 in from_part:
+        for n2 in to_part:
             if graph.has_edge(n1, n2):
                 partition_link_wei = max(partition_link_wei, 0) + graph.edges[(n1, n2)]['wei']
     return partition_link_wei
 
 
-def coarsen_graph(graph: Graph, level=0, coarsen_to=240):
-    flag = True
-    while flag or (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
-        'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
-        flag = False
+def check_sum_load(graph):
+    # print(graph.edges(data=True))
+    edge_wei = 0
+    for edge in graph.edges:
+        edge_wei += graph.edges[edge]['wei']
+    node_val = 0
+    for node in graph.nodes:
+        node_val += graph.nodes[node]['load']
+    print('总节点：{}, 总节点负载：{}, 总链路负载：{}'.format(graph.number_of_nodes(), node_val, edge_wei))
+
+
+def coarsen_graph(graph: Graph, ctrl: Ctrl):
+    level = 0
+    coarsen_to = ctrl.CoarsenTo
+    while True:
         print('*' * 30, '第{}次粗化'.format(level), '*' * 30)
-        # print(graph.edges(data=True))
-        edge_wei = 0
-        for edge in graph.edges:
-            edge_wei += graph.edges[edge]['wei']
-        node_val = 0
-        for node in graph.nodes:
-            node_val += graph.nodes[node]['val']
-            # edge_wei += graph.nodes[node]['innerW']
-        # print(graph.nodes(data=True))
-        print('总节点：{}, 总节点负载：{}, 总链路负载：{}'.format(graph.number_of_nodes(), node_val, edge_wei))
+        check_sum_load(graph)
         match_graph(graph)
-        # print(graph.edges(data=True))
-        # print(graph.nodes(data=True))
         level += 1
         coarse_g = gen_coarse_graph(graph, level)
-        print("粗化后节点数 {}".format(coarse_g.number_of_nodes()))
-        graph.graph['coarser'] = coarse_g
-        coarse_g.graph['finer'] = graph
+        check_sum_load(coarse_g)
         graph = coarse_g
+        if not (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
+            'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
+            break
     return graph
 
 
@@ -192,7 +196,7 @@ def refine_2way(graph: Graph, cgraph: Graph):
 
 
 def init_2way_partition(graph: Graph, iter_num=1):
-    sum_val = sum([graph.nodes[node]['val'] for node in graph.nodes])
+    sum_val = sum([graph.nodes[node]['load'] for node in graph.nodes])
     min_cut = math.inf
     for seed in range(iter_num):
         print('迭代{}'.format(seed))
@@ -207,9 +211,9 @@ def init_2way_partition(graph: Graph, iter_num=1):
         while len(queue) > 0 and partition1_sum_val < sum_val / 2:
             node = queue.popleft()
             partition0.add(node)
-            graph.nodes[node]['p'] = 0
+            graph.nodes[node]['belong'] = 0
             # print('add node {}'.format(node))
-            partition1_sum_val += graph.nodes[node]['val']
+            partition1_sum_val += graph.nodes[node]['load']
             neighbors = nx.neighbors(graph, node)
             for nei in neighbors:
                 if nei not in tauched_node:
@@ -217,7 +221,7 @@ def init_2way_partition(graph: Graph, iter_num=1):
                     queue.append(nei)
         for node in graph.nodes:
             if node not in partition0:
-                graph.nodes[node]['p'] = 1
+                graph.nodes[node]['belong'] = 1
         # 获取边界节点和切
         cut = 0
         boundary_nodes = [[], []]
@@ -226,12 +230,12 @@ def init_2way_partition(graph: Graph, iter_num=1):
         for node in graph.nodes:
             if node in checked_node:
                 continue
-            node_partition = graph.nodes[node]['p']
+            node_partition = graph.nodes[node]['belong']
             is_boundary_node = False
             checked_node.add(node)
             neighbors = nx.neighbors(graph, node)
             for nei in neighbors:
-                nei_partition = graph.nodes[nei]['p']
+                nei_partition = graph.nodes[nei]['belong']
                 if node_partition != nei_partition:
                     is_boundary_node = True
                     cut += graph.edges[(nei, node)]['wei']
@@ -264,14 +268,18 @@ def FM_2WayRefine(graph: Graph, iter_num=5):
     pass
 
 
-def run_metis_main(graph: Graph):
+def run_metis_main(common: Common):
+    origin_graph = gen_init_graph(common.graph, common.link_load)
+    print(origin_graph)
     # print(len(coarse_graph_list))
-    coarsest_graph = coarsen_graph(graph)
+    ctrl = Ctrl()
+    coarsest_graph = coarsen_graph(origin_graph, ctrl)
+    #ccds
     # print(coarsest_graph.edges(data=True))
     # print('最粗图节点数',coarsest_graph.number_of_nodes())
     # print(coarsest_graph.nodes(data=True))
-    print('二分最粗图')
-    multilevel_bisect(coarsest_graph)
+    # print('二分最粗图')
+    # multilevel_bisect(coarsest_graph)
     # plt.figure(dpi=200)
     # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)
     # labels = {n: '{}'.format(n.split('-')[1]) for n in pos}

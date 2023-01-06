@@ -1,7 +1,9 @@
 import copy
+import heapq
 import logging
 import math
 import os.path
+import queue
 import random
 import sys
 import time
@@ -11,8 +13,10 @@ import numpy.random
 from matplotlib import pyplot as plt
 from networkx import Graph
 from numpy.random import default_rng
-
+from  PyMetis import edge_equal
 from getSatLoad import getLoad
+
+
 # from util import draw_result_with_time, get_lbr
 
 
@@ -31,6 +35,7 @@ def testNetworkx():
 
 def deprecatedFun():
     print("this is deprecated!!!")
+
 
 def gen_result():
     result = {}
@@ -75,14 +80,14 @@ def test_metis_bi_result(xadj_file, adjncy_file, where_file):
             graph.add_node(nei)
             graph.add_edge(node, nei)
     nodes = list(graph.nodes)
-    num_comps=0
+    num_comps = 0
     for p in partitions:
         new_graph = copy.deepcopy(graph)
         for node in nodes:
             if new_graph.nodes[node]['p'] != p:
                 new_graph.remove_node(node)
-        comp=nx.components.number_connected_components(new_graph)
-        num_comps+=comp
+        comp = nx.components.number_connected_components(new_graph)
+        num_comps += comp
         print(comp)
     print(num_comps)
     # pos = nx.drawing.spring_layout(graph,seed=2)
@@ -106,22 +111,27 @@ def test_metis_bi_result(xadj_file, adjncy_file, where_file):
     # print(graph.number_of_nodes())
     # print(graph.number_of_edges())
 
+
 def testPygMetis():
     pass
 
+
 class C:
-    def __init__(self,x):
-        self.x=x
+    def __init__(self, x):
+        self.x = x
 
     def printx(self):
         print(self.x)
 
+
 if __name__ == '__main__':
-    l = eval("['1','2','3']")
-    print(len(l))
-    for i in l:
-        print(i)
-    print('4' and '1' in l)
+    g = Graph(name='graph')
+    print(g.graph['name'])
+    g.add_edge(1, 2)
+    g.add_edge(1, 3)
+    g.add_edge(1, 4)
+    for e in g.edges():
+        print(edge_equal(e, (1, 2)))
     # xadj_file = ' xadj.txtxxx'
     # adjncy_file = 'adjncy.txtxxx'
     # where_file = 'where.txt'

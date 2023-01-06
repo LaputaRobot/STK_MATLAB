@@ -1,8 +1,8 @@
 # AssignScheme = 'SamePlane'
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
-AssignScheme = 'METIS'
-# AssignScheme = 'PyMETIS'
+# AssignScheme = 'METIS'
+AssignScheme = 'PyMETIS'
 
 Rewrite = True
 # Rewrite = False
