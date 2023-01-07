@@ -1,7 +1,7 @@
 import math
 import os
 
-from PMetis.config import Rewrite
+from config import Rewrite
 
 
 def get_base_dir(scheme):

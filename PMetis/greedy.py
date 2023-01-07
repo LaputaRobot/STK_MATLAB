@@ -2,8 +2,8 @@ import copy
 
 import networkx as nx
 
-from PMetis.analysis_result import apply_partition
-from PMetis.util import Common
+from analysis_result import apply_partition
+from util import Common
 
 
 def greedy_alg1(common:Common):

@@ -1,12 +1,25 @@
 import logging
 import os
+import time
+import math
+import os
+import linecache
 
 import matplotlib.pyplot as plt
 import networkx as nx
-# from graphviz import *
 from networkx import path_weight, Graph
+from config import MATRIX
 
-from getSatLoad import *
+
+def get_time(f):
+    def inner(*arg, **kwarg):
+        s_time = time.time()
+        res = f(*arg, **kwarg)
+        e_time = time.time()
+        print('函数 {} 耗时：{}秒'.format(f.__name__, e_time - s_time))
+        return res
+
+    return inner
 
 
 def get_log_handlers(des, file):
@@ -99,7 +112,7 @@ def draw_result(G, assignment, node_style, title='', node_loads=None):
     plt.show()
 
 
-def gen_topology(time):
+def gen_topology(time_slot):
     graph = nx.Graph()
     plane_num = 8
     sat_per_plane = 9
@@ -108,23 +121,22 @@ def gen_topology(time):
             src = '{}{}'.format(p_id, s_id)
             srcLEO = 'LEO{}'.format(src)
             if not graph.has_node(srcLEO):
-                graph.add_node(srcLEO, load=getLoad(src, time), controller='', con_load=0, real_load=0)
+                graph.add_node(srcLEO, load=getLoad(src, time_slot), controller='', con_load=0, real_load=0)
             n_s_id = s_id + 1
             if n_s_id > 9:
                 n_s_id %= sat_per_plane
             dst = '{}{}'.format(p_id, n_s_id)
             dstLEO = 'LEO{}'.format(dst)
             if not graph.has_node(dstLEO):
-                graph.add_node(dstLEO, load=getLoad(dst, time), controller='', con_load=0, real_load=0)
+                graph.add_node(dstLEO, load=getLoad(dst, time_slot), controller='', con_load=0, real_load=0)
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
-    connections = open('topos/{}.log'.format(time), 'r').readlines()
-    # print('add iter-isl .................')
+    connections = open('topos/{}.log'.format(time_slot), 'r').readlines()
     for connect in connections:
         src = connect[:2]
         dst = connect[3:5]
         # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
-        graph.add_edge('LEO{}'.format(src), 'LEO{}'.format(dst), delay=get_delay(src, dst, time))
+        graph.add_edge('LEO{}'.format(src), 'LEO{}'.format(dst), delay=get_delay(src, dst, time_slot))
     return graph
 
 
@@ -271,6 +283,13 @@ class Common():
         self.link_load = get_edge_load(graph, self.pair_load, self.pair_path_delay)
 
 
+class Ctrl():
+    def __init__(self):
+        self.coarsenTo = 240
+        self.nIparts = 4
+        self.nCuts = 4
+
+
 def exch(dicts):
     new_dicts = {}
     for k in dicts:
@@ -304,6 +323,98 @@ def genEachTTopo():
         else:
             edges.remove(lineList[2])
         lastTime = time
+
+
+def position_to_index(lat, lon):
+    """
+    根据经纬度，将卫星映射到矩阵内
+    :param lat: 卫星纬度
+    :param lon: 卫星经度
+    :return: 卫星在矩阵的index
+    """
+    x = math.floor((-lat + 90) / 15)
+    if lon >= 0:
+        y = math.floor(lon / 15)
+    else:
+        y = 24 - math.ceil((-lon) / 15)
+    return x, y
+
+
+def getLoad(leo, time):
+    f_name = '../data/72-loads/srcData/{}.csv'.format(leo)
+    f = open(f_name, 'r')
+    # lines = f.readlines()
+    # line = f.readlines()[time + 1].split(',')
+    line = linecache.getline(f_name, time + 2).split(',')
+    # line = lines[1].split(',')
+    # time = float(line[0])
+    lat = float(line[1]) * 180 / math.pi
+    lon = float(line[2]) * 180 / math.pi
+    x, y = position_to_index(lat, lon)
+    load = MATRIX[x][y]
+    # print(leo,time, load)
+    # return x, y
+    return load
+
+
+def getLoadChangeFile():
+    files = os.listdir('../72-loads/')[:-1]
+    print(files)
+    for fileN in files:
+        file = open('../72-loads/' + fileN, 'r')
+        lastLoad = -1
+        lines = file.readlines()
+        changeFile = open('../72-loads/change/' + fileN, 'w')
+        for line in lines[1:]:
+            line = line.split(',')
+            time = float(line[0])
+            lat = float(line[1]) * 180 / math.pi
+            lon = float(line[2]) * 180 / math.pi
+            x, y = position_to_index(lat, lon)
+            load = MATRIX[x][y]
+            if lastLoad != load:
+                changeFile.write('{},{},{},{}\n'.format(time, lat, lon, load))
+            lastLoad = load
+
+
+def getAllLoadChange():
+    # allChangeFile = open('allLoadChange.csv', 'w')
+    # files = os.listdir('../72-loads/change/')
+    allChangeFile = open('Topo-Load-Change.csv', 'w')
+    files = ['allLoadChange.csv', 'allTopoChange.csv']
+    print(files)
+    all_file_dict = []
+    for fileN in files:
+        # file = open('../72-loads/change/' + fileN, 'r')
+        file = open(fileN, 'r')
+        LEO_name = fileN.split('.')[0]
+        file_dict = {LEO_name: []}
+        lines = file.readlines()
+        for line in lines:
+            # line = line.split(',')
+            # t = float(line[0])
+            # load = float(line[-1])
+            file_dict[LEO_name].append(line.split(','))
+        all_file_dict.append(file_dict)
+    while len(all_file_dict) > 0:
+        min_time = math.inf
+        file_index = 0
+        min_index = 0
+        key = ''
+        min_key = ''
+        while file_index < len(all_file_dict):
+            key = list(all_file_dict[file_index].keys())[0]
+            if float(all_file_dict[file_index][key][0][0]) < min_time:
+                min_time = float(all_file_dict[file_index][key][0][0])
+                min_index = file_index
+                min_key = key
+            file_index += 1
+        allChangeFile.write(
+            '{},{},{}'.format(all_file_dict[min_index][min_key][0][0], all_file_dict[min_index][min_key][0][1],
+                              all_file_dict[min_index][min_key][0][2]))
+        all_file_dict[min_index][min_key].pop(0)
+        if len(all_file_dict[min_index][min_key]) == 0:
+            all_file_dict.pop(min_index)
 
 
 if __name__ == '__main__':

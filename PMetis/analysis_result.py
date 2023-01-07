@@ -1,5 +1,5 @@
-from PMetis.compareMetisResult import get_min_delay
-from PMetis.util import *
+from compareMetisResult import get_min_delay
+from util import *
 
 
 def apply_partition(graph, link_load, partition):

@@ -2,13 +2,13 @@ import logging
 import os
 import shutil
 
-from PMetis.PyMetis import run_metis_main
-from PMetis.analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
-from PMetis.balcon import bal_con_assign
-from PMetis.config import AssignScheme, assignment1, MCS, MSSLS, Rewrite, assignment2, LogDestination
-from PMetis.greedy import greedy_alg1
-from PMetis.metis import gen_metis_file, read_metis_result
-from PMetis.util import gen_topology, Common, new_file, get_log_handlers
+from PyMetis import run_metis_main
+from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
+from balcon import bal_con_assign
+from config import AssignScheme, assignment1, MCS, MSSLS, Rewrite, assignment2, LogDestination
+from greedy import greedy_alg1
+from metis import gen_metis_file, read_metis_result
+from util import gen_topology, Common, new_file, get_log_handlers
 
 if __name__ == '__main__':
     files = os.listdir('topos')

@@ -2,9 +2,9 @@ import copy
 import math
 import time
 
-from PMetis.config import MCS, MSSLS
-from PMetis.analysis_result import apply_partition
-from PMetis.util import Common
+from config import MCS, MSSLS
+from analysis_result import apply_partition
+from util import Common
 import networkx as nx
 
 

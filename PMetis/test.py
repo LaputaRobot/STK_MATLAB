@@ -13,7 +13,7 @@ import numpy.random
 from matplotlib import pyplot as plt
 from networkx import Graph
 from numpy.random import default_rng
-from  PyMetis import edge_equal
+from PyMetis import edge_equal
 from getSatLoad import getLoad
 
 
@@ -124,6 +124,10 @@ class C:
         print(self.x)
 
 
+def fun1(graph):
+    return Graph()
+
+
 if __name__ == '__main__':
     g = Graph(name='graph')
     print(g.graph['name'])
@@ -132,6 +136,8 @@ if __name__ == '__main__':
     g.add_edge(1, 4)
     for e in g.edges():
         print(edge_equal(e, (1, 2)))
+    g=fun1(graph=g)
+    print(g)
     # xadj_file = ' xadj.txtxxx'
     # adjncy_file = 'adjncy.txtxxx'
     # where_file = 'where.txt'

@@ -1,17 +1,18 @@
 import copy
 
-from PMetis.util import Common, getIndex, getLEO, pprintDict
+from util import Common, getIndex, getLEO, pprintDict
 
 
-def gen_metis_file(time,common:Common):
+def gen_metis_file(time, common: Common):
     """
     基于时间戳生成用于metis程序输入的文件
 
+    :param common:
     :param time: 时间戳
     """
     f = open('MetisTopos/{}'.format(time), 'w')
-    G=common.graph
-    link_load=common.link_load
+    G = common.graph
+    link_load = common.link_load
     f.write('{} {} 011\n'.format(len(G.nodes), len(G.edges)))
     for node in G.nodes:
         f.write('{} '.format(G.nodes[node]['load'] * 100))
@@ -27,7 +28,6 @@ def gen_metis_file(time,common:Common):
                     f.write('{:.0f} '.format(link_load[(node, nei)] * 100))
         f.write('\n')
     f.close()
-
 
 
 def read_metis_result(file_name):
@@ -53,9 +53,10 @@ def read_metis_result(file_name):
         newR[p[0]] = p
     return newR
 
-def genMetisGraphwithLink(common:Common):
-    G=common.graph
-    link_load=common.link_load
+
+def genMetisGraphwithLink(common: Common):
+    G = common.graph
+    link_load = common.link_load
     f = open('metisLinkG72', 'w')
     fNamed = open('metisLinkG72-named', 'w')
     fOrder = open('nodeOrder.txt', 'w')
@@ -114,6 +115,7 @@ def genMetisGraphwithLink(common:Common):
         fNamed.write('\n')
     f.close()
     fNamed.close()
+
 
 def readMetisResultwithLink():
     f = open('metisLinkG72.part.8', 'r')
