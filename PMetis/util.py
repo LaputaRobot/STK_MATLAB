@@ -16,7 +16,7 @@ def get_time(f):
         s_time = time.time()
         res = f(*arg, **kwarg)
         e_time = time.time()
-        print('函数 {} 耗时：{}秒'.format(f.__name__, e_time - s_time))
+        print('函数 {} 耗时：{:>5.4f}秒'.format(f.__name__, e_time - s_time))
         return res
 
     return inner
@@ -288,6 +288,8 @@ class Ctrl():
         self.coarsenTo = 240
         self.nIparts = 4
         self.nCuts = 4
+        self.niter = 10
+        self.seed=0
 
 
 def exch(dicts):

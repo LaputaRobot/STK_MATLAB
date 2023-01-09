@@ -1,3 +1,5 @@
+import sys
+
 # AssignScheme = 'SamePlane'
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
@@ -14,6 +16,7 @@ LogDestination = 's,f'
 nparts = 8
 MatchOrder = 'HE'
 MatchScheme = 'EHEM'
+allow_err = sys.float_info.epsilon * 100
 
 # BalCon 算法参数配置
 MCS = 3

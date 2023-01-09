@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from networkx import Graph
 import networkx as nx
 from config import nparts, MatchOrder, MatchScheme
-from util import Common
+from util import Common, get_time
 from coarsen import *
 from pmetis import *
 
@@ -31,9 +31,11 @@ def gen_init_graph(graph, link_loads):
 def init_KWay_partitioning(graph: Graph, ctrl: Ctrl):
     ctrl.nCuts = 4
     ctrl.coarsenTo = 20
+    ctrl.niter = 10
     M_level_recursive_bisection(graph, ctrl, nparts, 0)
 
 
+@get_time
 def run_metis_main(common: Common):
     origin_graph = gen_init_graph(common.graph, common.link_load)
     ctrl = Ctrl()

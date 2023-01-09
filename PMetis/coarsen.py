@@ -3,21 +3,22 @@ import networkx as nx
 from util import Common, Ctrl
 from config import nparts, MatchOrder, MatchScheme
 import math
+import  numpy as np
 
 
 def coarsen_graph(graph: Graph, ctrl: Ctrl):
     level = 0
     coarsen_to = ctrl.coarsenTo
     while True:
-        print('*' * 30, '第{}次粗化'.format(level), '*' * 30)
-        check_sum_load(graph)
-        match_graph(graph)
+        # print( '第{}次粗化'.format(level),end=', ')
+        # check_sum_load(graph)
+        match_graph(graph, ctrl)
         level += 1
         coarse_g = gen_coarse_graph(graph, level)
         graph = coarse_g
         if not (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
             'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
-            check_sum_load(coarse_g)
+            # check_sum_load(coarse_g)
             break
     return graph
 
@@ -79,9 +80,12 @@ def get_match_node_load(graph: Graph, node1, node2):
     return load
 
 
-def match_graph(graph: Graph):
+def match_graph(graph: Graph, ctrl: Ctrl):
     unmatched_nodes = {}
-    for node in graph.nodes:
+    rng = np.random.default_rng(ctrl.seed)
+    nodes=list(graph.nodes)
+    rng.shuffle(nodes)
+    for node in nodes:
         unmatched_nodes[node] = get_node_order_val(graph, node)
     sorted_unmatched_nodes = dict(sorted(unmatched_nodes.items(), key=lambda x: x[1], reverse=True))
     index = 0
@@ -174,4 +178,4 @@ def check_sum_load(graph):
     node_val = 0
     for node in graph.nodes:
         node_val += graph.nodes[node]['load']
-    print('总节点：{}, 总节点负载：{}, 总链路负载：{}'.format(graph.number_of_nodes(), node_val, edge_wei))
+    print('总节点：{}, 总节点负载：{}, 总链路负载：{:>7.2f}'.format(graph.number_of_nodes(), node_val, edge_wei))

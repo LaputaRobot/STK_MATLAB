@@ -7,6 +7,7 @@ import queue
 import random
 import sys
 import time
+import numpy as np
 
 import networkx as nx
 import numpy.random
@@ -129,15 +130,28 @@ def fun1(graph):
 
 
 if __name__ == '__main__':
-    g = Graph(name='graph')
-    print(g.graph['name'])
-    g.add_edge(1, 2)
-    g.add_edge(1, 3)
-    g.add_edge(1, 4)
-    for e in g.edges():
-        print(edge_equal(e, (1, 2)))
-    g=fun1(graph=g)
-    print(g)
+    G = nx.Graph()
+    G.add_edge(0,1)
+    G.add_edge(0,2)
+    lis = [1, 3, 6, 5]
+    print(sorted(lis))
+    for seed in range(5):
+        rng = default_rng(seed)
+        start_node = rng.shuffle(lis)
+        print(lis)
+    # while len(lis)>0:
+    #     print(lis.pop())
+
+    priority_queue = queue.PriorityQueue()
+    priority_queue.put((0,1))
+    priority_queue.put((1.0/3,2))
+    priority_queue.empty()
+    priority_queue.queue.remove((1.00/3,2))
+    priority_queue.put((-1,2))
+    print(priority_queue.queue)
+    # while len(lis) > 0:
+    # choice = np.random.choice(lis, 4, replace=False)
+    # print(choice)
     # xadj_file = ' xadj.txtxxx'
     # adjncy_file = 'adjncy.txtxxx'
     # where_file = 'where.txt'
