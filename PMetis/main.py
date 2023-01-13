@@ -54,17 +54,21 @@ if __name__ == '__main__':
             for p in range(8, 9):
                 for ufactor in range(100, 3000, 100):
                     for contig in ['-contig', '']:
-                        assignmentFile = 'metis/{}/{}/{}-{}{}.ass'.format(scheme, t, p, ufactor, contig)
+                        assignmentFile = 'metis/{}/{}/{}-{}{}.ass'.format(
+                            scheme, t, p, ufactor, contig)
                         if os.path.exists(assignmentFile) and not Rewrite:
                             continue
                         if common is None:
                             G = gen_topology(t)
                             common = Common(G)
-                        resultLogFile = 'metis/{}/{}/{}-{}{}.log'.format(scheme, t, p, ufactor, contig)
+                        resultLogFile = 'metis/{}/{}/{}-{}{}.log'.format(
+                            scheme, t, p, ufactor, contig)
                         new_file(resultLogFile)
-                        logger = logging.getLogger('{}-{}-{}-{}'.format(t, p, ufactor, contig))
+                        logger = logging.getLogger(
+                            '{}-{}-{}-{}'.format(t, p, ufactor, contig))
                         logger.setLevel(logging.INFO)
-                        handlers = get_log_handlers(LogDestination, resultLogFile)
+                        handlers = get_log_handlers(
+                            LogDestination, resultLogFile)
                         for handler in handlers:
                             logger.addHandler(handler)
                         # cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p, ufactor, contig,
@@ -74,12 +78,12 @@ if __name__ == '__main__':
                         resultFile = '{}.part.{}'.format(metisFile, p)
                         os.system(cmd)
                         shutil.move(resultFile, assignmentFile)
-                        assignment = read_metis_result(file_name=assignmentFile)
+                        assignment = read_metis_result(
+                            file_name=assignmentFile)
                         analysis(common, assignment, logger)
         elif AssignScheme == 'PyMETIS':
             G = gen_topology(t)
             common = Common(G)
             run_metis_main(common)
-
 
             # sys.exit(0)

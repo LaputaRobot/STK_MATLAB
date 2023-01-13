@@ -24,7 +24,8 @@ def gen_init_graph(graph, link_loads):
         new_g.add_node('{}'.format(node[3:]), load=graph.nodes[node]['load'], real_load=0, contains=[], belong='',
                        inner_edge_wei=0)
     for edge in graph.edges:
-        new_g.add_edge('{}'.format(edge[0][3:]), '{}'.format(edge[1][3:]), wei=link_loads[edge])
+        new_g.add_edge('{}'.format(edge[0][3:]), '{}'.format(
+            edge[1][3:]), wei=link_loads[edge])
     return new_g
 
 
@@ -39,7 +40,8 @@ def init_KWay_partitioning(graph: Graph, ctrl: Ctrl):
 def run_metis_main(common: Common):
     origin_graph = gen_init_graph(common.graph, common.link_load)
     ctrl = Ctrl()
-    ctrl.coarsenTo = max(origin_graph.number_of_nodes() / 20 * math.log(nparts), 30 * nparts)
+    ctrl.coarsenTo = max(origin_graph.number_of_nodes() /
+                         20 * math.log(nparts), 30 * nparts)
     ctrl.nIparts = 4 if ctrl.coarsenTo == 30 * nparts else 5
     coarsest_graph = coarsen_graph(origin_graph, ctrl)
     init_KWay_partitioning(coarsest_graph, ctrl)

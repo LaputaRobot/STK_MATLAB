@@ -50,7 +50,7 @@ def get_sum_result(scheme):
                         max_load = float(line.split(':')[1])
                     if 'avg_setup_time' in line:
                         delay = float(line.split(' ')[-1])
-                if delay < result[t]['avg_setup_time'] and max_load<100:
+                if delay < result[t]['avg_setup_time'] and max_load < 100:
                     result[t] = {'sum_con_loads': sum_load, 'max_con_load': max_load,
                                  'avg_setup_time': delay,
                                  'assign': {'con': con, 'load': load, 'switches': switches},
@@ -71,10 +71,11 @@ def compare(schemes):
             sum_file = os.path.join(get_base_dir(scheme), t, '{}.sum'.format(t))
             with open(sum_file, 'r') as f:
                 result = eval(f.readlines()[0])
-                print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}'.format(scheme, result['sum_con_loads'],
-                                                                       result['max_con_load'],
-                                                                       result['avg_setup_time']))
-                if result['avg_setup_time'] < setup_time :
+                print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}, {}'.format(scheme, result['sum_con_loads'],
+                                                                           result['max_con_load'],
+                                                                           result['avg_setup_time'],
+                                                                           result['args']))
+                if result['avg_setup_time'] < setup_time:
                     best_scheme = scheme
                     setup_time = result['avg_setup_time']
         print('------- slot {:>7}, best scheme is ----- {}'.format(t, best_scheme))

@@ -130,25 +130,30 @@ def fun1(graph):
 
 
 if __name__ == '__main__':
+
     G = nx.Graph()
-    G.add_edge(0,1)
-    G.add_edge(0,2)
+    G.add_edge(0, 1)
+    G.add_edge(0, 2)
     lis = [1, 3, 6, 5]
-    print(sorted(lis))
-    for seed in range(5):
-        rng = default_rng(seed)
-        start_node = rng.shuffle(lis)
-        print(lis)
+    lis1 = lis
+    lis1[0] = 3
+    print(lis)
+    # print(sorted(lis))
+    # for seed in range(5):
+    #     rng = default_rng(seed)
+    #     start_node = rng.shuffle(lis)
+    #     print(lis)
     # while len(lis)>0:
     #     print(lis.pop())
 
     priority_queue = queue.PriorityQueue()
-    priority_queue.put((0,1))
-    priority_queue.put((1.0/3,2))
+    priority_queue.put((0, 1))
+    priority_queue.put((1.0 / 3, 2))
     priority_queue.empty()
-    priority_queue.queue.remove((1.00/3,2))
-    priority_queue.put((-1,2))
+    priority_queue.queue.remove((1.00 / 3, 2))
+    priority_queue.put((-1, 2))
     print(priority_queue.queue)
+    default = 1
     # while len(lis) > 0:
     # choice = np.random.choice(lis, 4, replace=False)
     # print(choice)
