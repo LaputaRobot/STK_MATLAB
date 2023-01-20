@@ -8,7 +8,7 @@ import linecache
 import matplotlib.pyplot as plt
 import networkx as nx
 from networkx import path_weight, Graph
-from config import MATRIX
+from config import MATRIX, log
 
 
 def get_time(f):
@@ -16,7 +16,7 @@ def get_time(f):
         s_time = time.time()
         res = f(*arg, **kwarg)
         e_time = time.time()
-        print('函数 {} 耗时：{:>5.4f}秒'.format(f.__name__, e_time - s_time))
+        log.info('函数 {} 耗时：{:>5.4f}秒'.format(f.__name__, e_time - s_time))
         return res
 
     return inner
@@ -290,6 +290,8 @@ class Ctrl():
         self.nCuts = 4
         self.niter = 10
         self.seed=0
+        self.ubfactors=1.13
+        self.max_v_wgt=0
 
 
 def exch(dicts):
@@ -418,8 +420,20 @@ def getAllLoadChange():
         if len(all_file_dict[min_index][min_key]) == 0:
             all_file_dict.pop(min_index)
 
+def rename_sum_file():
+    import pathlib
+    files=list(pathlib.Path('./metis/').glob('**/*.sum'))
+    print(len(files))
+    for f in files:
+        s_name=f.name
+        t_name=f.parent.absolute().__str__()+'/-{}-sum.json'.format(s_name.split('.')[0])
+        print('{}->{}'.format(s_name,t_name))
+        f.rename(t_name)
+        
+        
 
 if __name__ == '__main__':
+    # rename_sum_file()
     absP = os.path.abspath('../matlab_Code/72-d')
     files = os.listdir('../matlab_Code/72-d')
     for f in files:

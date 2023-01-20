@@ -16,7 +16,7 @@ from networkx import Graph
 from numpy.random import default_rng
 from PyMetis import edge_equal
 from getSatLoad import getLoad
-
+from config import *
 
 # from util import draw_result_with_time, get_lbr
 
@@ -128,72 +128,30 @@ class C:
 def fun1(graph):
     return Graph()
 
+def testlog():
+    log=get_logger()
+    log.info("msg")
 
 if __name__ == '__main__':
-
+    testlog()
     G = nx.Graph()
     G.add_edge(0, 1)
-    G.add_edge(0, 2)
+    G.add_edge(0, 2, wei=3)
+    print(G.number_of_nodes())
+    print(G.has_edge(2, 0))
+    G.add_edge(2,0, wei=4)
+    print(G.number_of_nodes())
+    neis = nx.neighbors(G, 0)
+    print(len(list(neis)))
+    print(G.neighbors(0))
+    print('degree: {}'.format(G.degree(0, weight='wei')))
+
     lis = [1, 3, 6, 5]
     lis1 = lis
     lis1[0] = 3
+    x = list(filter(lambda x: x > 3, lis))
+    print(x)
     print(lis)
-    # print(sorted(lis))
-    # for seed in range(5):
-    #     rng = default_rng(seed)
-    #     start_node = rng.shuffle(lis)
-    #     print(lis)
-    # while len(lis)>0:
-    #     print(lis.pop())
 
-    priority_queue = queue.PriorityQueue()
-    priority_queue.put((0, 1))
-    priority_queue.put((1.0 / 3, 2))
-    priority_queue.empty()
-    priority_queue.queue.remove((1.00 / 3, 2))
-    priority_queue.put((-1, 2))
-    print(priority_queue.queue)
-    default = 1
-    # while len(lis) > 0:
-    # choice = np.random.choice(lis, 4, replace=False)
-    # print(choice)
-    # xadj_file = ' xadj.txtxxx'
-    # adjncy_file = 'adjncy.txtxxx'
-    # where_file = 'where.txt'
-    # test_metis_bi_result(xadj_file, adjncy_file, where_file=where_file)
-    # draw_result_with_time('my', 1330, 'load')
-    # draw_result_with_time('src', 1330, 'load')
-    # loads1={'LEO49': 51.25823719895647, 'LEO32': 54.506696195103686, 'LEO37': 18.26353650454407, 'LEO33': 31.287744452281707, 'LEO58': 42.0293023981377, 'LEO61': 58.30877457803851, 'LEO73': 14.29823123002132, 'LEO77': 10.306880629680094}
-    # loads2={'LEO39': 37.68074349354527, 'LEO12': 22.31773215773854, 'LEO35': 24.832627632970464, 'LEO32': 54.96015432072758, 'LEO49': 45.26250853502802, 'LEO61': 49.00406262092618, 'LEO58': 22.019914326348154, 'LEO69': 32.61565351541098}
-    # print(get_lbr(list(loads1.values())))
-    # print(get_lbr(list(loads2.values())))
-    # for i in range(20,110,5):
-    #     if i!=100:
-    #         print('{}, {}'.format(i,1 / (100 - i) * 1000))
-    # import matplotlib.pyplot as plt
-    # plt.figure(figsize=(11, 8), dpi=100)
-    # plt.plot([1,2,3,4,5])
-    # plt.title("x")
-    # plt.show()
-    # print(int(22/10)+1)
-    # args='file.uf.con'
-    # logger = logging.getLogger('mylogger')
-    # logger.setLevel(logging.INFO)
-    # f_handler = logging.FileHandler('metisResult/my/{}'.format(args))
-    # logger.addHandler(f_handler)
-    # logger.info('ok')
-    # logger.info('ok')
-    # print('result: {:->10.2f}'.format(1/3))
-    # print('result: {:4d}'.format(13))
-    # d = {1: 2, 2: 2}
-    # d1 = dict([(1, 2)])
-    # print(d1.has_key(1))
-    # s = sorted(link_loads.items(), key=lambda x: x[1], reverse=True)
-    # s_dict = dict(s)
-    # src=s[0][0][0]
-    # dst=s[0][0][1]
-    # print(src,dst)
-    # print(s_dict)
-    # sorted_neighbor_links_list = sorted({}.items(), key=lambda x: x[1], reverse=True)
-    # print(sorted_neighbor_links_list)
-    # print(sorted([2,1]))
+    
+   

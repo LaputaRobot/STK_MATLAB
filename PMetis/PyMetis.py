@@ -2,14 +2,15 @@ import copy
 import math
 import queue
 import time
-
-import matplotlib.pyplot as plt
-from networkx import Graph
 import networkx as nx
-from config import nparts, MatchOrder, MatchScheme
+import matplotlib.pyplot as plt
+
+from networkx import Graph
+from config import nparts, MatchOrder, log
 from util import Common, get_time
 from coarsen import *
 from pmetis import *
+from pprint import pprint
 
 
 def gen_init_graph(graph, link_loads):
@@ -29,11 +30,16 @@ def gen_init_graph(graph, link_loads):
     return new_g
 
 
-def init_KWay_partitioning(graph: Graph, ctrl: Ctrl):
+def init_KWay_partition(graph: Graph, ctrl: Ctrl):
+    log.info('*'*40+' begin init kway partion '+'*'*40+'\n')
     ctrl.nCuts = 4
     ctrl.coarsenTo = 20
     ctrl.niter = 10
-    M_level_recursive_bisection(graph, ctrl, nparts, 0)
+    graph.graph['sum_val'] = sum(graph.nodes[node]['load'] for node in graph)
+    cut = M_level_recur_bisect(graph, graph, ctrl, nparts, 0)
+    log.info('*'*40+' finish init kway partion '+'*'*40+'\n')
+    log.info('finish init part, cut: {:7.4f}, bal: {:4.3f}'.format(
+        cut, compute_load_imbalance(graph, nparts)))
 
 
 @get_time
@@ -44,7 +50,12 @@ def run_metis_main(common: Common):
                          20 * math.log(nparts), 30 * nparts)
     ctrl.nIparts = 4 if ctrl.coarsenTo == 30 * nparts else 5
     coarsest_graph = coarsen_graph(origin_graph, ctrl)
-    init_KWay_partitioning(coarsest_graph, ctrl)
+    cut = init_KWay_partition(coarsest_graph, ctrl)
+    log.info('part: \n')
+    part, part_val = get_node_part(coarsest_graph)
+    pprint(part, width=200)
+    pprint(part_val, compact=True)
+
     # plt.figure(dpi=200)
     # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)
     # labels = {n: '{}'.format(n.split('-')[1]) for n in pos}
