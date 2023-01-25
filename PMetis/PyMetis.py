@@ -50,11 +50,13 @@ def run_metis_main(common: Common):
                          20 * math.log(nparts), 30 * nparts)
     ctrl.nIparts = 4 if ctrl.coarsenTo == 30 * nparts else 5
     coarsest_graph = coarsen_graph(origin_graph, ctrl)
-    cut = init_KWay_partition(coarsest_graph, ctrl)
+    init_KWay_partition(coarsest_graph, ctrl)
     log.info('part: \n')
-    part, part_val = get_node_part(coarsest_graph)
+    part, part_val = compute_kway_partition_params(coarsest_graph)
     pprint(part, width=200)
     pprint(part_val, compact=True)
+
+    RefineKWay(coarsest_graph, origin_graph, ctrl)
 
     # plt.figure(dpi=200)
     # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)

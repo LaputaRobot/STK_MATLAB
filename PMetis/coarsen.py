@@ -101,7 +101,7 @@ def get_match_node_load(graph: Graph, node1, node2):
 
 def match_graph(graph: Graph, ctrl: Ctrl):
     degrees = list(graph.degree())
-    log.info("# {}, max degree: {}, min: {}, avg: {:3.1f}".format(graph.number_of_nodes(), max(degrees, key=lambda x: x[1])[1],
+    log.debug("# {}, max degree: {}, min: {}, avg: {:3.1f}".format(graph.number_of_nodes(), max(degrees, key=lambda x: x[1])[1],
                                                                   min(degrees, key=lambda x: x[1])[1], mean([d[1] for d in degrees]),))
     # TODO  匹配方式不合适， 导致二分时不够粗化，节点太多
     unmatched_nodes = {}

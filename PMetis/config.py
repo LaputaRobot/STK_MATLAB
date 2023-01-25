@@ -28,6 +28,9 @@ MatchScheme = 'SRC'
 allow_err = sys.float_info.epsilon * 100
 un_factor=1.3
 max_allow_bal=0.005
+contiguous=True
+
+
 # BalCon 算法参数配置
 MCS = 3
 MSSLS = 24
@@ -62,10 +65,10 @@ MATRIX = [[0] * 24,
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
           [0] * 24, [0] * 24]
 
-
+LOG_LEVEL=logging.INFO
 def get_logger():
     logger = logging.getLogger('pymetis')
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(LOG_LEVEL)
 
     # formatter = logging.Formatter('%(filename)-15s:%(lineno)d - %(funcName)s - %(message)s')
     formatter = logging.Formatter('./{filename}", line {lineno}\t |{funcName:<20s}| {message}',style='{')

@@ -17,6 +17,7 @@ from numpy.random import default_rng
 from PyMetis import edge_equal
 from getSatLoad import getLoad
 from config import *
+from pmetis import *
 
 # from util import draw_result_with_time, get_lbr
 
@@ -132,26 +133,42 @@ def testlog():
     log=get_logger()
     log.info("msg")
 
-if __name__ == '__main__':
-    testlog()
-    G = nx.Graph()
-    G.add_edge(0, 1)
-    G.add_edge(0, 2, wei=3)
-    print(G.number_of_nodes())
-    print(G.has_edge(2, 0))
-    G.add_edge(2,0, wei=4)
-    print(G.number_of_nodes())
-    neis = nx.neighbors(G, 0)
-    print(len(list(neis)))
-    print(G.neighbors(0))
-    print('degree: {}'.format(G.degree(0, weight='wei')))
+def assert_diff_func(n):
+    p_vals=[16,15,13,14,18,21,13,18]
+    max_p_vals = max(p_vals)
+    sum_val = sum(p_vals)
+    tar_p_val = sum_val/n
+    pij = (1/sum_val)/(1/n)
+    ub_vec = 1.3
+    # ub_vec = pow(un_factor, 1/math.log(nparts))
+    print(max_p_vals*pij-ub_vec)
 
-    lis = [1, 3, 6, 5]
-    lis1 = lis
-    lis1[0] = 3
-    x = list(filter(lambda x: x > 3, lis))
-    print(x)
-    print(lis)
+
+if __name__ == '__main__':
+    # testlog()
+    # assert_diff_func(8)
+    l=[]
+    l[4]=1
+    print(l)
+
+    # G = nx.Graph()
+    # G.add_edge(0, 1)
+    # G.add_edge(0, 2, wei=3)
+    # print(G.number_of_nodes())
+    # print(G.has_edge(2, 0))
+    # G.add_edge(2,0, wei=4)
+    # print(G.number_of_nodes())
+    # neis = nx.neighbors(G, 0)
+    # print(len(list(neis)))
+    # print(G.neighbors(0))
+    # print('degree: {}'.format(G.degree(0, weight='wei')))
+
+    # lis = [1, 3, 6, 5]
+    # lis1 = lis
+    # lis1[0] = 3
+    # x = list(filter(lambda x: x > 3, lis))
+    # print(x)
+    # print(lis)
 
     
    

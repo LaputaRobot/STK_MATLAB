@@ -430,7 +430,53 @@ def rename_sum_file():
         print('{}->{}'.format(s_name,t_name))
         f.rename(t_name)
         
-        
+
+    """计算K路划分参数, 如边界节点及节点ed/id
+
+    Args:
+        graph (Graph): 初始划分完成后的图
+    """
+
+    part = {}
+    part_val = {}
+    cut = 0
+    boundary_nodes = []
+    node_ed = {}
+    node_id = {}
+    sum_val = 0
+    for node in graph.nodes:
+        node_p = graph.nodes[node]['belong']
+        # node_p = '{:>2.0f}'.format(node_p)
+        if node_p in part:
+            part[node_p].append(node)
+            part_val[node_p] += graph.nodes[node]['load']
+        else:
+            part[node_p] = [node]
+            part_val[node_p] = graph.nodes[node]['load']
+        node_id[node] = 0
+        node_ed[node] = 0
+        sum_val += graph.nodes[node]['load']
+        neighbors = nx.neighbors(graph, node)
+        for nei in neighbors:
+            nei_partition = graph.nodes[nei]['belong']
+            if node_p != nei_partition:
+                cut += graph.edges[(node, nei)]['wei']
+                node_ed[node] += graph.edges[(node, nei)]['wei']
+            else:
+                node_id[node] += graph.edges[(node, nei)]['wei']
+        if node_ed[node] - node_id[node]> 0 :
+            boundary_nodes.append(node)
+            # print("before add boundary node {}".format(node))
+    graph.graph['sum_val'] = sum_val
+    graph.graph['boundary'] = boundary_nodes
+    graph.graph['cut'] = cut / 2
+    graph.graph['p_vals'] = part_val
+    graph.graph['node_id'] = node_id
+    graph.graph['node_ed'] = node_ed
+    graph.graph['part'] = part
+    return part, part_val
+
+
 
 if __name__ == '__main__':
     # rename_sum_file()

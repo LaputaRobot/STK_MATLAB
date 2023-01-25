@@ -4,6 +4,7 @@ import numpy as np
 from config import *
 from networkx import Graph
 from util import *
+from contig import *
 
 
 def FM_2WayRefine(graph: Graph, ctrl: Ctrl):
@@ -171,12 +172,12 @@ def compute_2way_partition_params(graph: Graph):
     node_ed = {}
     node_id = {}
     partition0_sum_val = 0
-    sum_val = sum([graph.nodes[node]['load'] for node in graph.nodes])
-    graph.graph['sum_val'] = sum_val
+    sum_val = 0
     for node in graph.nodes:
         node_id[node] = 0
         node_ed[node] = 0
         node_partition = graph.nodes[node]['belong']
+        sum_val += graph.nodes[node]['load']
         if node_partition == 0:
             partition0_sum_val += graph.nodes[node]['load']
         neighbors = nx.neighbors(graph, node)
@@ -190,12 +191,61 @@ def compute_2way_partition_params(graph: Graph):
         if node_ed[node] > 0 or len(graph[node]) == 0:
             boundary_nodes.append(node)
             # print("before add boundary node {}".format(node))
+    graph.graph['sum_val'] = sum_val
     graph.graph['boundary'] = boundary_nodes
     graph.graph['cut'] = cut / 2
     graph.graph['p_vals'] = [partition0_sum_val,
                              graph.graph['sum_val'] - partition0_sum_val]
     graph.graph['node_id'] = node_id
     graph.graph['node_ed'] = node_ed
+
+
+@get_time
+def compute_kway_partition_params(graph: Graph):
+    """计算K路划分参数, 如边界节点及节点ed/id
+
+    Args:
+        graph (Graph): 初始划分完成后的图
+    """
+
+    part = {}
+    part_val = {}
+    cut = 0
+    boundary_nodes = []
+    node_ed = {}
+    node_id = {}
+    sum_val = 0
+    for node in graph.nodes:
+        node_p = graph.nodes[node]['belong']
+        # node_p = '{:>2.0f}'.format(node_p)
+        if node_p in part:
+            part[node_p].append(node)
+            part_val[node_p] += graph.nodes[node]['load']
+        else:
+            part[node_p] = [node]
+            part_val[node_p] = graph.nodes[node]['load']
+        node_id[node] = 0
+        node_ed[node] = 0
+        sum_val += graph.nodes[node]['load']
+        neighbors = nx.neighbors(graph, node)
+        for nei in neighbors:
+            nei_partition = graph.nodes[nei]['belong']
+            if node_p != nei_partition:
+                cut += graph.edges[(node, nei)]['wei']
+                node_ed[node] += graph.edges[(node, nei)]['wei']
+            else:
+                node_id[node] += graph.edges[(node, nei)]['wei']
+        if node_ed[node] - node_id[node] > 0:
+            boundary_nodes.append(node)
+            # print("before add boundary node {}".format(node))
+    graph.graph['sum_val'] = sum_val
+    graph.graph['boundary'] = boundary_nodes
+    graph.graph['cut'] = cut / 2
+    graph.graph['p_vals'] = part_val
+    graph.graph['node_id'] = node_id
+    graph.graph['node_ed'] = node_ed
+    graph.graph['part'] = part
+    return part, part_val
 
 
 def project_2Way_partition(ctrl: Ctrl, cgraph: Graph):
@@ -214,4 +264,6 @@ def project_2Way_partition(ctrl: Ctrl, cgraph: Graph):
 
 def RefineKWay(graph: Graph, o_graph: Graph, ctrl: Ctrl):
     # TODO 完成K路划分
-    pass
+    num_comps = find_components(graph)
+    if contiguous and num_comps > nparts:
+        eliminate_components(graph, ctrl)
