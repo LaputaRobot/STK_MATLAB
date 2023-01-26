@@ -20,15 +20,15 @@ def get_sum_result(scheme):
         result[t] = {"sum_con_loads": 0, "max_con_load": 0, "avg_setup_time": math.inf,
                      "assign": {}, "args": {"part": 0, "ufactor": 0, "contig": True}}
         result_files = os.listdir(os.path.join(base_dir, t))
-        if '{}.sum'.format(t) in result_files and not Rewrite:
+        if '-{}-sum.json'.format(t) in result_files and not Rewrite:
             continue
         for file in result_files:
             if str.endswith(file, 'log'):
                 args_list = str.split(file[:-4], '-')
                 args = {}
                 if scheme == 'metis':
-                    args = {"part": args_list[0], "ufactor": args_list[1], "contig": len(
-                        args_list) > 2}
+                    args = {"part": args_list[0], "ufactor": args_list[1], "contig": 'contig' in file,
+                    'minconn': 'minconn' in file}
                 if scheme == 'balcon':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
 
@@ -54,7 +54,7 @@ def get_sum_result(scheme):
                 if delay < result[t]['avg_setup_time'] and max_load < 100:
                     result[t] = {"sum_con_loads": sum_load, "max_con_load": max_load,
                                  "avg_setup_time": delay, "assign": ass, "args": args}
-        sum_file = open(os.path.join(base_dir, t, '{}.sum'.format(t)), 'w')
+        sum_file = open(os.path.join(base_dir, t, '-{}-sum.json'.format(t)), 'w')
         sum_file.write(json.dumps(result[t], indent=4, separators=(',', ': ')))
         sum_file.close()
 
@@ -69,7 +69,7 @@ def compare(schemes):
         setup_time = math.inf
         for scheme in schemes:
             sum_file = os.path.join(get_base_dir(
-                scheme), t, '{}.sum'.format(t))
+                scheme), t, '-{}-sum.json'.format(t))
             with open(sum_file, 'r') as f:
                 result = json.load(f)
                 print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}, {}'.format(scheme, result['sum_con_loads'],

@@ -267,3 +267,20 @@ def RefineKWay(graph: Graph, o_graph: Graph, ctrl: Ctrl):
     num_comps = find_components(graph)
     if contiguous and num_comps > nparts:
         eliminate_components(graph, ctrl)
+
+
+def compute_K_way_boundary(graph: Graph, ctrl: Ctrl, type):
+    boundary_nodes = []
+    node_ed = graph.graph['node_ed']
+    node_id = graph.graph['node_id']
+    if type == 'balance':
+        if node_ed[node] > 0:
+            boundary_nodes.append(node)
+    if type == 'refine':
+        if node_ed[node]-node_id[node] >= 0:
+            boundary_nodes.append(node)
+    graph.graph['boundary'] = boundary_nodes
+
+
+def greedy_K_way_optimize(graph: Graph, ctrl: Ctrl, n_iter, f_factor, mode):
+    pass

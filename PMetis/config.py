@@ -7,8 +7,8 @@ import logging
 # AssignScheme = 'METIS'
 AssignScheme = 'PyMETIS'
 
-# Rewrite = True
-Rewrite = False
+Rewrite = True
+# Rewrite = False
 
 LogDestination = 's,f'
 # LogDestination = 's'
@@ -26,9 +26,9 @@ MatchOrder = 'SRC'
 MatchScheme = 'SRC'
 
 allow_err = sys.float_info.epsilon * 100
-un_factor=1.3
-max_allow_bal=0.005
-contiguous=True
+un_factor = 1.3
+max_allow_bal = 0.005
+contiguous = True
 
 
 # BalCon 算法参数配置
@@ -65,13 +65,16 @@ MATRIX = [[0] * 24,
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
           [0] * 24, [0] * 24]
 
-LOG_LEVEL=logging.INFO
+LOG_LEVEL = logging.INFO
+
+
 def get_logger():
     logger = logging.getLogger('pymetis')
     logger.setLevel(LOG_LEVEL)
 
     # formatter = logging.Formatter('%(filename)-15s:%(lineno)d - %(funcName)s - %(message)s')
-    formatter = logging.Formatter('./{filename}", line {lineno}\t |{funcName:<20s}| {message}',style='{')
+    formatter = logging.Formatter(
+        './{filename}", line {lineno}\t |{funcName:<20s}| {message}', style='{')
     # formatter = logging.Formatter('./{filename}", line {lineno}\t | {message}',style='{')
 
     # 2、创建一个handler，用于写入日志文件
@@ -80,7 +83,6 @@ def get_logger():
     # fh.setFormatter(formatter)
     # logger.addHandler(fh)
 
-
     # 再创建一个handler，用于输出到控制台
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
@@ -88,9 +90,9 @@ def get_logger():
     logger.addHandler(ch)
     return logger
 
-    
 
 def printParameters():
     print("AssignScheme: {:4s}".format(AssignScheme))
 
-log=get_logger()
+
+log = get_logger()

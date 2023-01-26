@@ -97,10 +97,12 @@ def draw_result(G, assignment, node_style, title='', node_loads=None):
         color = con_colors[controller]
         node_colors.append(color)
     if node_style.find('weight') != -1:
-        node_colors = [[1 - int(G.nodes[n]['load']) / 7, 0.7, 0.7] for n in pos]
+        node_colors = [[1 - int(G.nodes[n]['load']) / 7, 0.7, 0.7]
+                       for n in pos]
     # print(node_colors)
 
-    nx.draw(G, pos, labels=labels, with_labels=True, node_color=node_colors, node_size=node_sizes)
+    nx.draw(G, pos, labels=labels, with_labels=True,
+            node_color=node_colors, node_size=node_sizes)
 
     # nx.draw_networkx()
     # nx.drawing.layout
@@ -121,14 +123,16 @@ def gen_topology(time_slot):
             src = '{}{}'.format(p_id, s_id)
             srcLEO = 'LEO{}'.format(src)
             if not graph.has_node(srcLEO):
-                graph.add_node(srcLEO, load=getLoad(src, time_slot), controller='', con_load=0, real_load=0)
+                graph.add_node(srcLEO, load=getLoad(src, time_slot),
+                               controller='', con_load=0, real_load=0)
             n_s_id = s_id + 1
             if n_s_id > 9:
                 n_s_id %= sat_per_plane
             dst = '{}{}'.format(p_id, n_s_id)
             dstLEO = 'LEO{}'.format(dst)
             if not graph.has_node(dstLEO):
-                graph.add_node(dstLEO, load=getLoad(dst, time_slot), controller='', con_load=0, real_load=0)
+                graph.add_node(dstLEO, load=getLoad(dst, time_slot),
+                               controller='', con_load=0, real_load=0)
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
     connections = open('topos/{}.log'.format(time_slot), 'r').readlines()
@@ -136,7 +140,8 @@ def gen_topology(time_slot):
         src = connect[:2]
         dst = connect[3:5]
         # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
-        graph.add_edge('LEO{}'.format(src), 'LEO{}'.format(dst), delay=get_delay(src, dst, time_slot))
+        graph.add_edge('LEO{}'.format(src), 'LEO{}'.format(
+            dst), delay=get_delay(src, dst, time_slot))
     return graph
 
 
@@ -205,7 +210,8 @@ def get_pair_load(graph):
         for dst in graph.nodes:
             if src != dst:
                 dst_load = graph.nodes[dst]['load']
-                all_pairs_load[(src, dst)] = src_load * (dst_load / (all_load - src_load))
+                all_pairs_load[(src, dst)] = src_load * \
+                    (dst_load / (all_load - src_load))
             else:
                 all_pairs_load[(src, dst)] = 0
     return all_pairs_load
@@ -223,7 +229,8 @@ def get_pair_delay(graph):
             # all_src_dst_paths[(src, dst)] = []
             if src != dst:
                 path = nx.shortest_path(graph, src, dst, weight='delay')
-                all_src_dst_paths[(src, dst)] = [path, path_weight(graph, path, 'delay')]
+                all_src_dst_paths[(src, dst)] = [
+                    path, path_weight(graph, path, 'delay')]
                 # print('{}->{}:'.format(src, dst))
                 # paths = list(islice(nx.shortest_simple_paths(graph, src, dst, weight='delay'), 4))
                 # if len(paths) > 1:
@@ -280,7 +287,8 @@ class Common():
         self.graph = graph
         self.pair_load = get_pair_load(graph)
         self.pair_path_delay = get_pair_delay(graph)
-        self.link_load = get_edge_load(graph, self.pair_load, self.pair_path_delay)
+        self.link_load = get_edge_load(
+            graph, self.pair_load, self.pair_path_delay)
 
 
 class Ctrl():
@@ -289,9 +297,9 @@ class Ctrl():
         self.nIparts = 4
         self.nCuts = 4
         self.niter = 10
-        self.seed=0
-        self.ubfactors=1.13
-        self.max_v_wgt=0
+        self.seed = 0
+        self.ubfactors = 1.13
+        self.max_v_wgt = 0
 
 
 def exch(dicts):
@@ -420,68 +428,23 @@ def getAllLoadChange():
         if len(all_file_dict[min_index][min_key]) == 0:
             all_file_dict.pop(min_index)
 
+
 def rename_sum_file():
     import pathlib
-    files=list(pathlib.Path('./metis/').glob('**/*.sum'))
+    files = list(pathlib.Path('./metis/').glob('**/*.sum'))
     print(len(files))
     for f in files:
-        s_name=f.name
-        t_name=f.parent.absolute().__str__()+'/-{}-sum.json'.format(s_name.split('.')[0])
-        print('{}->{}'.format(s_name,t_name))
+        s_name = f.name
+        t_name = f.parent.absolute().__str__(
+        )+'/-{}-sum.json'.format(s_name.split('.')[0])
+        print('{}->{}'.format(s_name, t_name))
         f.rename(t_name)
-        
-
-    """计算K路划分参数, 如边界节点及节点ed/id
-
-    Args:
-        graph (Graph): 初始划分完成后的图
-    """
-
-    part = {}
-    part_val = {}
-    cut = 0
-    boundary_nodes = []
-    node_ed = {}
-    node_id = {}
-    sum_val = 0
-    for node in graph.nodes:
-        node_p = graph.nodes[node]['belong']
-        # node_p = '{:>2.0f}'.format(node_p)
-        if node_p in part:
-            part[node_p].append(node)
-            part_val[node_p] += graph.nodes[node]['load']
-        else:
-            part[node_p] = [node]
-            part_val[node_p] = graph.nodes[node]['load']
-        node_id[node] = 0
-        node_ed[node] = 0
-        sum_val += graph.nodes[node]['load']
-        neighbors = nx.neighbors(graph, node)
-        for nei in neighbors:
-            nei_partition = graph.nodes[nei]['belong']
-            if node_p != nei_partition:
-                cut += graph.edges[(node, nei)]['wei']
-                node_ed[node] += graph.edges[(node, nei)]['wei']
-            else:
-                node_id[node] += graph.edges[(node, nei)]['wei']
-        if node_ed[node] - node_id[node]> 0 :
-            boundary_nodes.append(node)
-            # print("before add boundary node {}".format(node))
-    graph.graph['sum_val'] = sum_val
-    graph.graph['boundary'] = boundary_nodes
-    graph.graph['cut'] = cut / 2
-    graph.graph['p_vals'] = part_val
-    graph.graph['node_id'] = node_id
-    graph.graph['node_ed'] = node_ed
-    graph.graph['part'] = part
-    return part, part_val
-
 
 
 if __name__ == '__main__':
-    # rename_sum_file()
-    absP = os.path.abspath('../matlab_Code/72-d')
-    files = os.listdir('../matlab_Code/72-d')
-    for f in files:
-        newF = f[4:]
-        os.rename(os.path.join(absP, f), os.path.join(absP, newF))
+    rename_sum_file()
+    # absP = os.path.abspath('../matlab_Code/72-d')
+    # files = os.listdir('../matlab_Code/72-d')
+    # for f in files:
+    #     newF = f[4:]
+    #     os.rename(os.path.join(absP, f), os.path.join(absP, newF))
