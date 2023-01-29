@@ -58,7 +58,7 @@ def eliminate_components(graph: Graph, ctrl: Ctrl):
             for node in c:
                 for nei in graph.neighbors(node):
                     nei_c_in = node_c[nei]
-                    if nei_c_in != c_id and comp_p[nei_c_in] > 0:
+                    if nei_c_in != c_id and comp_p[nei_c_in] >= 0:
                         if nei_c_in in nei_comp_con:
                             nei_comp_con[nei_c_in] += graph.edges[node, nei]['wei']
                         else:

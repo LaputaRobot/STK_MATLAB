@@ -143,13 +143,38 @@ def assert_diff_func(n):
     # ub_vec = pow(un_factor, 1/math.log(nparts))
     print(max_p_vals*pij-ub_vec)
 
+class kv(object):
+    def __init__(self, k,v):
+        self.k=k
+        self.v=v
+    
+    def __lt__(self, other):
+        return self.v > other.v
+
+    def __str__(self):
+        return "{{{}: {}}}".format(self.k,self.v) 
+
+    def __eq__(self, other):
+        return self.k == other.k
+
+def testPQueue():
+    q=[]
+    for i in range(20):
+        item=kv('{}'.format(i),random.randint(1, 100))
+        q.append(item)
+        print('add: ', item)
+    for i in range(10):
+        q.remove(kv('{}'.format(i),1))
+    heapq.heapify(q)
+    while len(q)>0:
+        item=heapq.heappop(q)
+        print(item)
+
 
 if __name__ == '__main__':
     # testlog()
     # assert_diff_func(8)
-    l=[]
-    l[4]=1
-    print(l)
+    testPQueue()
 
     # G = nx.Graph()
     # G.add_edge(0, 1)

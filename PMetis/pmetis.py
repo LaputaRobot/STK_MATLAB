@@ -200,7 +200,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         assert my_s == partition0
         assert set(s) == set(swaps)
 
-        log.debug('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
+        log.info('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
                                                                                    [p0_val,
                                                                                     sum_val - p0_val],
                                                                                    graph.graph['p_vals']))

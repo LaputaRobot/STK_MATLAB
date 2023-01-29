@@ -11,6 +11,9 @@ from networkx import path_weight, Graph
 from config import MATRIX, log
 
 
+BALANCE = 'balance'
+REFINE = 'refine'
+
 def get_time(f):
     def inner(*arg, **kwarg):
         s_time = time.time()
@@ -135,7 +138,9 @@ def gen_topology(time_slot):
                                controller='', con_load=0, real_load=0)
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
-    connections = open('topos/{}.log'.format(time_slot), 'r').readlines()
+    dirname = os.path.split(os.path.abspath(__file__))[0]
+    file = os.path.join(dirname,'topos/{}.log'.format(time_slot))
+    connections = open(file, 'r').readlines()
     for connect in connections:
         src = connect[:2]
         dst = connect[3:5]
@@ -172,7 +177,9 @@ def getLEOWithL(index):
 
 
 def get_delay(src, dst, time):
-    f = open('../data/72-d/{}-{}.csv'.format(src, dst), 'r')
+    dirname = os.path.split(os.path.abspath(__file__))[0]
+    file = os.path.join(dirname,'../data/72-d/{}-{}.csv'.format(src, dst))
+    f = open(file, 'r')
     line = f.readlines()[int(time / 10) + 1].split(',')
     return float(line[1]) / (3 * 10 ** 5)
 
@@ -353,7 +360,8 @@ def position_to_index(lat, lon):
 
 
 def getLoad(leo, time):
-    f_name = '../data/72-loads/srcData/{}.csv'.format(leo)
+    dirname, _ =os.path.split(os.path.abspath(__file__))
+    f_name = os.path.join(dirname,'../data/72-loads/srcData/{}.csv'.format(leo)) 
     f = open(f_name, 'r')
     # lines = f.readlines()
     # line = f.readlines()[time + 1].split(',')

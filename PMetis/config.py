@@ -26,9 +26,11 @@ MatchOrder = 'SRC'
 MatchScheme = 'SRC'
 
 allow_err = sys.float_info.epsilon * 100
+
 un_factor = 1.3
 max_allow_bal = 0.005
 contiguous = True
+
 
 
 # BalCon 算法参数配置

@@ -1,6 +1,7 @@
 import logging
 import os
 import shutil
+import sys
 
 from PyMetis import run_metis_main
 from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
@@ -11,7 +12,8 @@ from metis import gen_metis_file, read_metis_result
 from util import gen_topology, Common, new_file, get_log_handlers
 
 if __name__ == '__main__':
-    files = os.listdir('topos')
+    dirname, filename = os.path.split(os.path.abspath(__file__))
+    files = os.listdir(os.path.join(dirname,'topos'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     t_index = 0
     for f in files[:50]:

@@ -1,5 +1,6 @@
 import queue
 import numpy as np
+import heapq
 
 from config import *
 from networkx import Graph
@@ -7,36 +8,53 @@ from util import *
 from contig import *
 
 
+class NodeGain(object):
+    def __init__(self, node, gain):
+        self.node = node
+        self.gain = gain
+
+    def __lt__(self, other):
+        return self.gain < other.gain
+
+    def __str__(self):
+        return "{{{}: {}}}".format(self.node, self.gain)
+
+    def __eq__(self, other):
+        return self.node == other.node
+
+
 def FM_2WayRefine(graph: Graph, ctrl: Ctrl):
     limit = min(max(0.01 * graph.number_of_nodes(), 15), 100)
     sum_val = graph.graph['sum_val']
     avgVwgt = min(sum_val / 20, 2 * sum_val / graph.number_of_nodes())
-    queues = [queue.PriorityQueue(), queue.PriorityQueue()]
+    queues = [[], []]
     orig_diff = abs(sum_val / 2 - graph.graph['p_vals'][0])
     moved = {}
-    source_id_ed = {}
+    # source_id_ed = {}
     all_swaps = []
     for i in range(ctrl.niter):
-        queues[0].queue.clear()
-        queues[1].queue.clear()
+        queues[0] = []
+        queues[1] = []
         min_cut_order = -1
         new_cut = min_cut = init_cut = graph.graph['cut']
         min_diff = abs(sum_val / 2 - graph.graph['p_vals'][0])
         np.random.seed(i)
         for node in np.random.choice(graph.graph['boundary'], len(graph.graph['boundary']), replace=False):
             p = graph.nodes[node]['belong']
-            queues[p].put((graph.graph['node_id'][node] -
-                          graph.graph['node_ed'][node], node))
-            source_id_ed[node] = graph.graph['node_id'][node] - \
-                graph.graph['node_ed'][node]
+            queues[p].append(NodeGain(node, graph.graph['node_id']
+                             [node] - graph.graph['node_ed'][node]))
+            # source_id_ed[node] = graph.graph['node_id'][node] - graph.graph['node_ed'][node]
+        for q in queues:
+            heapq.heapify(q)
         nSwaps = 0
         swaps = []
         while nSwaps < graph.number_of_nodes():
             from_part = 0 if graph.graph['p_vals'][0] > graph.graph['p_vals'][1] else 1
             to_part = (from_part + 1) % 2
-            if queues[from_part].empty():
+            if len(queues[from_part]) == 0:
                 break
-            high_gain_node = queues[from_part].get()[1]
+            heapq.heapify(queues[from_part])
+            high_gain_node = heapq.heappop(queues[from_part]).node
             new_cut -= (graph.graph['node_ed'][high_gain_node] -
                         graph.graph['node_id'][high_gain_node])
             graph.graph['p_vals'][from_part] -= graph.nodes[high_gain_node]['load']
@@ -74,29 +92,26 @@ def FM_2WayRefine(graph: Graph, ctrl: Ctrl):
                         graph.graph['boundary'].remove(nei)
                         # print("moving remove boundary nei node {}".format(nei))
                         if nei not in moved:
-                            queues[nei_belong].queue.remove(
-                                (source_id_ed[nei], nei))
+                            queues[nei_belong].remove(NodeGain(nei, 0))
                     else:
                         if nei not in moved:
-                            queues[nei_belong].queue.remove(
-                                (source_id_ed[nei], nei))
-                            queues[nei_belong].put(
-                                (graph.graph['node_id'][nei] - graph.graph['node_ed'][nei], nei))
-                            source_id_ed[nei] = graph.graph['node_id'][nei] - \
-                                graph.graph['node_ed'][nei]
+                            queues[nei_belong].remove(NodeGain(nei, 0))
+                            queues[nei_belong].append(
+                                NodeGain(nei, graph.graph['node_id'][nei] - graph.graph['node_ed'][nei]))
+                            # source_id_ed[nei] = graph.graph['node_id'][nei] - graph.graph['node_ed'][nei]
                 else:
                     if graph.graph['node_ed'][nei] > 0:
                         graph.graph['boundary'].append(nei)
                         # print("moving add boundary node {}".format(nei))
                         if nei not in moved:
-                            queues[nei_belong].put(
-                                (graph.graph['node_id'][nei] - graph.graph['node_ed'][nei], nei))
-                            source_id_ed[nei] = graph.graph['node_id'][nei] - \
-                                graph.graph['node_ed'][nei]
+                            queues[nei_belong].append(
+                                NodeGain(nei, graph.graph['node_id'][nei] - graph.graph['node_ed'][nei]))
+                            # source_id_ed[nei] = graph.graph['node_id'][nei] - graph.graph['node_ed'][nei]
 
             nSwaps += 1
         moved = {}
         nSwaps -= 1
+        # log.info('swap: {}, min_cut_order: {}'.format(swaps, min_cut_order))
         while nSwaps > min_cut_order:
             nSwaps -= 1
             high_gain_node = swaps.pop()
@@ -130,14 +145,16 @@ def FM_2WayRefine(graph: Graph, ctrl: Ctrl):
                     graph.graph['boundary'].remove(nei)
                     # print("restore remove boundary nei node {}".format(nei))
 
+        # log.info('swap: {}'.format(swaps))
         graph.graph['cut'] = min_cut
         for node in swaps:
             if node in all_swaps:
                 all_swaps.remove(node)
             else:
                 all_swaps.append(node)
+        
         if min_cut_order <= 0 or min_cut == init_cut:
-            # print('iter {} break'.format(i))
+            # log.info('iter {} break by min_cut_order <= 0? {}, min_cut == init_cut? {}'.format(i,min_cut_order <= 0,min_cut == init_cut))
             break
     return all_swaps
 
@@ -267,20 +284,29 @@ def RefineKWay(graph: Graph, o_graph: Graph, ctrl: Ctrl):
     num_comps = find_components(graph)
     if contiguous and num_comps > nparts:
         eliminate_components(graph, ctrl)
+        compute_K_way_boundary(graph, ctrl, BALANCE)
+        greedy_K_way_optimize(graph, ctrl, 5, 0, BALANCE)
 
 
-def compute_K_way_boundary(graph: Graph, ctrl: Ctrl, type):
+def compute_K_way_boundary(graph: Graph, ctrl: Ctrl, b_type):
     boundary_nodes = []
     node_ed = graph.graph['node_ed']
     node_id = graph.graph['node_id']
-    if type == 'balance':
-        if node_ed[node] > 0:
-            boundary_nodes.append(node)
-    if type == 'refine':
-        if node_ed[node]-node_id[node] >= 0:
-            boundary_nodes.append(node)
+    for node in graph:
+        if b_type == 'balance':
+            if node_ed[node] > 0:
+                boundary_nodes.append(node)
+        if b_type == 'refine':
+            if node_ed[node]-node_id[node] >= 0:
+                boundary_nodes.append(node)
     graph.graph['boundary'] = boundary_nodes
 
 
 def greedy_K_way_optimize(graph: Graph, ctrl: Ctrl, n_iter, f_factor, mode):
-    pass
+    tar_p_wgt = 1/nparts*graph.graph['sum_val']
+    min_p_wgt = tar_p_wgt*(1/un_factor)
+    max_p_wgt = tar_p_wgt*un_factor
+    for i in range(n_iter):
+        if mode == BALANCE and max(graph.graph['p_vals']) > max_p_wgt:
+            break
+        old_cut = graph.graph['cut']
