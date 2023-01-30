@@ -55,7 +55,6 @@ def run_metis_main(common: Common):
     part, part_val = compute_kway_partition_params(coarsest_graph)
     pprint(part, width=200)
     pprint(part_val, compact=True)
-
     RefineKWay(coarsest_graph, origin_graph, ctrl)
 
     # plt.figure(dpi=200)

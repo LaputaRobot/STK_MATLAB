@@ -170,11 +170,24 @@ def testPQueue():
         item=heapq.heappop(q)
         print(item)
 
+def test_grammar():
+    dic={'name':'y','age':12}
+    dic_copy=dic
+    dic_copy['name']='z'
+    print(dic)
+
+    lis=[1,2,3]
+    lis_copy=lis
+    # lis_copy[0]=2
+    # print(lis)
+    lis[0]=2
+    print(lis_copy)
 
 if __name__ == '__main__':
     # testlog()
     # assert_diff_func(8)
-    testPQueue()
+    # testPQueue()
+    test_grammar()
 
     # G = nx.Graph()
     # G.add_edge(0, 1)

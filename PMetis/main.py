@@ -16,10 +16,10 @@ if __name__ == '__main__':
     files = os.listdir(os.path.join(dirname,'topos'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     t_index = 0
-    for f in files[:50]:
+    for f in files[:2]:
         t = int(f.split('.')[0])
         t_index += 1
-        print("\n时隙: {}, {}".format(t_index, t))
+        print('\n\033[1;36m','+'*77,"时隙: {}, {}".format(t_index, t),'+'*77,'\033[0m')
         assignment = None
         if AssignScheme == 'Greedy':
             G = gen_topology(t)

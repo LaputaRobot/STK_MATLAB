@@ -1,4 +1,5 @@
 import networkx as nx
+import copy
 
 from networkx import Graph
 from config import *
@@ -16,6 +17,13 @@ def find_components(graph: Graph):
         comp_sum += num_comp
     return comp_sum
 
+
+def is_articulation_node(graph: Graph, node):
+    p=graph.nodes[node]['belong']
+    p_nodes = copy.deepcopy(graph.graph['part'][p])  
+    p_nodes.remove(node)
+    sub_g = graph.subgraph(p_nodes)
+    return nx.is_connected(sub_g)
 
 @get_time
 def eliminate_components(graph: Graph, ctrl: Ctrl):
@@ -72,7 +80,7 @@ def eliminate_components(graph: Graph, ctrl: Ctrl):
                 cur = comp_p[c]
                 if target is None or better_balance(c_w, graph.graph['p_vals'][target], graph.graph['p_vals'][cur], graph, ctrl):
                     target = cur
-            log.info('move {} ({})[{}] from {} to {}'.format(
+            log.info('move component {} (wight: {})[{}] from part {} to part {}'.format(
                 c_id, comp_w[c_id], comps[c_id], -comp_p[c_id], target))
             move_component(graph, ctrl, c_id, target, comps, comp_p, comp_w)
             log.info(graph.graph['cut'])

@@ -8,11 +8,30 @@ import linecache
 import matplotlib.pyplot as plt
 import networkx as nx
 from networkx import path_weight, Graph
-from config import MATRIX, log
+from config import MATRIX, log, contiguous
 
 
 BALANCE = 'balance'
 REFINE = 'refine'
+PRESENT = 1     # The vertex is in the queue
+EXTRACTED = 2   # The vertex has been extracted from the queue
+NOT_PRESENT = 3  # The vertex is not present in the queue and has not been extracted before
+
+
+class NodeGain(object):
+    def __init__(self, node, gain):
+        self.node = node
+        self.gain = gain
+
+    def __lt__(self, other):
+        return self.gain > other.gain
+
+    def __str__(self):
+        return "{{{}: {}}}".format(self.node, self.gain)
+
+    def __eq__(self, other):
+        return self.node == other.node
+
 
 def get_time(f):
     def inner(*arg, **kwarg):
@@ -139,7 +158,7 @@ def gen_topology(time_slot):
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
     dirname = os.path.split(os.path.abspath(__file__))[0]
-    file = os.path.join(dirname,'topos/{}.log'.format(time_slot))
+    file = os.path.join(dirname, 'topos/{}.log'.format(time_slot))
     connections = open(file, 'r').readlines()
     for connect in connections:
         src = connect[:2]
@@ -178,7 +197,7 @@ def getLEOWithL(index):
 
 def get_delay(src, dst, time):
     dirname = os.path.split(os.path.abspath(__file__))[0]
-    file = os.path.join(dirname,'../data/72-d/{}-{}.csv'.format(src, dst))
+    file = os.path.join(dirname, '../data/72-d/{}-{}.csv'.format(src, dst))
     f = open(file, 'r')
     line = f.readlines()[int(time / 10) + 1].split(',')
     return float(line[1]) / (3 * 10 ** 5)
@@ -307,6 +326,7 @@ class Ctrl():
         self.seed = 0
         self.ubfactors = 1.13
         self.max_v_wgt = 0
+        self.contiguous = contiguous
 
 
 def exch(dicts):
@@ -360,8 +380,9 @@ def position_to_index(lat, lon):
 
 
 def getLoad(leo, time):
-    dirname, _ =os.path.split(os.path.abspath(__file__))
-    f_name = os.path.join(dirname,'../data/72-loads/srcData/{}.csv'.format(leo)) 
+    dirname, _ = os.path.split(os.path.abspath(__file__))
+    f_name = os.path.join(
+        dirname, '../data/72-loads/srcData/{}.csv'.format(leo))
     f = open(f_name, 'r')
     # lines = f.readlines()
     # line = f.readlines()[time + 1].split(',')

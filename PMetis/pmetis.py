@@ -100,16 +100,6 @@ def multilevel_bisect(graph: Graph, ctrl: Ctrl):
     return min_cut
 
 
-def compute_load_imbalance(graph: Graph, n):
-    p_vals = graph.graph['p_vals']
-    max_p_vals = max(p_vals)
-    sum_val = sum(p_vals)
-    tar_p_val = sum_val/n
-    pij = 1/sum_val/(1/n)
-    ub_vec = pow(un_factor, 1/math.log(nparts))
-    return max_p_vals*pij-ub_vec
-
-
 def get_graph_unfactor(graph: Graph, part: int):
     return max(graph.graph['p_vals'])/((sum(graph.graph['p_vals'])/part))
 
@@ -201,9 +191,9 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         assert set(s) == set(swaps)
 
         log.info('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
-                                                                                   [p0_val,
-                                                                                    sum_val - p0_val],
-                                                                                   graph.graph['p_vals']))
+                                                                                  [p0_val,
+                                                                                   sum_val - p0_val],
+                                                                                  graph.graph['p_vals']))
         cut = graph.graph['cut']
         # 判断是否要连续
         # tmp_graph = copy.deepcopy(graph)
