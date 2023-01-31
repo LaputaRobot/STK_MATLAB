@@ -16,7 +16,7 @@ if __name__ == '__main__':
     files = os.listdir(os.path.join(dirname,'topos'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     t_index = 0
-    for f in files[:2]:
+    for f in files[:1]:
         t = int(f.split('.')[0])
         t_index += 1
         print('\n\033[1;36m','+'*77,"时隙: {}, {}".format(t_index, t),'+'*77,'\033[0m')
@@ -87,6 +87,15 @@ if __name__ == '__main__':
         elif AssignScheme == 'PyMETIS':
             G = gen_topology(t)
             common = Common(G)
-            run_metis_main(common)
-
-            # sys.exit(0)
+            logger = logging.getLogger('py_metis')
+            logger.setLevel(logging.INFO)
+            handlers = get_log_handlers('s', None)
+            for handler in handlers:
+                logger.addHandler(handler)
+            part=run_metis_main(common)
+            assignment = {}
+            print(sum([len(part[p]) for p in part]))
+            for p in part:
+                assignment['LEO'+part[p][0]]=['LEO{}'.format(n) for n in part[p]]
+            analysis(common, assignment, logger)
+            # TODO 多次运行结果不同

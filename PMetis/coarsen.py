@@ -4,7 +4,8 @@ import networkx as nx
 
 from networkx import Graph
 from util import Common, Ctrl
-from config import nparts, MatchOrder, MatchScheme, log
+from config import nparts, MatchOrder, MatchScheme
+from config import coarsen_log as log
 from statistics import *
 
 
@@ -17,8 +18,8 @@ def coarsen_graph(graph: Graph, ctrl: Ctrl):
         # print( '第{}次粗化'.format(level),end=', ')
         # check_sum_load(graph)
         match_graph(graph, ctrl)
-        level += 1
         coarse_g = gen_coarse_graph(graph, level)
+        level += 1
         graph = coarse_g
         if not (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
                 'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
@@ -26,7 +27,7 @@ def coarsen_graph(graph: Graph, ctrl: Ctrl):
             log.info('# {}, stop coarsen graph'.format(
                 graph.number_of_nodes()))
             break
-        log.info('# {}, continue coarsen graph'.format(
+        log.debug('# {}, continue coarsen graph'.format(
             graph.number_of_nodes()))
     return graph
 
@@ -103,7 +104,6 @@ def match_graph(graph: Graph, ctrl: Ctrl):
     degrees = list(graph.degree())
     log.debug("# {}, max degree: {}, min: {}, avg: {:3.1f}".format(graph.number_of_nodes(), max(degrees, key=lambda x: x[1])[1],
                                                                   min(degrees, key=lambda x: x[1])[1], mean([d[1] for d in degrees]),))
-    # TODO  匹配方式不合适， 导致二分时不够粗化，节点太多
     unmatched_nodes = {}
     rng = np.random.default_rng(ctrl.seed)
     nodes = list(graph.nodes)

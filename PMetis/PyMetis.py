@@ -6,11 +6,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 from networkx import Graph
-from config import nparts, MatchOrder, log
-from util import Common, get_time
+from k_refine import refine_k_way, compute_k_way_params
+from util import Common, get_time, pformat_with_indent
 from coarsen import *
 from pmetis import *
 from pprint import pprint
+from config import nparts, MatchOrder, log
 
 
 def gen_init_graph(graph, link_loads):
@@ -31,15 +32,15 @@ def gen_init_graph(graph, link_loads):
 
 
 def init_KWay_partition(graph: Graph, ctrl: Ctrl):
-    log.info('*'*40+' begin init kway partion '+'*'*40+'\n')
+    log.info('*'*40+' begin init kway partion '+'*'*40)
     ctrl.nCuts = 4
     ctrl.coarsenTo = 20
     ctrl.niter = 10
     graph.graph['sum_val'] = sum(graph.nodes[node]['load'] for node in graph)
     cut = M_level_recur_bisect(graph, graph, ctrl, nparts, 0)
-    log.info('*'*40+' finish init kway partion '+'*'*40+'\n')
     log.info('finish init part, cut: {:7.4f}, bal: {:4.3f}'.format(
         cut, compute_load_imbalance(graph, nparts)))
+    log.info('*'*40+' finish init kway partion '+'*'*40)
 
 
 @get_time
@@ -51,12 +52,13 @@ def run_metis_main(common: Common):
     ctrl.nIparts = 4 if ctrl.coarsenTo == 30 * nparts else 5
     coarsest_graph = coarsen_graph(origin_graph, ctrl)
     init_KWay_partition(coarsest_graph, ctrl)
-    log.info('part: \n')
-    part, part_val = compute_kway_partition_params(coarsest_graph)
-    pprint(part, width=200)
-    pprint(part_val, compact=True)
-    RefineKWay(coarsest_graph, origin_graph, ctrl)
-
+    part, part_val = compute_k_way_params(coarsest_graph)
+    log.debug('part: \n {}'.format(pformat_with_indent(part, width=200)))
+    log.info('part_val: \n{}'.format(pformat_with_indent(part_val, compact=True)))                              
+    refine_k_way(coarsest_graph, origin_graph, ctrl)
+    log.info('part: \n {}'.format(pformat_with_indent(origin_graph.graph['part'], width=100, compact=True)))
+    log.info('part_val: \n{}'.format(pformat_with_indent(origin_graph.graph['p_vals'], compact=True))) 
+    return origin_graph.graph['part']
     # plt.figure(dpi=200)
     # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)
     # labels = {n: '{}'.format(n.split('-')[1]) for n in pos}

@@ -27,7 +27,7 @@ MatchScheme = 'SRC'
 
 allow_err = sys.float_info.epsilon * 100
 
-un_factor = 1.3
+un_factor = 2.2
 max_allow_bal = 0.005
 contiguous = True
 
@@ -68,14 +68,23 @@ MATRIX = [[0] * 24,
           [0] * 24, [0] * 24]
 
 LOG_LEVEL = logging.INFO
+COARSEN_LOG_LEVEL = logging.WARNING
+INIT_PART_LOG_LEVEL = logging.WARNING
+K_REFINE_LOG_LEVEL = logging.INFO
+TWO_REFINE_LOG_LEVEL = logging.WARNING
+CONTIGUOUS_LOG_LEVEL = logging.INFO
 
 
-def get_logger():
-    logger = logging.getLogger('pymetis')
+def get_logger(name,log_level):
+    logger = logging.getLogger(name)
     logger.setLevel(LOG_LEVEL)
 
     # formatter = logging.Formatter('%(filename)-15s:%(lineno)d - %(funcName)s - %(message)s')
-    formatter = logging.Formatter(
+    if 'REFINE' in name:
+        formatter = logging.Formatter(
+        './{filename}", line {lineno} |{funcName:<20s}| {message}', style='{')
+    else:
+        formatter = logging.Formatter(
         './{filename}", line {lineno}\t |{funcName:<20s}| {message}', style='{')
     # formatter = logging.Formatter('./{filename}", line {lineno}\t | {message}',style='{')
 
@@ -87,7 +96,7 @@ def get_logger():
 
     # 再创建一个handler，用于输出到控制台
     ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    ch.setLevel(log_level)
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     return logger
@@ -97,4 +106,9 @@ def printParameters():
     print("AssignScheme: {:4s}".format(AssignScheme))
 
 
-log = get_logger()
+log = get_logger('main', LOG_LEVEL)
+coarsen_log = get_logger('COARSEN', COARSEN_LOG_LEVEL)
+init_log = get_logger('INIT', INIT_PART_LOG_LEVEL)
+k_refine_log = get_logger('K_REFINE', K_REFINE_LOG_LEVEL)
+two_refine_log = get_logger('B_REFINE', TWO_REFINE_LOG_LEVEL)
+contiguous_log = get_logger('CON', CONTIGUOUS_LOG_LEVEL)

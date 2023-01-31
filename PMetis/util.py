@@ -4,15 +4,16 @@ import time
 import math
 import os
 import linecache
-
 import matplotlib.pyplot as plt
 import networkx as nx
+
 from networkx import path_weight, Graph
 from config import MATRIX, log, contiguous
+from pprint import pformat
 
 
-BALANCE = 'balance'
-REFINE = 'refine'
+BALANCE = 'BALANCE'
+REFINE = 'REFINE'
 PRESENT = 1     # The vertex is in the queue
 EXTRACTED = 2   # The vertex has been extracted from the queue
 NOT_PRESENT = 3  # The vertex is not present in the queue and has not been extracted before
@@ -34,14 +35,13 @@ class NodeGain(object):
 
 
 def get_time(f):
-    def inner(*arg, **kwarg):
+    def get_run_time(*arg, **kwarg):
         s_time = time.time()
         res = f(*arg, **kwarg)
         e_time = time.time()
         log.info('函数 {} 耗时：{:>5.4f}秒'.format(f.__name__, e_time - s_time))
         return res
-
-    return inner
+    return get_run_time
 
 
 def get_log_handlers(des, file):
@@ -468,6 +468,25 @@ def rename_sum_file():
         )+'/-{}-sum.json'.format(s_name.split('.')[0])
         print('{}->{}'.format(s_name, t_name))
         f.rename(t_name)
+
+# def pprint_with_indent(obj, log_level,log:logging.Logger, **args):
+#     if log_level >= log.level:
+#         str_=pformat(obj,**args)
+#         lines=str.split(str_,'\n')
+#         for line in lines:
+#             print('\t'*3,' {:20s}| {}'.format(' ',line))
+def pformat_with_indent(obj, **args):
+    str_=pformat(obj,**args)
+    lines=str.split(str_,'\n')
+    new_str=''
+    for i in range(len(lines)):
+        line = lines[i]
+        new_str+='\t'*3
+        new_str+='  {:>20s}| {}'.format(' ',line)
+        if i!=len(lines)-1:
+            new_str+='\n'  
+    return new_str    
+
 
 
 if __name__ == '__main__':

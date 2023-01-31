@@ -8,9 +8,10 @@ import random
 import sys
 import time
 import numpy as np
-
+from pprint import pprint,pformat
 import networkx as nx
 import numpy.random
+
 from matplotlib import pyplot as plt
 from networkx import Graph
 from numpy.random import default_rng
@@ -18,6 +19,7 @@ from PyMetis import edge_equal
 from getSatLoad import getLoad
 from config import *
 from pmetis import *
+from util import pprint_with_indent
 
 # from util import draw_result_with_time, get_lbr
 
@@ -183,11 +185,25 @@ def test_grammar():
     lis[0]=2
     print(lis_copy)
 
+
+def test_log():
+    from config import coarsen_log as log
+    # import util.log as n_log
+    log.debug('debug')
+    log.info('info')
+
+def test_pprint():
+    s = pformat([i for i in range(20)], indent=20,width=30,compact=True)
+    print(s)
+
 if __name__ == '__main__':
     # testlog()
     # assert_diff_func(8)
     # testPQueue()
-    test_grammar()
+    # test_grammar()
+    # test_pprint()
+    # test_log()
+    pprint_with_indent([i for i in range(20)], width=30,compact=True)
 
     # G = nx.Graph()
     # G.add_edge(0, 1)

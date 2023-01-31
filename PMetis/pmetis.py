@@ -9,12 +9,15 @@ from util import Ctrl
 from coarsen import coarsen_graph
 from numpy.random import default_rng
 from config import *
+from k_refine import *
+from b_refine import *
+from config import init_log as log
 from pprint import pprint
-from refine import *
+
 
 
 def M_level_recur_bisect(o_graph: Graph, graph: Graph, ctrl: Ctrl, nParts, fPart):
-    log.info('# {}, nparts: {:>2.0f}, sum_val: {}'.format(
+    log.debug('# {}, nparts: {:>2.0f}, sum_val: {}'.format(
         graph.number_of_nodes(), nParts, graph.graph['sum_val']))
     # log.info('nodes: {}'.format(list(graph.nodes)))
 
@@ -190,7 +193,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         assert my_s == partition0
         assert set(s) == set(swaps)
 
-        log.info('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
+        log.debug('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
                                                                                   [p0_val,
                                                                                    sum_val - p0_val],
                                                                                   graph.graph['p_vals']))

@@ -1,10 +1,11 @@
 import networkx as nx
 import copy
 
+from util import *
 from networkx import Graph
 from config import *
-from util import *
-from pprint import pprint
+from config import contiguous_log as log
+from pprint import pprint, pformat
 
 
 def find_components(graph: Graph):
@@ -19,11 +20,14 @@ def find_components(graph: Graph):
 
 
 def is_articulation_node(graph: Graph, node):
-    p=graph.nodes[node]['belong']
-    p_nodes = copy.deepcopy(graph.graph['part'][p])  
+    p = graph.nodes[node]['belong']
+    p_nodes = copy.deepcopy(graph.graph['part'][p])
     p_nodes.remove(node)
+    if len(p_nodes)==0:
+        return True
     sub_g = graph.subgraph(p_nodes)
-    return nx.is_connected(sub_g)
+    return not nx.is_connected(sub_g)
+
 
 @get_time
 def eliminate_components(graph: Graph, ctrl: Ctrl):
@@ -50,8 +54,8 @@ def eliminate_components(graph: Graph, ctrl: Ctrl):
                 comp_p.append(p)
             else:
                 comp_p.append(-p)
-    pprint(comps, width=200)
-    log.info(comp_w)
+    log.debug('组件如下: \n{}'.format(pformat_with_indent(comps, width=200)))
+    log.debug('comp_w：{}'.format(comp_w))
     # 获取节点所属component
     node_c = {}
     for i in range(len(comps)):
@@ -62,30 +66,31 @@ def eliminate_components(graph: Graph, ctrl: Ctrl):
             # 对需要迁移的component，根据连接度在相邻part选择候选集，并在候选集中找到最平衡的，作为target
             c = comps[c_id]
             c_w = comp_w[c_id]
-            nei_comp_con = {}
+            nei_comp_connect = {}
             for node in c:
                 for nei in graph.neighbors(node):
-                    nei_c_in = node_c[nei]
-                    if nei_c_in != c_id and comp_p[nei_c_in] >= 0:
-                        if nei_c_in in nei_comp_con:
-                            nei_comp_con[nei_c_in] += graph.edges[node, nei]['wei']
+                    nei_c_id = node_c[nei]
+                    # 不是一个区域且无需移动的component
+                    if nei_c_id != c_id and comp_p[nei_c_id] >= 0:
+                        if nei_c_id in nei_comp_connect:
+                            nei_comp_connect[nei_c_id] += graph.edges[node, nei]['wei']
                         else:
-                            nei_comp_con[nei_c_in] = graph.edges[node,
-                                                                 nei]['wei']
-            max_degree = max(nei_comp_con.items(), key=lambda x: x[1])
-            can_nei_c = [c for c in nei_comp_con if nei_comp_con[c]
+                            nei_comp_connect[nei_c_id] = graph.edges[node,
+                                                                     nei]['wei']
+            max_degree = max(nei_comp_connect.items(), key=lambda x: x[1])
+            can_nei_c = [c for c in nei_comp_connect if nei_comp_connect[c]
                          >= max_degree[1]/2]  # 选择候选集
             target = comp_p[max_degree[0]]
-            for c in can_nei_c:
-                cur = comp_p[c]
+            for nei_c_id in can_nei_c:
+                cur = comp_p[nei_c_id]
                 if target is None or better_balance(c_w, graph.graph['p_vals'][target], graph.graph['p_vals'][cur], graph, ctrl):
                     target = cur
             log.info('move component {} (wight: {})[{}] from part {} to part {}'.format(
                 c_id, comp_w[c_id], comps[c_id], -comp_p[c_id], target))
             move_component(graph, ctrl, c_id, target, comps, comp_p, comp_w)
-            log.info(graph.graph['cut'])
-            pprint(graph.graph['part'], width=200)
-            pprint(graph.graph['p_vals'], compact=True)
+            log.info('cut: {:7.4f}'.format(graph.graph['cut']))
+            log.debug('part: \n {}'.format(pformat_with_indent(graph.graph['part'], width=200)))
+            log.info('part_val: \n{}'.format(pformat_with_indent(graph.graph['p_vals'], compact=True)))  
 
 
 def better_balance(c_w, p1_w, p2_w, graph: Graph, ctrl):
@@ -110,8 +115,8 @@ def better_balance(c_w, p1_w, p2_w, graph: Graph, ctrl):
 
 
 def move_component(graph: Graph, ctrl: Ctrl, c_id, target, comps, comp_p, comp_w):
-    from refine import compute_kway_partition_params
+    from k_refine import compute_k_way_params
     for node in comps[c_id]:
         graph.nodes[node]['belong'] = target
     comp_p[c_id] = target
-    compute_kway_partition_params(graph)
+    compute_k_way_params(graph)
