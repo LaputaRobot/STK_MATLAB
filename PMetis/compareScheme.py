@@ -10,6 +10,8 @@ def get_base_dir(scheme):
         return 'metis/src'
     if scheme == 'balcon':
         return 'balcon'
+    if scheme == 'pymetis':
+        return 'pymetis'
 
 
 def get_sum_result(scheme):
@@ -18,7 +20,7 @@ def get_sum_result(scheme):
     result = {}
     for t in times:
         result[t] = {"sum_con_loads": 0, "max_con_load": 0, "avg_setup_time": math.inf,
-                     "assign": {}, "args": {"part": 0, "ufactor": 0, "contig": True}}
+                     "assign": {}, "args": {}}
         result_files = os.listdir(os.path.join(base_dir, t))
         if '-{}-sum.json'.format(t) in result_files and not Rewrite:
             continue
@@ -31,7 +33,8 @@ def get_sum_result(scheme):
                     'minconn': 'minconn' in file}
                 if scheme == 'balcon':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
-
+                if scheme == 'pymetis':
+                    args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3], "contig": 'contig' in file}
                 sum_load = 0
                 max_load = 0
                 delay = 0
@@ -64,6 +67,11 @@ def compare(schemes):
     files.sort(key=lambda x: int(x.split('.')[0]))
     print('{:>12} {:>12}, {:>12}, {:>12}'.format(
         '', 'sum_load', 'max_load', 'delay'))
+    avg_result = {}
+    sum_result = {}
+    for scheme in schemes:
+        sum_result[scheme] = 0
+    
     for t in files[:50]:
         best_scheme = ''
         setup_time = math.inf
@@ -76,15 +84,18 @@ def compare(schemes):
                                                                            result['max_con_load'],
                                                                            result['avg_setup_time'],
                                                                            result['args']))
+                sum_result[scheme]+= result['avg_setup_time']                                             
                 if result['avg_setup_time'] < setup_time:
                     best_scheme = scheme
                     setup_time = result['avg_setup_time']
         print(
             '------- slot {:>7}, best scheme is ----- {}\n'.format(t, best_scheme))
-
+    for scheme in schemes:
+        avg_result[scheme] = sum_result[scheme]/50
+    print(avg_result)
 
 if __name__ == '__main__':
-    schemes = ['metis', 'balcon']
+    schemes = ['metis', 'balcon','pymetis']
     # schemes = ['metis']
     for scheme in schemes:
         get_sum_result(scheme)

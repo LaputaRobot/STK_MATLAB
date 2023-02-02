@@ -4,7 +4,6 @@ import networkx as nx
 
 from networkx import Graph
 from util import Common, Ctrl
-from config import nparts, MatchOrder, MatchScheme
 from config import coarsen_log as log
 from statistics import *
 
@@ -32,7 +31,7 @@ def coarsen_graph(graph: Graph, ctrl: Ctrl):
     return graph
 
 
-def get_node_order_val(graph: Graph, node):
+def get_node_order_val(graph: Graph, node,ctrl:Ctrl):
     '''
     获取节点匹配时的值, 该值越大, 在匹配时越在先被选择
     :param graph: 原始图
@@ -43,16 +42,16 @@ def get_node_order_val(graph: Graph, node):
     if len(neighbors) == 0:
         return 0
     node_val = 0
-    if MatchOrder == 'Wei':
+    if ctrl.match_order == 'Wei':
         node_val = max([graph.edges[(node, nei)]['wei'] for nei in neighbors])
-    if MatchOrder == 'LoadWeiLoad':
+    if ctrl.match_order == 'LoadWeiLoad':
         node_val = graph.nodes[node]['load']
         for nei in neighbors:
             node_val += (graph.nodes[nei]['load'] +
                          graph.edges[(node, nei)]['wei'])
-    if MatchOrder == 'SumWei':
+    if ctrl.match_order == 'SumWei':
         node_val = graph.degree(node, weight='wei')
-    if MatchOrder == 'SRC':
+    if ctrl.match_order == 'SRC':
         node_val == graph.degree(node)
     return node_val
 
@@ -109,7 +108,7 @@ def match_graph(graph: Graph, ctrl: Ctrl):
     nodes = list(graph.nodes)
     rng.shuffle(nodes)  # 具有相同值的节点，多次迭代时，被选择的顺序不固定
     for node in nodes:
-        unmatched_nodes[node] = get_node_order_val(graph, node)
+        unmatched_nodes[node] = get_node_order_val(graph, node,ctrl)
     sorted_unmatched_nodes = dict(
         sorted(unmatched_nodes.items(), key=lambda x: x[1], reverse=True))
     index = 0
@@ -140,7 +139,7 @@ def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node, ctrl):
     neighbors = list(nx.neighbors(graph, node))
     match_nei = node
     max_wei = -math.inf
-    if MatchScheme == 'WeiDif':
+    if ctrl.match_scheme == 'WeiDif':
         for nei in neighbors:
             if nei in sorted_unmatched_nodes:
                 deepNeighbors = list(nx.neighbors(graph, nei))
@@ -151,7 +150,7 @@ def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node, ctrl):
                 if match_nei == node or nei_wei > max_wei:
                     match_nei = nei
                     max_wei = nei_wei
-    if MatchScheme == 'WeiLoad':
+    if ctrl.match_scheme == 'WeiLoad':
         for nei in neighbors:
             if nei in sorted_unmatched_nodes:
                 nei_wei = graph.nodes[nei]['load'] + \
@@ -159,7 +158,7 @@ def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node, ctrl):
                 if match_nei == node or nei_wei > max_wei:
                     match_nei = nei
                     max_wei = nei_wei
-    if MatchScheme == 'SRC':
+    if ctrl.match_scheme == 'SRC':
         for nei in neighbors:
             if nei in sorted_unmatched_nodes and graph.nodes[nei]['load']+graph.nodes[node]['load'] <= ctrl.max_v_wgt:
                 nei_wei = graph.edges[(node, nei)]['wei']

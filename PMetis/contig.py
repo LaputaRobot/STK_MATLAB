@@ -98,13 +98,13 @@ def better_balance(c_w, p1_w, p2_w, graph: Graph, ctrl):
     nrm2 = 0
     max1 = 0
     max2 = 0
-    pij = 1/graph.graph['sum_val']/(1/nparts)
+    pij = 1/graph.graph['sum_val']/(1/ctrl.nparts)
 
-    tmp1 = pij*(p1_w+c_w) - un_factor
+    tmp1 = pij*(p1_w+c_w) - ctrl.un_factor
     nrm1 += tmp1*tmp1
     max1 = max(max1, tmp1)
 
-    tmp2 = pij*(p2_w + c_w) - un_factor
+    tmp2 = pij*(p2_w + c_w) - ctrl.un_factor
     nrm2 += tmp2*tmp2
     max2 = max(max2, tmp2)
     if max2 < max1:

@@ -204,13 +204,13 @@ def compute_2way_partition_params(graph: Graph):
     graph.graph['node_ed'] = node_ed
 
 
-def compute_load_imbalance(graph: Graph, n):
+def compute_load_imbalance(graph: Graph, n, ctrl:Ctrl):
     p_vals = graph.graph['p_vals']
     max_p_vals = max(p_vals)
     sum_val = sum(p_vals)
     tar_p_val = sum_val/n
     pij = 1/sum_val/(1/n)
-    ub_vec = pow(un_factor, 1/math.log(nparts))
+    ub_vec = pow(ctrl.un_factor, 1/math.log(ctrl.nparts))
     return max_p_vals*pij-ub_vec
 
 def project_2Way_partition(ctrl: Ctrl, cgraph: Graph):

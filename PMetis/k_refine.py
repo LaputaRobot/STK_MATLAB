@@ -82,9 +82,9 @@ def project_k_way_partition(ctrl: Ctrl, graph: Graph):
 
 def refine_k_way(graph: Graph, o_graph: Graph, ctrl: Ctrl):
     num_comps = find_components(graph)
-    ctrl.contiguous = contiguous
+    contiguous = ctrl.contiguous
     n_level = graph.graph['level']
-    if contiguous and num_comps > nparts:
+    if contiguous and num_comps > ctrl.nparts:
         eliminate_components(graph, ctrl)
         compute_k_way_boundary(graph, ctrl, BALANCE)
         greedy_k_way_opt(graph, ctrl, 5, 0, BALANCE)
@@ -99,7 +99,7 @@ def refine_k_way(graph: Graph, o_graph: Graph, ctrl: Ctrl):
             compute_k_way_boundary(graph, ctrl, REFINE)
         greedy_k_way_opt(graph, ctrl, ctrl.niter, 5, REFINE)
         if contiguous and i == n_level / 2:
-            if find_components(graph) > nparts:
+            if find_components(graph) > ctrl.nparts:
                 eliminate_components(graph, ctrl)
             if not is_balanced(ctrl, graph, 0.02):
                 ctrl.contiguous = 1
@@ -115,7 +115,7 @@ def refine_k_way(graph: Graph, o_graph: Graph, ctrl: Ctrl):
         project_k_way_partition(ctrl, graph)
         compute_k_way_params(graph)
     ctrl.contiguous = contiguous
-    if contiguous and find_components(graph) > nparts:
+    if contiguous and find_components(graph) > ctrl.nparts:
         eliminate_components(graph, ctrl)
     if not is_balanced(ctrl, graph, 0):
         compute_k_way_boundary(graph, ctrl, BALANCE)
@@ -125,7 +125,7 @@ def refine_k_way(graph: Graph, o_graph: Graph, ctrl: Ctrl):
 
 
 def is_balanced(ctrl: Ctrl, graph: Graph, f_factor):
-    return compute_load_imbalance(graph, nparts) <= f_factor
+    return compute_load_imbalance(graph, ctrl.nparts, ctrl) <= f_factor
 
 
 
@@ -151,9 +151,9 @@ def get_refine_gain(graph: Graph, node):
 
 
 def greedy_k_way_opt(graph: Graph, ctrl: Ctrl, n_iter, f_factor, mode):
-    tar_p_wgt = 1/nparts*graph.graph['sum_val']
-    min_p_wgt = tar_p_wgt*(1/un_factor)
-    max_p_wgt = tar_p_wgt*un_factor
+    tar_p_wgt = 1/ctrl.nparts*graph.graph['sum_val']
+    min_p_wgt = tar_p_wgt*(1/ctrl.un_factor)
+    max_p_wgt = tar_p_wgt*ctrl.un_factor
     queue = []
     node_status = {}
     log.debug('Optimize {}, n_iter: {}, f_factor: {}'.format(mode,n_iter, f_factor))
@@ -196,7 +196,7 @@ def greedy_k_way_opt(graph: Graph, ctrl: Ctrl, n_iter, f_factor, mode):
                         'weight of from_part too small, skip {}'.format(node))
                     continue
 
-            if contiguous and is_articulation_node(graph, node):
+            if ctrl.contiguous and is_articulation_node(graph, node):
                 log.debug('is_articulation, skip {}'.format(node))
                 continue
 

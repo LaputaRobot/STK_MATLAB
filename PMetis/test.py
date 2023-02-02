@@ -19,7 +19,8 @@ from PyMetis import edge_equal
 from getSatLoad import getLoad
 from config import *
 from pmetis import *
-from util import pprint_with_indent
+from util import pformat_with_indent
+from concurrent.futures import ThreadPoolExecutor,as_completed
 
 # from util import draw_result_with_time, get_lbr
 
@@ -172,29 +173,59 @@ def testPQueue():
         item=heapq.heappop(q)
         print(item)
 
+def fun1():
+    p=1
+
 def test_grammar():
     dic={'name':'y','age':12}
     dic_copy=dic
     dic_copy['name']='z'
-    print(dic)
 
     lis=[1,2,3]
     lis_copy=lis
     # lis_copy[0]=2
     # print(lis)
     lis[0]=2
-    print(lis_copy)
+
+    for p in range(4,5):
+        for i in range(10):
+            print(p)
+            fun1()
+    
 
 
 def test_log():
-    from config import coarsen_log as log
+    # from config import coarsen_log as log
+    logger = logging.getLogger('test')
+    logger.setLevel(LOG_LEVEL)
+
+    formatter = logging.Formatter('%(filename)-15s:%(lineno)d - %(funcName)s - %(message)s')
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    logger.info('info')
+    logger.debug('debug')
+    print('print')
     # import util.log as n_log
-    log.debug('debug')
-    log.info('info')
+    # log.debug('debug')
+    # log.info('info')
+
+def get_html(times):
+    time.sleep(times%2)
+    # print("get page {}s finished".format(times))
+    return times
 
 def test_pprint():
     s = pformat([i for i in range(20)], indent=20,width=30,compact=True)
     print(s)
+
+
+def test_thread_pool():
+    executor=ThreadPoolExecutor(max_workers=50)
+    tasks=[executor.submit(get_html,i) for i in range(50)]
+    for f in as_completed(tasks):
+        print('{}: {} done'.format(time.asctime() ,f.result()))
 
 if __name__ == '__main__':
     # testlog()
@@ -203,8 +234,9 @@ if __name__ == '__main__':
     # test_grammar()
     # test_pprint()
     # test_log()
-    pprint_with_indent([i for i in range(20)], width=30,compact=True)
-
+    test_thread_pool()
+    # pprint_with_indent([i for i in range(20)], width=30,compact=True)
+    # print(os.cpu_count())
     # G = nx.Graph()
     # G.add_edge(0, 1)
     # G.add_edge(0, 2, wei=3)

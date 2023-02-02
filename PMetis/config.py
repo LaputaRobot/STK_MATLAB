@@ -5,33 +5,38 @@ import logging
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
 # AssignScheme = 'METIS'
-AssignScheme = 'PyMETIS'
+AssignScheme = 'PyMetis'
 
-Rewrite = True
-# Rewrite = False
+# Rewrite = True
+Rewrite = False
 
-LogDestination = 's,f'
-# LogDestination = 's'
+LogToScreen = 's'
+LogToFile = 'f'
 
 # PyMetis参数设置
-nparts = 8
 
-# MatchOrder = 'Wei'
-# MatchOrder = 'LoadWeiLoad'
-# MatchOrder = 'SumWei'
-MatchOrder = 'SRC'
 
-# MatchScheme = 'WeiDif'
-# MatchScheme = 'WeiLoad'
-MatchScheme = 'SRC'
+MO_Wei = 'Wei'
+MO_LoadWeiLoad = 'LoadWeiLoad'
+MO_SumWei = 'SumWei'
+MO_SRC = 'SRC'
+
+MS_WeiDif = 'WeiDif'
+MS_WeiLoad = 'WeiLoad'
+MS_SRC = 'SRC'
 
 allow_err = sys.float_info.epsilon * 100
 
-un_factor = 2.2
+
 max_allow_bal = 0.005
-contiguous = True
 
 
+LOG_LEVEL = logging.WARN
+COARSEN_LOG_LEVEL = logging.WARN
+INIT_PART_LOG_LEVEL = logging.WARN
+K_REFINE_LOG_LEVEL = logging.WARN
+TWO_REFINE_LOG_LEVEL = logging.WARN
+CONTIGUOUS_LOG_LEVEL = logging.WARN
 
 # BalCon 算法参数配置
 MCS = 3
@@ -67,12 +72,7 @@ MATRIX = [[0] * 24,
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
           [0] * 24, [0] * 24]
 
-LOG_LEVEL = logging.INFO
-COARSEN_LOG_LEVEL = logging.WARNING
-INIT_PART_LOG_LEVEL = logging.WARNING
-K_REFINE_LOG_LEVEL = logging.INFO
-TWO_REFINE_LOG_LEVEL = logging.WARNING
-CONTIGUOUS_LOG_LEVEL = logging.INFO
+
 
 
 def get_logger(name,log_level):

@@ -3,13 +3,14 @@ import copy
 from util import Common, getIndex, getLEO, pprintDict
 
 
-def gen_metis_file(time, common: Common):
+def gen_metis_file(common: Common):
     """
     基于时间戳生成用于metis程序输入的文件
 
     :param common:
     :param time: 时间戳
     """
+    time = common.time
     f = open('MetisTopos/{}'.format(time), 'w')
     G = common.graph
     link_load = common.link_load

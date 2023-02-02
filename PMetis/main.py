@@ -2,36 +2,40 @@ import logging
 import os
 import shutil
 import sys
+import time
+import multiprocessing
 
-from PyMetis import run_metis_main
+from PyMetis import run_metis_main,run_py_metis_con
 from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
 from balcon import bal_con_assign
-from config import AssignScheme, assignment1, MCS, MSSLS, Rewrite, assignment2, LogDestination
+from config import *
 from greedy import greedy_alg1
 from metis import gen_metis_file, read_metis_result
-from util import gen_topology, Common, new_file, get_log_handlers
+from concurrent.futures import ThreadPoolExecutor,as_completed
+from util import gen_topology, Common, new_file, get_log_handlers, Ctrl 
 
 if __name__ == '__main__':
     dirname, filename = os.path.split(os.path.abspath(__file__))
     files = os.listdir(os.path.join(dirname,'topos'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     t_index = 0
-    for f in files[:1]:
+    # executor = ThreadPoolExecutor(max_workers=10)
+    # tasks=[]
+    pool=multiprocessing.Pool(processes=8)
+    for f in files[:50]:
         t = int(f.split('.')[0])
         t_index += 1
         print('\n\033[1;36m','+'*77,"时隙: {}, {}".format(t_index, t),'+'*77,'\033[0m')
         assignment = None
         if AssignScheme == 'Greedy':
-            G = gen_topology(t)
-            common = Common(G)
+            common = Common(t)
             assignment = greedy_alg1(common)
         elif AssignScheme == 'SamePlane':
             assignment = assignment1
         elif AssignScheme == 'BalCon':
             bal_assign_f = 'balcon/{}/{}-{}.ass'.format(t, MCS, MSSLS)
             if not os.path.exists(bal_assign_f) or Rewrite:
-                G = gen_topology(t)
-                common = Common(G)
+                common = Common(t)
                 bal_log_f = 'balcon/{}/{}-{}.log'.format(t, MCS, MSSLS)
                 new_file(bal_log_f)
                 logger = logging.getLogger('{}'.format(t))
@@ -49,9 +53,8 @@ if __name__ == '__main__':
             metisFile = 'MetisTopos/{}'.format(t)
             common = None
             if not os.path.exists(metisFile):
-                G = gen_topology(t)
-                common = Common(G)
-                gen_metis_file(t, common)
+                common = Common(t)
+                gen_metis_file(common)
             scheme = 'src'
             for p in range(8, 9):
                 for ufactor in range(100, 3000, 100):
@@ -62,16 +65,14 @@ if __name__ == '__main__':
                             if os.path.exists(assignmentFile) and not Rewrite:
                                 continue
                             if common is None:
-                                G = gen_topology(t)
-                                common = Common(G)
+                                common = Common(t)
                             resultLogFile = 'metis/{}/{}/{}-{}{}{}.log'.format(
                                 scheme, t, p, ufactor, contig, minconn)
                             new_file(resultLogFile)
                             logger = logging.getLogger(
                                 '{}-{}-{}-{}'.format(t, p, ufactor, contig))
                             logger.setLevel(logging.INFO)
-                            handlers = get_log_handlers(
-                                LogDestination, resultLogFile)
+                            handlers = get_log_handlers([LogToFile,LogToScreen], resultLogFile)
                             for handler in handlers:
                                 logger.addHandler(handler)
                             # cmd = 'gpmetis {} {} -ufactor={} {} |tee -a {}'.format(metisFile, p, ufactor, contig,
@@ -84,18 +85,43 @@ if __name__ == '__main__':
                             assignment = read_metis_result(
                                 file_name=assignmentFile)
                             analysis(common, assignment, logger)
-        elif AssignScheme == 'PyMETIS':
-            G = gen_topology(t)
-            common = Common(G)
-            logger = logging.getLogger('py_metis')
-            logger.setLevel(logging.INFO)
-            handlers = get_log_handlers('s', None)
-            for handler in handlers:
-                logger.addHandler(handler)
-            part=run_metis_main(common)
-            assignment = {}
-            print(sum([len(part[p]) for p in part]))
-            for p in part:
-                assignment['LEO'+part[p][0]]=['LEO{}'.format(n) for n in part[p]]
-            analysis(common, assignment, logger)
-            # TODO 多次运行结果不同
+        elif AssignScheme == 'PyMetis':
+            common = Common(t)
+            for p in range(8, 9):
+                for ufactor in range(100, 3000, 100):
+                    for match_order in [MO_LoadWeiLoad,MO_SumWei,MO_Wei,MO_SRC]:
+                        for match_scheme in [MS_SRC,MS_WeiDif,MS_WeiLoad]:
+                            for contig in ['-contig','']:
+                                resultLogFile = 'pymetis/{}/{}-{}-{}-{}{}.log'.format(
+                                     t, p, ufactor,match_order, match_scheme, contig)
+                                if os.path.exists(resultLogFile) and not Rewrite:
+                                    continue
+                                new_file(resultLogFile)
+                                
+                                ctrl=Ctrl()
+                                ctrl.contiguous = True if contig == '-contig' else False
+                                ctrl.nparts = p
+                                ctrl.un_factor =1+ ufactor/1000
+                                ctrl.match_order = match_order
+                                ctrl.match_scheme = match_scheme
+                                # tasks.append(executor.submit(run_py_metis_con, common, ctrl, logger,task_id))
+                                pool.apply_async(run_py_metis_con, (common, ctrl, resultLogFile,))
+                                # run_metis_main(common, ctrl)
+                                # parts=run_metis_main(common, ctrl)
+                                # assignment = {}
+                                # for part in parts:
+                                #     assignment['LEO'+parts[part][0]]=['LEO{}'.format(n) for n in parts[part]]
+                                # analysis(common, assignment, logger)
+    pool.close()
+    pool.join()   #调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束
+    print("Sub-process(es) done.")                                
+    # for task in as_completed(tasks):
+    #     print('{:.3f}: task-{} done'.format(time.time() ,task.result()))                                
+    # index=1
+    # while index<20:
+    #     index+=1
+    #     time.sleep(1)
+    #     print(time.time())
+    #     for task in tasks:
+    #         print('{}'.format(task.done()))
+        

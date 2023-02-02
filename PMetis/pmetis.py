@@ -17,7 +17,7 @@ from pprint import pprint
 
 
 def M_level_recur_bisect(o_graph: Graph, graph: Graph, ctrl: Ctrl, nParts, fPart):
-    log.debug('# {}, nparts: {:>2.0f}, sum_val: {}'.format(
+    log.info('# {}, nParts: {:>2.0f}, sum_val: {}'.format(
         graph.number_of_nodes(), nParts, graph.graph['sum_val']))
     # log.info('nodes: {}'.format(list(graph.nodes)))
 
@@ -89,7 +89,7 @@ def multilevel_bisect(graph: Graph, ctrl: Ctrl):
         # if abs(src_cut-graph.graph['cut']) > allow_err:
         #     log.info(
         #         "有效----------------------------------------    {}".format(src_cut-graph.graph['cut']))
-        cur_bal = compute_load_imbalance(graph, 2)
+        cur_bal = compute_load_imbalance(graph, 2, ctrl)
         log.info('bal: {:>7.4f}\n'.format(cur_bal))
         if i == 0 or (cur_bal < max_allow_bal and graph.graph['cut'] < min_cut) or (
                 best_bal > max_allow_bal and cur_bal < best_bal):
@@ -125,13 +125,13 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         # print('初始二分迭代{}'.format(seed), end=': \n')
         rng = default_rng(seed+ctrl.seed*ctrl.nIparts)
         start_node = rng.choice(list(graph.nodes))
-        partition0 = set()
-        touched_node = set()
-        untouched_node = set(graph.nodes)
+        partition0 = []
+        touched_node = []
+        untouched_node = list(graph.nodes)
         p0_val = 0
         queue = collections.deque()
         queue.append(start_node)
-        touched_node.add(start_node)
+        touched_node.append(start_node)
         untouched_node.remove(start_node)
         drain = False
         # log.info('{}, {}'.format(seed+ctrl.seed*ctrl.nIparts, start_node))
@@ -140,17 +140,16 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
             if len(queue) == 0:
                 if len(untouched_node) == 0 or drain:
                     break
-                start_node = rng.choice(list(untouched_node))
+                start_node = rng.choice(untouched_node)
                 queue.append(start_node)
-                touched_node.add(start_node)
+                touched_node.append(start_node)
                 untouched_node.remove(start_node)
             node = queue.popleft()
             if p0_val > 0 and sum_val-p0_val-graph.nodes[node]['load'] < min_p_wei:
                 drain = True
                 continue
-            partition0.add(node)
+            partition0.append(node)
             graph.nodes[node]['belong'] = 0
-            # print('add node {}'.format(node))
             p0_val += graph.nodes[node]['load']
             if sum_val-p0_val <= max_p_wei:
                 break
@@ -159,7 +158,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
             neighbors = nx.neighbors(graph, node)
             for nei in neighbors:
                 if nei not in touched_node:
-                    touched_node.add(nei)
+                    touched_node.append(nei)
                     untouched_node.remove(nei)
                     queue.append(nei)
         for node in graph.nodes:
@@ -173,6 +172,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         # 优化扩张后的二分图
         # print('优化前 {}'.format(nx.is_connected(graph.subgraph(partition0))))
         compute_2way_partition_params(graph)
+        log.debug('p0: {}'.format(partition0))
         src_cut = graph.graph['cut']
         swaps = FM_2WayRefine(graph, ctrl)
         # 验证
@@ -182,15 +182,15 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         s = []
         for node in graph.nodes:
             if graph.nodes[node]['belong'] == 0:
-                partition0.add(node)
+                partition0.append(node)
             if where[node] != graph.nodes[node]['belong']:
                 s.append(node)
         for node in swaps:
             if node in src_partition0:
                 my_s.remove(node)
             else:
-                my_s.add(node)
-        assert my_s == partition0
+                my_s.append(node)
+        assert set(my_s) == set(partition0)
         assert set(s) == set(swaps)
 
         log.debug('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],

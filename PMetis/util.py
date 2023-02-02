@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 from networkx import path_weight, Graph
-from config import MATRIX, log, contiguous
+from config import MATRIX, log, LogToFile, LogToScreen
 from pprint import pformat
 
 
@@ -45,13 +45,12 @@ def get_time(f):
 
 
 def get_log_handlers(des, file):
-    d = str.split(des, ',')
     handlers = []
-    if 'f' in d:
+    if LogToFile in des:
         handler = logging.FileHandler(file)
         handler.terminator = ''
         handlers.append(handler)
-    if 's' in d:
+    if LogToScreen in des:
         handler = logging.StreamHandler()
         handler.terminator = ''
         handlers.append(handler)
@@ -309,12 +308,13 @@ def get_edge_load(graph, pair_load, pair_path_delay):
 
 class Common():
 
-    def __init__(self, graph: Graph):
-        self.graph = graph
-        self.pair_load = get_pair_load(graph)
-        self.pair_path_delay = get_pair_delay(graph)
+    def __init__(self, t):
+        self.time = t
+        self.graph = gen_topology(t)
+        self.pair_load = get_pair_load(self.graph)
+        self.pair_path_delay = get_pair_delay(self.graph)
         self.link_load = get_edge_load(
-            graph, self.pair_load, self.pair_path_delay)
+            self.graph, self.pair_load, self.pair_path_delay)
 
 
 class Ctrl():
@@ -326,8 +326,18 @@ class Ctrl():
         self.seed = 0
         self.ubfactors = 1.13
         self.max_v_wgt = 0
-        self.contiguous = contiguous
+        self.contiguous = True
+        self.nparts = 8
+        self.un_factor= 2.2
+        self.match_order = 'SRC'
+        self.match_scheme = 'SRC'
+        
+    def keys(self):
+        return ('nparts','un_factor','match_order','match_scheme','contiguous' )
 
+    def __getitem__(self, item):
+        return getattr(self, item)
+    
 
 def exch(dicts):
     new_dicts = {}
