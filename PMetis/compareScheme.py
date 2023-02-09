@@ -31,6 +31,8 @@ def get_sum_result(scheme):
                 if scheme == 'metis':
                     args = {"part": args_list[0], "ufactor": args_list[1], "contig": 'contig' in file,
                     'minconn': 'minconn' in file}
+                    if args['minconn']:
+                        continue
                 if scheme == 'balcon':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
                 if scheme == 'pymetis':
@@ -71,7 +73,6 @@ def compare(schemes):
     sum_result = {}
     for scheme in schemes:
         sum_result[scheme] = 0
-    
     for t in files[:50]:
         best_scheme = ''
         setup_time = math.inf
@@ -97,6 +98,7 @@ def compare(schemes):
 if __name__ == '__main__':
     schemes = ['metis', 'balcon','pymetis']
     # schemes = ['metis']
-    for scheme in schemes:
+    # for scheme in schemes:
+    for scheme in ['metis']:
         get_sum_result(scheme)
     compare(schemes)

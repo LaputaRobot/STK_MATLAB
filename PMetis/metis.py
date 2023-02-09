@@ -11,11 +11,14 @@ def gen_metis_file(common: Common):
     :param time: 时间戳
     """
     time = common.time
-    f = open('MetisTopos/{}'.format(time), 'w')
+    f = open('/home/ygb/STK_MATLAB/PMetis/MetisTopos/{}'.format(time), 'w')
     G = common.graph
     link_load = common.link_load
     f.write('{} {} 011\n'.format(len(G.nodes), len(G.edges)))
+    i=1
     for node in G.nodes:
+        assert(getIndex(node)==i)
+        i+=1
         f.write('{} '.format(G.nodes[node]['load'] * 100))
         neighbors = G.neighbors(node)
         for nei in neighbors:

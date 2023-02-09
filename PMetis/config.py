@@ -4,11 +4,11 @@ import logging
 # AssignScheme = 'SamePlane'
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
-# AssignScheme = 'METIS'
-AssignScheme = 'PyMetis'
+AssignScheme = 'METIS'
+# AssignScheme = 'PyMetis'
 
-# Rewrite = True
-Rewrite = False
+Rewrite = True
+# Rewrite = False
 
 LogToScreen = 's'
 LogToFile = 'f'
