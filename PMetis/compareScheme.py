@@ -12,6 +12,10 @@ def get_base_dir(scheme):
         return 'balcon'
     if scheme == 'pymetis':
         return 'pymetis'
+    if scheme == 'parmetis':
+        return  '/home/ygb/STK_MATLAB/PMetis/parmetis/resultlog'
+    if scheme == 'balcon-re':
+        return '/home/ygb/STK_MATLAB/PMetis/parmetis/balcon'
 
 
 def get_sum_result(scheme):
@@ -33,10 +37,12 @@ def get_sum_result(scheme):
                     'minconn': 'minconn' in file}
                     if args['minconn']:
                         continue
-                if scheme == 'balcon':
+                if scheme == 'balcon' or scheme == 'balcon-re':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
                 if scheme == 'pymetis':
                     args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3], "contig": 'contig' in file}
+                if scheme == 'parmetis':
+                    args = {"ubvec":args_list[0],"itr":args_list[1],"seed":args_list[2]}
                 sum_load = 0
                 max_load = 0
                 delay = 0
@@ -95,10 +101,41 @@ def compare(schemes):
         avg_result[scheme] = sum_result[scheme]/50
     print(avg_result)
 
+def get_repart_cost(t,scheme):
+    # TODO 分析两种方案的迁移成本
+    
+
+def repart_compare(schmes):
+    files = os.listdir('/home/ygb/STK_MATLAB/PMetis/parmetis/newpart')
+    files.sort(key=lambda x: int(x.split('.')[0]))
+    print('{:>12} {:>12}, {:>12}, {:>12}'.format(
+        '', 'sum_load', 'max_load', 'delay'))
+    avg_result = {}
+    sum_result = {}
+    for scheme in schemes:
+        sum_result[scheme] = 0
+    for t in files:
+        best_scheme = ''
+        setup_time = math.inf
+        for scheme in schemes:
+            sum_file = os.path.join(get_base_dir(
+                scheme), t, '-{}-sum.json'.format(t))
+            with open(sum_file, 'r') as f:
+                result = json.load(f)
+                print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}, {}'.format(scheme, result['sum_con_loads'],
+                                                                           result['max_con_load'],
+                                                                           result['avg_setup_time'],
+                                                                           result['args']))
+                sum_result[scheme]+= result['avg_setup_time']                                             
+                if result['avg_setup_time'] < setup_time:
+                    best_scheme = scheme
+                    setup_time = result['avg_setup_time']
+        print(
+            '------- slot {:>7}, best scheme is ----- {}\n'.format(t, best_scheme))
+
 if __name__ == '__main__':
-    schemes = ['metis', 'balcon','pymetis']
-    # schemes = ['metis']
-    # for scheme in schemes:
-    for scheme in ['metis']:
+    # schemes = ['metis', 'balcon','pymetis']
+    schemes = ['parmetis','balcon-re']
+    for scheme in schemes:
         get_sum_result(scheme)
-    compare(schemes)
+    # compare(schemes)

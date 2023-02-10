@@ -2,13 +2,12 @@ import copy
 import math
 import time
 
-from config import MCS, MSSLS
 from analysis_result import apply_partition
 from util import Common
 import networkx as nx
 
 
-def bal_con_assign(common: Common, initial_assign, logger):
+def bal_con_assign(common: Common, initial_assign, mcs, mssls, logger):
     start_time = time.time()
     iteration = 1
     assign = initial_assign
@@ -30,11 +29,11 @@ def bal_con_assign(common: Common, initial_assign, logger):
             alternatives.extend(computeMigrationAl(cluster, assign, max_con, max_con_load, common))
             while True:
                 newCluster = increaseCluster(cluster, common)
-                if len(newCluster) > MCS or newCluster == cluster:
+                if len(newCluster) > mcs or newCluster == cluster:
                     break
                 cluster = newCluster
                 alternatives.extend(computeMigrationAl(cluster, assign, max_con, max_con_load, common))
-            if len(alternatives) > MSSLS:
+            if len(alternatives) > mssls:
                 break
         best_alter = getBestAl(alternatives)
         new_assign = copy.deepcopy(assign)
@@ -46,7 +45,8 @@ def bal_con_assign(common: Common, initial_assign, logger):
                     new_assign[best_alter['dstCon']].append(node)
         tmp = {}
         for val in new_assign.values():
-            tmp[val[0]] = val
+            if len(val)>0:
+                tmp[val[0]] = val
         assign_l = copy.deepcopy(assign)
         assign = tmp
         con_loads = apply_partition(g, common.link_load, assign)

@@ -42,6 +42,9 @@ CONTIGUOUS_LOG_LEVEL = logging.WARN
 MCS = 3
 MSSLS = 24
 
+RepartScheme = 'parmetis'
+# RepartScheme = 'balcon'
+
 assignment1 = {'LEO11': ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19'],
                'LEO21': ['LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29'],
                'LEO31': ['LEO31', 'LEO32', 'LEO33', 'LEO34', 'LEO35', 'LEO36', 'LEO37', 'LEO38', 'LEO39'],

@@ -45,7 +45,7 @@ if __name__ == '__main__':
                     logger.addHandler(handler)
                 initialAssign = assignment2
                 f = open(bal_assign_f, 'w')
-                assignment = bal_con_assign(common, initialAssign, logger)
+                assignment = bal_con_assign(common, initialAssign,MCS,MSSLS, logger)
                 analysis(common, assignment, logger)
                 f.write(assignment.__str__())
                 f.close()

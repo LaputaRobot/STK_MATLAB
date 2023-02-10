@@ -96,8 +96,8 @@ def adaptive_repart(t):
         pre_part=get_pre_part1()
         print(pre_part,'\n')
         re_ubvec=np.float32(2.0)
-        options=np.asarray([1,sum([math.pow(2, i) for i in range(11)]),1,1],int) 
-        new_cut, part = adaptive_repart_kway(8, g_xadj, g_adjncy, pre_part, vwgt=g_vwgt, adjwgt=g_adjwgt, ubvec=re_ubvec,itr=1, options=options, comm=comm)   
+        options=np.asarray([1,sum([math.pow(2, i) for i in range(11)]),1,2],int) 
+        new_cut, part = adaptive_repart_kway(9, g_xadj, g_adjncy, pre_part, vwgt=g_vwgt, adjwgt=g_adjwgt, ubvec=re_ubvec,itr=1, options=options, comm=comm)   
         print(new_cut)
         # NOTE: collect to all processes
         parts = comm.allgather(part)
