@@ -33,7 +33,7 @@ if __name__ == '__main__':
         elif AssignScheme == 'SamePlane':
             assignment = assignment1
         elif AssignScheme == 'BalCon':
-            bal_assign_f = 'balcon/{}/{}-{}.ass'.format(t, MCS, MSSLS)
+            bal_assign_f = '/home/ygb/result/part/balcon/{}/{}-{}.ass'.format(t, MCS, MSSLS)
             if not os.path.exists(bal_assign_f) or Rewrite:
                 common = Common(t)
                 bal_log_f = 'balcon/{}/{}-{}.log'.format(t, MCS, MSSLS)
@@ -60,13 +60,13 @@ if __name__ == '__main__':
                 for ufactor in range(100, 3000, 100):
                     for contig in ['-contig', '']:
                         for minconn in ['-minconn', '']:
-                            assignmentFile = 'metis/{}/{}/{}-{}{}{}.ass'.format(
+                            assignmentFile = '/home/ygb/result/part/metis/{}/{}/{}-{}{}{}.ass'.format(
                                 scheme, t, p, ufactor, contig, minconn)
                             if os.path.exists(assignmentFile) and not Rewrite:
                                 continue
                             if common is None:
                                 common = Common(t)
-                            resultLogFile = 'metis/{}/{}/{}-{}{}{}.log'.format(
+                            resultLogFile = '/home/ygb/result/part/metis/{}/{}/{}-{}{}{}.log'.format(
                                 scheme, t, p, ufactor, contig, minconn)
                             new_file(resultLogFile)
                             logger = logging.getLogger(
@@ -92,7 +92,7 @@ if __name__ == '__main__':
                     for match_order in [MO_LoadWeiLoad,MO_SumWei,MO_Wei,MO_SRC]:
                         for match_scheme in [MS_SRC,MS_WeiDif,MS_WeiLoad]:
                             for contig in ['-contig','']:
-                                resultLogFile = 'pymetis/{}/{}-{}-{}-{}{}.log'.format(
+                                resultLogFile = '/home/ygb/result/part/pymetis/{}/{}-{}-{}-{}{}.log'.format(
                                      t, p, ufactor,match_order, match_scheme, contig)
                                 if os.path.exists(resultLogFile) and not Rewrite:
                                     continue

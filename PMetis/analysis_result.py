@@ -1,4 +1,3 @@
-from compareMetisResult import get_min_delay
 from util import *
 
 

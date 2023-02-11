@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 from networkx import path_weight, Graph
-from config import MATRIX, log, LogToFile, LogToScreen
+from config import MATRIX, log, LogToFile, LogToScreen,result_base
 from pprint import pformat
 
 
@@ -156,8 +156,7 @@ def gen_topology(time_slot):
                                controller='', con_load=0, real_load=0)
             # print('LEO{}'.format(src), '>', 'LEO{}'.format(dst))
             graph.add_edge(srcLEO, dstLEO, delay=16.32)
-    dirname = os.path.split(os.path.abspath(__file__))[0]
-    file = os.path.join(dirname, 'topos/{}.log'.format(time_slot))
+    file = os.path.join(result_base, 'part/topos/{}.log'.format(time_slot))
     connections = open(file, 'r').readlines()
     for connect in connections:
         src = connect[:2]

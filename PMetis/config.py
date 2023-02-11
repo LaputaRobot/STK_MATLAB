@@ -1,14 +1,15 @@
 import sys
 import logging
 
+result_base = '/home/ygb/result'
 # AssignScheme = 'SamePlane'
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
 AssignScheme = 'METIS'
 # AssignScheme = 'PyMetis'
 
-Rewrite = True
-# Rewrite = False
+# Rewrite = True
+Rewrite = False
 
 LogToScreen = 's'
 LogToFile = 'f'
@@ -42,8 +43,8 @@ CONTIGUOUS_LOG_LEVEL = logging.WARN
 MCS = 3
 MSSLS = 24
 
-RepartScheme = 'parmetis'
-# RepartScheme = 'balcon'
+# RepartScheme = 'parmetis'
+RepartScheme = 'balcon'
 
 assignment1 = {'LEO11': ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19'],
                'LEO21': ['LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29'],

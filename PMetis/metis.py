@@ -1,7 +1,8 @@
 import copy
+import os
 
 from util import Common, getIndex, getLEO, pprintDict
-
+from config import result_base
 
 def gen_metis_file(common: Common):
     """
@@ -11,7 +12,7 @@ def gen_metis_file(common: Common):
     :param time: 时间戳
     """
     time = common.time
-    f = open('/home/ygb/STK_MATLAB/PMetis/MetisTopos/{}'.format(time), 'w')
+    f = open(os.path.join(result_base, 'partMetisTopos/{}'.format(time)), 'w')
     G = common.graph
     link_load = common.link_load
     f.write('{} {} 011\n'.format(len(G.nodes), len(G.edges)))
