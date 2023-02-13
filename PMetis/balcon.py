@@ -18,8 +18,8 @@ def bal_con_assign(common: Common, initial_assign, mcs, mssls, logger):
     sum_con_load = sum(con_loads.values())
     sum_con_load_l = math.inf
     max_con_load_l = math.inf
-    assign_l = copy.deepcopy(assign)
     while sum_con_load_l > sum_con_load or max_con_load_l > max_con_load:
+        assign_l = copy.deepcopy(assign)
         sum_con_load_l = sum_con_load
         max_con_load_l = max_con_load
         alternatives = []
@@ -43,12 +43,10 @@ def bal_con_assign(common: Common, initial_assign, mcs, mssls, logger):
                 if best_alter['dstCon'] != controller:
                     new_assign[controller].remove(node)
                     new_assign[best_alter['dstCon']].append(node)
-        tmp = {}
+        assign ={}
         for val in new_assign.values():
             if len(val)>0:
-                tmp[val[0]] = val
-        assign_l = copy.deepcopy(assign)
-        assign = tmp
+                assign[val[0]] = val
         con_loads = apply_partition(g, common.link_load, assign)
         max_con = max(con_loads, key=con_loads.get)
         max_con_load = con_loads[max_con]

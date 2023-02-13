@@ -11,6 +11,7 @@ import numpy as np
 from pprint import pprint,pformat
 import networkx as nx
 import numpy.random
+import multiprocessing
 
 from matplotlib import pyplot as plt
 from networkx import Graph
@@ -19,7 +20,7 @@ from PyMetis import edge_equal
 from getSatLoad import getLoad
 from config import *
 from pmetis import *
-from util import pformat_with_indent
+from util import pformat_with_indent,get_time
 from concurrent.futures import ThreadPoolExecutor,as_completed
 
 # from util import draw_result_with_time, get_lbr
@@ -227,14 +228,60 @@ def test_thread_pool():
     for f in as_completed(tasks):
         print('{}: {} done'.format(time.asctime() ,f.result()))
 
+@get_time
+def test_get_time():
+    # t1=time.time()
+    sum=0
+    for i in range(992):
+        for j in range(5):
+            sum+=1
+    # print(time.time()-t1)
+
+def put_num(i,ass_l):
+    x = random.randint(1, 10)
+    time.sleep(0.1)
+    if x not in ass_l:
+        # lock.acquire()
+        print('{} add {}'.format(i,x))
+        # ass_l.append(x)
+        ass_l[x] =1
+        # lock.release()
+    else:
+        print('skip: {}'.format(i))
+    
+
+def test_multiprocess():
+    pool=multiprocessing.Pool(processes=5)
+    lock=multiprocessing.Lock()
+    ass_set= set()
+    for i in range(1000):
+        pool.apply_async(put_num,(i,ass_set, lock,))
+    pool.close()
+    pool.join()  
+    
+def printi(i):
+    print(i)
+
 if __name__ == '__main__':
+    # test_multiprocess()
+    lock=multiprocessing.Lock()
+    d=multiprocessing.Manager().dict()
+    pool=multiprocessing.Pool(processes=4)
+    for i in range(100):
+        pool.apply_async(put_num,(i, d,))
+        # pool.apply_async(printi,(i,))
+    pool.close()
+    pool.join() 
+    print(d)
+
+    # test_get_time()
     # testlog()
     # assert_diff_func(8)
     # testPQueue()
     # test_grammar()
     # test_pprint()
     # test_log()
-    test_thread_pool()
+    # test_thread_pool()
     # pprint_with_indent([i for i in range(20)], width=30,compact=True)
     # print(os.cpu_count())
     # G = nx.Graph()
@@ -255,6 +302,4 @@ if __name__ == '__main__':
     # x = list(filter(lambda x: x > 3, lis))
     # print(x)
     # print(lis)
-
-    
    

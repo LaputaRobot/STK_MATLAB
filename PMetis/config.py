@@ -32,7 +32,7 @@ allow_err = sys.float_info.epsilon * 100
 max_allow_bal = 0.005
 
 
-LOG_LEVEL = logging.WARN
+LOG_LEVEL = logging.INFO
 COARSEN_LOG_LEVEL = logging.WARN
 INIT_PART_LOG_LEVEL = logging.WARN
 K_REFINE_LOG_LEVEL = logging.WARN
@@ -43,8 +43,9 @@ CONTIGUOUS_LOG_LEVEL = logging.WARN
 MCS = 3
 MSSLS = 24
 
-# RepartScheme = 'parmetis'
-RepartScheme = 'balcon'
+RepartScheme = 'parmetis'
+# RepartScheme = 'parmetis_vsize'
+# RepartScheme = 'balcon'
 
 assignment1 = {'LEO11': ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19'],
                'LEO21': ['LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29'],
