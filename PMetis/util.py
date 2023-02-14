@@ -330,6 +330,7 @@ class Ctrl():
         self.un_factor= 2.2
         self.match_order = 'SRC'
         self.match_scheme = 'SRC'
+        self.max_v_ubvec = 2
         
     def keys(self):
         return ('nparts','un_factor','match_order','match_scheme','contiguous' )

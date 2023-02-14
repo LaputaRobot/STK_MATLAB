@@ -73,9 +73,11 @@ def parmetis_repart(common,pre_t, t,  ubvec, itr, seed, pre_part_file):
     print('{}-{}-{}.log'.format(ubvec,itr,seed))
     analysis(common, assignment, logger)
 
-def parmetis_analysis():
+def parmetis_analysis(common,t,ubvec,itr,seed, ass_set):
     new_part_file= os.path.join(result_base,'repart/newpart/{}/{}-{}-{}.part'.format(t,ubvec,itr,seed))
-    assignment = read_metis_result(new_part_file, ass_dic)
+    assignment = read_metis_result(new_part_file, ass_set)
+    if assignment is None:
+        return
     result_log= os.path.join(result_base,'repart/resultlog/{}/{}-{}-{}.log'.format(t,ubvec,itr,seed))
     new_file(result_log)
     logger = logging.getLogger('{}'.format(result_log))
@@ -97,14 +99,14 @@ if __name__ == "__main__":
         pre_t=time_slots[t_index-1]
         # ass_dic=multiprocessing.Manager().dict()
         t_index += 1
-        common = Common(t)
         slot_start = time.time()
+        common = Common(t)
         if RepartScheme =='parmetis':
             pre_part_file = get_pre_part(pre_t)
             ubvec_min=16
-            ubvec_max=20
+            ubvec_max=22
             itr_min = 10
-            itr_max = 200
+            itr_max = 300
             seed_min = 1
             seed_max = 10
             new_graph_file = os.path.join(result_base,'part/MetisTopos/{}'.format(t))
@@ -116,31 +118,18 @@ if __name__ == "__main__":
             cmd_t1=time.time()
             os.system(cmd)
             print('cmd cost: {}'.format(time.time()-cmd_t1))
+            ass_set=set()
             for ubvec in range(ubvec_min,ubvec_max+1): #1.5 -> 2.2
                 for itr in range(itr_min,itr_max+10,10): # 0.01 -0.01-> 0.2
                     for seed in range(seed_min,seed_max+1):
+                        # pool.apply_async(parmetis_analysis, (common, t, ubvec, itr, seed,))
+                        parmetis_analysis(common, t, ubvec, itr, seed,ass_set)
                         # pool.apply_async(repart,(pre_t, t, 8, ubvec, itr, 0, seed, pre_part_file,))
                         # pool.apply_async(parmetis_repart, (common, pre_t, t, ubvec, itr, seed, pre_part_file,))
                         # parmetis_repart(common, pre_t, t, ubvec, itr, seed, pre_part_file)
                         # start_t = time.time()
                         # print('{:>2d} {:>5d} {:>2d}'.format(ubvec,itr,seed))
-                        # TODO 使用多进程进行分析
-                        new_part_file= os.path.join(result_base,'repart/newpart/{}/{}-{}-{}.part'.format(t,ubvec,itr,seed))
-                        assignment = read_metis_result(new_part_file)
-                        result_log= os.path.join(result_base,'repart/resultlog/{}/{}-{}-{}.log'.format(t,ubvec,itr,seed))
-                        new_file(result_log)
-                        logger = logging.getLogger('{}'.format(result_log))
-                        logger.setLevel(logging.INFO)
-                        handlers = get_log_handlers([ LogToFile],result_log)
-                        for handler in handlers:
-                            logger.addHandler(handler)
-                        if assignment is None:
-                            if handlers.__len__()>1:
-                                logger.removeHandler(handlers[1])
-                            logger.info('avg_setup_time: {:>6.2f}\n'.format(300))
-                            continue
-                        print('{}-{}-{}.log'.format(ubvec,itr,seed))
-                        analysis(common, assignment, logger)
+            print('set len: {}'.format(len(ass_set)))          
         print('slot cost: {}'.format(time.time()-slot_start))
         if RepartScheme == 'balcon':
             pre_ass = get_pre_ass(pre_t)

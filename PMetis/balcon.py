@@ -1,10 +1,28 @@
 import copy
 import math
 import time
-
-from analysis_result import apply_partition
-from util import Common
 import networkx as nx
+import logging
+
+
+from analysis_result import apply_partition,analysis
+from util import Common,get_log_handlers,new_file
+from config import assignment2,LogToFile
+
+def run_balcon_parallel(common, mcs, mssls, bal_log_f):
+    new_file(bal_log_f)
+    logger = logging.getLogger('{}'.format(bal_log_f))
+    logger.setLevel(logging.INFO)
+    handlers = get_log_handlers([LogToFile], bal_log_f)
+    for handler in handlers:
+        logger.addHandler(handler)
+    initialAssign = assignment2
+    # f = open(bal_assign_f, 'w')
+    try:
+        assignment = bal_con_assign(common, initialAssign, mcs, mssls, logger)
+    except Exception as e:
+        print('error')
+    analysis(common, assignment, logger)
 
 
 def bal_con_assign(common: Common, initial_assign, mcs, mssls, logger):

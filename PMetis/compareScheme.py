@@ -37,9 +37,8 @@ def get_sum_result(scheme):
                 args_list = str.split(file[:-4], '-')
                 args = {}
                 if scheme == 'metis':
-                    args = {"part": args_list[0], "ufactor": args_list[1], "contig": 'contig' in file,
-                    'minconn': 'minconn' in file}
-                    if args['minconn']:
+                    args = {"part": args_list[0], "ufactor": args_list[1],"seed":args_list[2], "contig": 'contig' in file}
+                    if int(args['seed'])>0:
                         continue
                 if scheme == 'balcon' or scheme == 'balcon-re':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
@@ -47,11 +46,11 @@ def get_sum_result(scheme):
                     args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3], "contig": 'contig' in file}
                 if scheme == 'parmetis':
                     args = {"ubvec":args_list[0],"itr":args_list[1],"seed":args_list[2]}
-                    if not (16<=int(args['ubvec'])<=20 and 10<=int(args['itr'])<=200 and 1<=int(args['seed'])<=9):
+                    if not (16<=int(args['ubvec'])<=22 and 10<=int(args['itr'])<=300 and 1<=int(args['seed'])<=10):
                         continue
                 sum_load = 0
                 max_load = 0
-                delay = 0
+                delay = 300
                 f = open(os.path.join(base_dir, t, file), 'r')
                 lines = f.readlines()
                 ass = {}
@@ -85,10 +84,7 @@ def compare(schemes):
     sum_result = {}
     for scheme in schemes:
         sum_result[scheme] = 0
-    t_index = 0 
-    for t in files[1:50]:
-        pre_t = files[t_index]
-        t_index += 1
+    for t in files[:50]:
         best_scheme = ''
         setup_time = math.inf
         for scheme in schemes:
@@ -100,7 +96,7 @@ def compare(schemes):
                                                                            result['max_con_load'],
                                                                            result['avg_setup_time'],
                                                                            result['args']))
-                sum_result[scheme]+= result['avg_setup_time']                                             
+                sum_result[scheme] += result['avg_setup_time']                                             
                 if result['avg_setup_time'] < setup_time:
                     best_scheme = scheme
                     setup_time = result['avg_setup_time']
@@ -136,7 +132,6 @@ def get_repart_cost(t,pre_t,scheme,args, node_loads):
     获取节点的负载
     """
     
-    # TODO 分析两种方案的迁移成本 
     cost = 0
     if scheme == 'parmetis':
         pre_part_file = os.path.join(result_base, 'repart/prepart/{}'.format(pre_t)) 
@@ -151,7 +146,6 @@ def get_repart_cost(t,pre_t,scheme,args, node_loads):
             if lines_pre[index]!= lines_new[index]:
                 cost += node_loads[index]
     if scheme == 'balcon-re':
-        # TODO 修改balcon返回被迁移的节点，并计算其迁移成本
         pre_ass = get_pre_ass(pre_t)
         pre_part  = get_node_part(pre_ass)
         new_sum_file=os.path.join(result_base, 'repart/balcon/{}/-{}-sum.json'.format(t,t))
@@ -180,7 +174,7 @@ def get_repart_cost(t,pre_t,scheme,args, node_loads):
 
     
 
-def repart_compare(schmes):
+def repart_compare(schemes):
     files = os.listdir(os.path.join(result_base, 'repart/newpart'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     print('{:>12} {:>12}, {:>12}, {:>12}'.format(
@@ -226,9 +220,12 @@ def repart_compare(schmes):
     print(avg_cost)
     # TODO 总负载*时延差*后一时间段长度-节点迁移中断时间长度*被迁移的负载差 两值比较
 
+
+
 if __name__ == '__main__':
-    # schemes = ['metis', 'balcon','pymetis']
-    schemes = ['parmetis','balcon-re']
+    schemes = ['metis', 'balcon','pymetis']
+    # schemes = ['parmetis','balcon-re']
     for scheme in schemes:
         get_sum_result(scheme)
-    repart_compare(schemes)
+    # repart_compare(schemes)
+    compare(schemes)

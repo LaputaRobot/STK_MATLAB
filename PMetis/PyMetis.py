@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 
 from networkx import Graph
 from k_refine import refine_k_way, compute_k_way_params
-from util import Common, get_time, pformat_with_indent,get_log_handlers
+from util import Common, get_time, pformat_with_indent, get_log_handlers
 from coarsen import *
 from pmetis import *
 from pprint import pprint
-from config import  log
+from config import log
 from analysis_result import analysis
 
 
@@ -44,13 +44,15 @@ def init_KWay_partition(graph: Graph, ctrl: Ctrl):
         cut, compute_load_imbalance(graph, ctrl.nparts, ctrl)))
     log.info('*'*40+' finish init kway partion '+'*'*40)
 
-def run_py_metis_con(src_common:Common,ctrl:Ctrl, resultLogFile):
+
+def pymetis_parallel(src_common: Common, ctrl: Ctrl, resultLogFile):
     common = src_common
     common.graph = copy.deepcopy(src_common.graph)
-    parts=run_metis_main(common, ctrl)
+    parts = run_metis_main(common, ctrl)
     assignment = {}
     for part in parts:
-        assignment['LEO'+parts[part][0]]=['LEO{}'.format(n) for n in parts[part]]
+        assignment['LEO'+parts[part][0]
+                   ] = ['LEO{}'.format(n) for n in parts[part]]
     logger = logging.getLogger('{}'.format(resultLogFile))
     logger.setLevel(logging.INFO)
     handlers = get_log_handlers([LogToFile], resultLogFile)
@@ -58,7 +60,8 @@ def run_py_metis_con(src_common:Common,ctrl:Ctrl, resultLogFile):
         logger.addHandler(handler)
     analysis(common, assignment, logger)
 
-def run_metis_main(common: Common,ctrl: Ctrl):
+
+def run_metis_main(common: Common, ctrl: Ctrl):
     origin_graph = gen_init_graph(common.graph, common.link_load)
     ctrl.coarsenTo = max(origin_graph.number_of_nodes() /
                          20 * math.log(ctrl.nparts), 30 * ctrl.nparts)
@@ -69,12 +72,15 @@ def run_metis_main(common: Common,ctrl: Ctrl):
     init_KWay_partition(coarsest_graph, ctrl)
     part, part_val = compute_k_way_params(coarsest_graph)
     log.debug('part: \n {}'.format(pformat_with_indent(part, width=200)))
-    log.info('part_val: \n{}'.format(pformat_with_indent(part_val, compact=True)))    
+    log.info('part_val: \n{}'.format(
+        pformat_with_indent(part_val, compact=True)))
 
     refine_k_way(coarsest_graph, origin_graph, ctrl)
-    log.info('part: \n {}'.format(pformat_with_indent(origin_graph.graph['part'], width=100, compact=True)))
-    log.info('part_val: \n{}'.format(pformat_with_indent(origin_graph.graph['p_vals'], compact=True))) 
-    
+    log.info('part: \n {}'.format(pformat_with_indent(
+        origin_graph.graph['part'], width=100, compact=True)))
+    log.info('part_val: \n{}'.format(pformat_with_indent(
+        origin_graph.graph['p_vals'], compact=True)))
+
     return origin_graph.graph['part']
     # plt.figure(dpi=200)
     # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)

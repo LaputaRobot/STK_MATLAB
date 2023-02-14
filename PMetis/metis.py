@@ -35,7 +35,7 @@ def gen_metis_file(common: Common):
     f.close()
 
 
-def read_metis_result(file_name):
+def read_metis_result(file_name,ass_set=set()):
     '''
     获取metis划分结果
 
@@ -47,12 +47,17 @@ def read_metis_result(file_name):
     result = {}
     lines = f.readlines()
     node = 1
+    ass_str=''
     for line in lines:
         partition = line[:-1]
+        ass_str+=partition
         if result.get(partition) is None:
             result[partition] = []
         result[partition].append(getLEO(node))
         node += 1
+    if ass_str in ass_set:
+        return None
+    ass_set.add(ass_str)
     newR = {}
     for p in result.values():
         newR[p[0]] = p
