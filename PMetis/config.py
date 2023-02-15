@@ -5,11 +5,11 @@ result_base = '/home/ygb/result'
 # AssignScheme = 'SamePlane'
 # AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
-AssignScheme = 'METIS'
-# AssignScheme = 'PyMetis'
+# AssignScheme = 'METIS'
+AssignScheme = 'PyMetis'
 
-# Rewrite = True
-Rewrite = False
+Rewrite = True
+# Rewrite = False
 
 LogToScreen = 's'
 LogToFile = 'f'
@@ -32,12 +32,12 @@ allow_err = sys.float_info.epsilon * 100
 max_allow_bal = 0.005
 
 
-LOG_LEVEL = logging.INFO
-COARSEN_LOG_LEVEL = logging.WARN
-INIT_PART_LOG_LEVEL = logging.WARN
-K_REFINE_LOG_LEVEL = logging.WARN
-TWO_REFINE_LOG_LEVEL = logging.WARN
-CONTIGUOUS_LOG_LEVEL = logging.WARN
+LOG_LEVEL = logging.WARN
+COARSEN_LOG_LEVEL = logging.DEBUG
+INIT_PART_LOG_LEVEL = logging.DEBUG
+K_REFINE_LOG_LEVEL = logging.DEBUG
+TWO_REFINE_LOG_LEVEL = logging.DEBUG
+CONTIGUOUS_LOG_LEVEL = logging.INFO
 
 # BalCon 算法参数配置
 MCS = 3

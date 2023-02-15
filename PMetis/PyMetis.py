@@ -38,6 +38,7 @@ def init_KWay_partition(graph: Graph, ctrl: Ctrl):
     ctrl.nCuts = 4
     ctrl.coarsenTo = 20
     ctrl.niter = 10
+    ctrl.ubfactors = pow(ctrl.un_factor, 1/math.log(ctrl.nparts))
     graph.graph['sum_val'] = sum(graph.nodes[node]['load'] for node in graph)
     cut = M_level_recur_bisect(graph, graph, ctrl, ctrl.nparts, 0)
     log.info('finish init part, cut: {:7.4f}, bal: {:4.3f}'.format(
@@ -65,6 +66,7 @@ def run_metis_main(common: Common, ctrl: Ctrl):
     origin_graph = gen_init_graph(common.graph, common.link_load)
     ctrl.coarsenTo = max(origin_graph.number_of_nodes() /
                          20 * math.log(ctrl.nparts), 30 * ctrl.nparts)
+    # ctrl.coarsenTo = 24
     ctrl.nIparts = 4 if ctrl.coarsenTo == 30 * ctrl.nparts else 5
     log.info('args: \n{}'.format(pformat_with_indent(dict(ctrl))))
     coarsest_graph = coarsen_graph(origin_graph, ctrl)

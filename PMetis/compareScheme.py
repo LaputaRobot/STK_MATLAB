@@ -10,7 +10,7 @@ from util import getIndex
 def get_base_dir(scheme):
     scheme_dir = ''
     if scheme == 'metis':
-        scheme_dir = 'part/metis/src'
+        scheme_dir = 'part/metis/log'
     if scheme == 'balcon':
         scheme_dir = 'part/balcon'
     if scheme == 'pymetis':
@@ -22,11 +22,12 @@ def get_base_dir(scheme):
     return os.path.join(result_base, scheme_dir)
 
 
-def get_sum_result(scheme):
+def get_sum_result(scheme,t_range):
     base_dir = get_base_dir(scheme)
     times = os.listdir(base_dir)
+    times.sort(key=lambda x: int(x.split('.')[0]))
     result = {}
-    for t in times:
+    for t in times[t_range[0]:t_range[1]]:
         result[t] = {"sum_con_loads": 0, "max_con_load": 0, "avg_setup_time": math.inf,
                      "assign": {}, "args": {}}
         result_files = os.listdir(os.path.join(base_dir, t))
@@ -38,8 +39,8 @@ def get_sum_result(scheme):
                 args = {}
                 if scheme == 'metis':
                     args = {"part": args_list[0], "ufactor": args_list[1],"seed":args_list[2], "contig": 'contig' in file}
-                    if int(args['seed'])>0:
-                        continue
+                    # if int(args['seed'])>0:
+                    #     continue
                 if scheme == 'balcon' or scheme == 'balcon-re':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
                 if scheme == 'pymetis':
@@ -54,6 +55,7 @@ def get_sum_result(scheme):
                 f = open(os.path.join(base_dir, t, file), 'r')
                 lines = f.readlines()
                 ass = {}
+                inner_delay = 10000
                 for line in lines:
                     if 'LEO' in line and '[' in line:
                         cols = line.split(':')
@@ -67,24 +69,41 @@ def get_sum_result(scheme):
                         max_load = float(line.split(':')[1])
                     if 'avg_setup_time' in line:
                         delay = float(line.split(' ')[-1])
+                    if 'sum_min_delay' in line:
+                        inner_delay =  float(line.split(' ')[-1])
                 if delay < result[t]['avg_setup_time'] and max_load < 100:
                     result[t] = {"sum_con_loads": sum_load, "max_con_load": max_load,
-                                 "avg_setup_time": delay, "assign": ass, "args": args}
+                                 "avg_setup_time": delay,"sum_min_delay":inner_delay, "assign": ass, "args": args}
         sum_file = open(os.path.join(base_dir, t, '-{}-sum.json'.format(t)), 'w')
         sum_file.write(json.dumps(result[t], indent=4, separators=(',', ': ')))
         sum_file.close()
 
 
-def compare(schemes):
+def compare(schemes,t_range):
     files = os.listdir(os.path.join(result_base, 'part/MetisTopos') )
     files.sort(key=lambda x: int(x.split('.')[0]))
     print('{:>12} {:>12}, {:>12}, {:>12}'.format(
         '', 'sum_load', 'max_load', 'delay'))
-    avg_result = {}
-    sum_result = {}
+    
+    sum_load_avg = {}
+    sum_load_sum = {}
+
+    max_load_avg = {}
+    max_load_sum = {}
+
+    delay_avg = {}
+    delay_sum = {}
+
+    inner_delay_avg = {}
+    inner_delay_sum = {}
     for scheme in schemes:
-        sum_result[scheme] = 0
-    for t in files[:50]:
+        sum_load_sum[scheme] = 0
+        max_load_sum[scheme] = 0
+        delay_sum[scheme] = 0
+        inner_delay_sum[scheme] = 0
+    files= files[t_range[0]:t_range[1]]
+    min_sum = 0
+    for t in files:
         best_scheme = ''
         setup_time = math.inf
         for scheme in schemes:
@@ -92,19 +111,31 @@ def compare(schemes):
                 scheme), t, '-{}-sum.json'.format(t))
             with open(sum_file, 'r') as f:
                 result = json.load(f)
-                print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}, {}'.format(scheme, result['sum_con_loads'],
+                print('{:>12}: {:>12.2f}, {:>12.2f}, {:>12.2f}, {:>12.2f}, {}'.format(scheme, result['sum_con_loads'],
                                                                            result['max_con_load'],
                                                                            result['avg_setup_time'],
+                                                                           result['sum_min_delay'],
                                                                            result['args']))
-                sum_result[scheme] += result['avg_setup_time']                                             
+                sum_load_sum[scheme] += result['sum_con_loads']                                             
+                max_load_sum[scheme] += result['max_con_load']    
+                delay_sum[scheme] += result['avg_setup_time']    
+                inner_delay_sum[scheme] += result['sum_min_delay']                                         
                 if result['avg_setup_time'] < setup_time:
                     best_scheme = scheme
                     setup_time = result['avg_setup_time']
         print(
             '------- slot {:>7}, best scheme is ----- {}\n'.format(t, best_scheme))
+        min_sum+=setup_time
     for scheme in schemes:
-        avg_result[scheme] = sum_result[scheme]/50
-    print(avg_result)
+        sum_load_avg[scheme] = sum_load_sum[scheme]/len(files)
+        max_load_avg[scheme] = max_load_sum[scheme]/len(files)
+        delay_avg[scheme] = delay_sum[scheme]/len(files)
+        inner_delay_avg[scheme] = inner_delay_sum[scheme]/len(files)
+    print(sum_load_avg)
+    print(max_load_avg)
+    print(delay_avg)
+    print(inner_delay_avg)
+    print(min_sum/len(files))
 
 def get_node_loads(t):
     graph_file = os.path.join(result_base, 'part/MetisTopos/{}'.format(t)) 
@@ -223,9 +254,10 @@ def repart_compare(schemes):
 
 
 if __name__ == '__main__':
-    schemes = ['metis', 'balcon','pymetis']
+    schemes = ['metis','pymetis']
+    t_range = [0,50]
     # schemes = ['parmetis','balcon-re']
-    for scheme in schemes:
-        get_sum_result(scheme)
+    # for scheme in schemes:
+    #     get_sum_result(scheme,t_range)
     # repart_compare(schemes)
-    compare(schemes)
+    compare(schemes,t_range)

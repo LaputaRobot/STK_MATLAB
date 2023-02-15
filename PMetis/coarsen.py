@@ -1,17 +1,20 @@
 import math
 import numpy as np
 import networkx as nx
+import heapq
 
 from networkx import Graph
-from util import Common, Ctrl
-from config import coarsen_log as log
+from util import Common, Ctrl, NodeGain
 from statistics import *
+from config import coarsen_log as log
 
 
 def coarsen_graph(graph: Graph, ctrl: Ctrl):
     level = 0
     coarsen_to = ctrl.coarsenTo
     ctrl.max_v_wgt = 1.5*sum(graph.nodes[n]['load'] for n in graph)/coarsen_to
+    # ctrl.max_v_wgt = 20
+    # ctrl.max_v_wgt = ctrl.max_v_ubvec*sum(graph.nodes[n]['load'] for n in graph)/ctrl.nparts
     log.info('# {}, start coarsen graph'.format(graph.number_of_nodes()))
     while True:
         # print( '第{}次粗化'.format(level),end=', ')
@@ -20,7 +23,7 @@ def coarsen_graph(graph: Graph, ctrl: Ctrl):
         coarse_g = gen_coarse_graph(graph, level)
         level += 1
         graph = coarse_g
-        if not (coarsen_to < graph.number_of_nodes() < 0.95 * graph.graph[
+        if not (coarsen_to < graph.number_of_nodes() < 0.85 * graph.graph[
                 'finer'].number_of_nodes() and graph.number_of_edges() > graph.number_of_nodes() / 2):
             # check_sum_load(coarse_g)
             log.info('# {}, stop coarsen graph'.format(
@@ -31,7 +34,7 @@ def coarsen_graph(graph: Graph, ctrl: Ctrl):
     return graph
 
 
-def get_node_order_val(graph: Graph, node,ctrl:Ctrl):
+def get_node_order_val(graph: Graph, node, ctrl: Ctrl):
     '''
     获取节点匹配时的值, 该值越大, 在匹配时越在先被选择
     :param graph: 原始图
@@ -52,7 +55,7 @@ def get_node_order_val(graph: Graph, node,ctrl:Ctrl):
     if ctrl.match_order == 'SumWei':
         node_val = graph.degree(node, weight='wei')
     if ctrl.match_order == 'SRC':
-        node_val == graph.degree(node)
+        node_val = graph.degree(node)
     return node_val
 
 
@@ -102,25 +105,36 @@ def get_match_node_load(graph: Graph, node1, node2):
 def match_graph(graph: Graph, ctrl: Ctrl):
     degrees = list(graph.degree())
     log.debug("# {}, max degree: {}, min: {}, avg: {:3.1f}".format(graph.number_of_nodes(), max(degrees, key=lambda x: x[1])[1],
-                                                                  min(degrees, key=lambda x: x[1])[1], mean([d[1] for d in degrees]),))
-    unmatched_nodes = {}
+                                                                   min(degrees, key=lambda x: x[1])[1], mean([d[1] for d in degrees]),))
+    # unmatched_nodes = {}
     rng = np.random.default_rng(ctrl.seed)
     nodes = list(graph.nodes)
     rng.shuffle(nodes)  # 具有相同值的节点，多次迭代时，被选择的顺序不固定
+    unmatched_nodes = []
+    unmatched_node_set = set()
     for node in nodes:
-        unmatched_nodes[node] = get_node_order_val(graph, node,ctrl)
-    sorted_unmatched_nodes = dict(
-        sorted(unmatched_nodes.items(), key=lambda x: x[1], reverse=True))
+        unmatched_nodes.append(
+            NodeGain(node, get_node_order_val(graph, node, ctrl)))
+        unmatched_node_set.add(node)
+    # sorted_unmatched_nodes = dict(
+    #     sorted(unmatched_nodes.items(), key=lambda x: x[1], reverse=True))
     index = 0
-    while len(sorted_unmatched_nodes) > 0:
-        node = list(sorted_unmatched_nodes.keys())[0]
+    heapq.heapify(unmatched_nodes)
+    while len(unmatched_nodes) > 0:
+        best_node_g = heapq.heappop(unmatched_nodes)
+        node = best_node_g.node
+        unmatched_node_set.remove(node)
+        # node = list(sorted_unmatched_nodes.keys())[0]
         match_nei = get_matched_neighbor(
-            graph, sorted_unmatched_nodes, node, ctrl)
+            graph, unmatched_node_set, node, ctrl)
         if match_nei != node:
             graph.nodes[match_nei]['belong'] = index
-            sorted_unmatched_nodes.pop(match_nei)
+            unmatched_nodes.remove(NodeGain(match_nei, 1))
+            unmatched_node_set.remove(match_nei)
+            heapq.heapify(unmatched_nodes)
+            # sorted_unmatched_nodes.pop(match_nei)
         graph.nodes[node]['belong'] = index
-        sorted_unmatched_nodes.pop(node)
+        # sorted_unmatched_nodes.pop(node)
         # if match_nei is not None and max_wei > 0 and get_match_node_load(graph, node, match_nei) < 100:
         index += 1
     # new_p = 0
@@ -135,32 +149,32 @@ def match_graph(graph: Graph, ctrl: Ctrl):
     return graph
 
 
-def get_matched_neighbor(graph: Graph, sorted_unmatched_nodes, node, ctrl):
+def get_matched_neighbor(graph: Graph, unmatched_node_set, node, ctrl):
     neighbors = list(nx.neighbors(graph, node))
     match_nei = node
-    max_wei = -math.inf
+    max_wei = - math.inf
     if ctrl.match_scheme == 'WeiDif':
         for nei in neighbors:
-            if nei in sorted_unmatched_nodes:
+            if nei in unmatched_node_set:
                 deepNeighbors = list(nx.neighbors(graph, nei))
                 nei_wei = graph.edges[(node, nei)]['wei']
                 for neiNei in deepNeighbors:
                     if neiNei != node:
                         nei_wei -= graph.edges[nei, neiNei]['wei']
-                if match_nei == node or nei_wei > max_wei:
+                if graph.nodes[nei]['load'] + graph.nodes[node]['load'] <= ctrl.max_v_wgt and nei_wei > max_wei:
                     match_nei = nei
                     max_wei = nei_wei
     if ctrl.match_scheme == 'WeiLoad':
         for nei in neighbors:
-            if nei in sorted_unmatched_nodes:
+            if nei in unmatched_node_set:
                 nei_wei = graph.nodes[nei]['load'] + \
                     graph.edges[(node, nei)]['wei']
-                if match_nei == node or nei_wei > max_wei:
+                if graph.nodes[nei]['load'] + graph.nodes[node]['load'] <= ctrl.max_v_wgt and nei_wei > max_wei:
                     match_nei = nei
                     max_wei = nei_wei
     if ctrl.match_scheme == 'SRC':
         for nei in neighbors:
-            if nei in sorted_unmatched_nodes and graph.nodes[nei]['load']+graph.nodes[node]['load'] <= ctrl.max_v_wgt:
+            if nei in unmatched_node_set and graph.nodes[nei]['load'] + graph.nodes[node]['load'] <= ctrl.max_v_wgt:
                 nei_wei = graph.edges[(node, nei)]['wei']
                 if match_nei == node or nei_wei > max_wei:
                     match_nei = nei
