@@ -17,24 +17,25 @@ def get_pre_part(t):
     pre_part_file= os.path.join(result_base, 'repart/prepart/{}'.format(t))
     if os.path.exists(pre_part_file):
         return pre_part_file
-    sum_file= os .path.join(result_base, 'part/metis/src/{}/-{}-sum.json'.format(t,t))
-    pre_graph_file = os.path.join(result_base, 'part/MetisTopos/{}'.format(t))
+    new_file(pre_part_file)
+    sum_file= os .path.join(result_base, 'part/metis/log/{}/-{}-sum.json'.format(t,t))
+    # pre_graph_file = os.path.join(result_base, 'part/MetisTopos/{}'.format(t))
     args= {}
     cmd = ''
     with open(sum_file, 'r') as f:
         result = json.load(f)
-        args=result['args']
+        args = result['args']
     contig='-contig' if args['contig'] else ''
-    minconn='-minconn' if args['minconn'] else ''
-    part_file = '{}.part.{}'.format(pre_graph_file, args['part'])
+    # minconn='-minconn' if args['minconn'] else ''
+    part_file =os.path.join(result_base, 'part/metis/part/{}/{}-{}-{}{}.part'.format(t, args['part'],args['ufactor'],args['seed'],contig)) 
     
-    cmd = 'gpmetis {} {} -ufactor={} {} {} '.format(pre_graph_file, args['part'], args['ufactor'], contig, minconn)
-    os.system(cmd)
-    shutil.move(part_file, pre_part_file)
+    # cmd = 'gpmetis {} {} -ufactor={} {} {} '.format(pre_graph_file, args['part'], args['ufactor'], contig, minconn)
+    # os.system(cmd)
+    shutil.copy(part_file, pre_part_file)
     return  pre_part_file
 
 def get_pre_ass(t):
-    sum_file=os.path.join(result_base, 'part/metis/src/{}/-{}-sum.json'.format(t,t))
+    sum_file=os.path.join(result_base, 'part/metis/log/{}/-{}-sum.json'.format(t,t))
     pre_ass = {}
     with open(sum_file, 'r') as f:
         result = json.load(f)
@@ -87,15 +88,25 @@ def parmetis_analysis(common,t,ubvec,itr,seed, ass_set):
         logger.addHandler(handler)
     analysis(common, assignment, logger)
 
+def balcon_repart(common, pre_ass, MCS, MSSLS, t):
+    result_log=os.path.join(result_base,'repart/balcon/{}/{}-{}.log'.format(t,MCS,MSSLS))
+    new_file(result_log)
+    logger = logging.getLogger('{}'.format(result_log))
+    logger.setLevel(logging.INFO)
+    handlers = get_log_handlers([LogToFile],result_log)
+    for handler in handlers:
+        logger.addHandler(handler)
+    assignment = bal_con_assign(common, pre_ass, MCS, MSSLS, logger)
+    analysis(common, assignment, logger)
 
 if __name__ == "__main__":
     files = os.listdir(os.path.join(result_base,'part/topos'))
     files.sort(key=lambda x: int(x.split('.')[0]))
     time_slots = [int(f.split('.')[0]) for f in files]
     t_index = 1
-    start_t =time.time()
-    # pool=multiprocessing.Pool(processes=8)
-    for t in time_slots[1:10]:
+    start_t = time.time()
+    pool=multiprocessing.Pool(processes=8)
+    for t in time_slots[10:50]:
         pre_t=time_slots[t_index-1]
         # ass_dic=multiprocessing.Manager().dict()
         t_index += 1
@@ -111,6 +122,7 @@ if __name__ == "__main__":
             seed_max = 10
             new_graph_file = os.path.join(result_base,'part/MetisTopos/{}'.format(t))
             part_file_dir= os.path.join(result_base,'repart/newpart/{}/'.format(t))
+            os.makedirs(part_file_dir, exist_ok=True)
             os.environ["LD_LIBRARY_PATH"]='/home/ygb/parlocal/lib'
             cmd = 'repart {} {} {} 3 0 {} {} {} {} {} {} {} 2 {}'.format(
                 new_graph_file, 8, pre_part_file ,ubvec_min,ubvec_max,itr_min,itr_max,0,seed_min,seed_max,part_file_dir)
@@ -130,29 +142,19 @@ if __name__ == "__main__":
                         # start_t = time.time()
                         # print('{:>2d} {:>5d} {:>2d}'.format(ubvec,itr,seed))
             print('set len: {}'.format(len(ass_set)))          
-        print('slot cost: {}'.format(time.time()-slot_start))
+        # print('slot cost: {}'.format(time.time()-slot_start))
+        print('slot---------------{}----{}------------'.format(pre_t,t))
         if RepartScheme == 'balcon':
             pre_ass = get_pre_ass(pre_t)
             for MCS in range(1,10):
                 for MSSLS in range(15,30):
-                    start_t=time.time()
-                    result_log=os.path.join(result_base,'repart/balcon/{}/{}-{}.log'.format(t,MCS,MSSLS))
-                    new_file(result_log)
-                    logger = logging.getLogger('{}'.format(result_log))
-                    logger.setLevel(logging.INFO)
-                    handlers = get_log_handlers([LogToScreen,LogToFile],result_log)
-                    for handler in handlers:
-                        logger.addHandler(handler)
-                    # for part in pre_ass.values():
-                    #     print(part)
-                    # print()
-                    assignment = bal_con_assign(common, pre_ass, MCS, MSSLS, logger)
-                    # for part in assignment.values():
-                    #     print(part)
-                    # print()
-                    analysis(common, assignment, logger)
+                    # assignment = bal_con_assign(common, pre_ass, MCS, MSSLS, logger)
+                    # analysis(common, assignment, logger)
+
+                    pool.apply_async(balcon_repart,(common, pre_ass, MCS, MSSLS, t,))
+                    # balcon_repart(common, pre_ass, MCS, MSSLS, t)
                     # cost_t = time.time()-start_t
                     # print('cost time: {}'.format(cost_t))
-    # pool.close()
-    # pool.join()   #调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束
+    pool.close()
+    pool.join()   #调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束
     print("Sub-process(es) done in {}.".format(time.time()-start_t)) 

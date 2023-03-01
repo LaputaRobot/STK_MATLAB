@@ -6,6 +6,7 @@ import os
 import linecache
 import matplotlib.pyplot as plt
 import networkx as nx
+import numpy as np
 
 from networkx import path_weight, Graph
 from config import MATRIX, log, LogToFile, LogToScreen,result_base
@@ -197,8 +198,13 @@ def get_delay(src, dst, time):
     dirname = os.path.split(os.path.abspath(__file__))[0]
     file = os.path.join(dirname, '../data/72-d/{}-{}.csv'.format(src, dst))
     f = open(file, 'r')
-    line = f.readlines()[int(time / 10) + 1].split(',')
+    try:
+        line = f.readlines()[int(time / 10) + 1].split(',')
+    except Exception as e:
+        print(file)
+        print(int(time / 10) + 1)
     return float(line[1]) / (3 * 10 ** 5)
+
 
 
 def get_all_load(graph: Graph):
@@ -310,6 +316,7 @@ class Common():
     def __init__(self, t):
         self.time = t
         self.graph = gen_topology(t)
+        # print('num of links',self.graph.number_of_edges())
         self.pair_load = get_pair_load(self.graph)
         self.pair_path_delay = get_pair_delay(self.graph)
         self.link_load = get_edge_load(
@@ -331,6 +338,7 @@ class Ctrl():
         self.match_order = 'SRC'
         self.match_scheme = 'SRC'
         self.max_v_ubvec = 2
+        self.rng = np.random.default_rng(0)
         
     def keys(self):
         return ('nparts','un_factor','match_order','match_scheme','contiguous' )

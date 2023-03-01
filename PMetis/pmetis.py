@@ -74,7 +74,6 @@ def multilevel_bisect(graph: Graph, ctrl: Ctrl):
     best_graph = None
     log.info('+'*25+'-> start # {} multilevel bisect'.format(graph.number_of_nodes()))
     for i in range(ctrl.nCuts):
-        ctrl.seed = i
         log.info('-'*10+'迭代------> {}'.format(i))
         cgraph = coarsen_graph(graph, ctrl)
         init_2way_partition(cgraph, ctrl)
@@ -113,18 +112,18 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
     min_cut = math.inf
     best_cut_graph = None
     unconnected_min_cut = math.inf
-    seed = 0
+    i = 0
 
     min_p_wei = sum_val/2*ctrl.ubfactors
     max_p_wei = 1/ctrl.ubfactors*sum_val/2
     # nx.draw_networkx(graph)
     # plt.show()
-    while seed < ctrl.nIparts or best_cut_graph is None:
-        seed += 1
+    while i < ctrl.nIparts or best_cut_graph is None:
+        i += 1
         # for seed in range(ctrl.nIparts):
         # print('初始二分迭代{}'.format(seed), end=': \n')
-        rng = default_rng(seed+ctrl.seed*ctrl.nIparts)
-        start_node = rng.choice(list(graph.nodes))
+        # rng = default_rng(seed+ctrl.seed*ctrl.nIparts)
+        start_node = ctrl.rng.choice(list(graph.nodes))
         partition0 = []
         touched_node = []
         untouched_node = list(graph.nodes)
@@ -140,7 +139,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
             if len(queue) == 0:
                 if len(untouched_node) == 0 or drain:
                     break
-                start_node = rng.choice(untouched_node)
+                start_node = ctrl.rng.choice(untouched_node)
                 queue.append(start_node)
                 touched_node.append(start_node)
                 untouched_node.remove(start_node)
@@ -193,7 +192,7 @@ def init_2way_partition(graph: Graph, ctrl: Ctrl):
         assert set(my_s) == set(partition0)
         assert set(s) == set(swaps)
 
-        log.debug('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(seed, src_cut, graph.graph['cut'],
+        log.debug('[{}], cut: {:>7.2f} -FL-> {:>5.2f}, p_vals: {} -FL-> {}'.format(i, src_cut, graph.graph['cut'],
                                                                                   [p0_val,
                                                                                    sum_val - p0_val],
                                                                                   graph.graph['p_vals']))

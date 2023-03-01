@@ -259,21 +259,23 @@ def test_multiprocess():
     pool.close()
     pool.join()  
     
-def printi(i):
-    print(i)
+def test_random():
+    rng=np.random.default_rng(1)
+    x=[i for i in range(10)]
+    y=[i for i in range(10)]
+    rng.shuffle(x)
+    rng.shuffle(y)
+    print(x)
+    print(y)
 
+def fun1(lis):
+    lis.append(1)
 if __name__ == '__main__':
     # test_multiprocess()
-    lock=multiprocessing.Lock()
-    d=multiprocessing.Manager().dict()
-    pool=multiprocessing.Pool(processes=4)
-    for i in range(100):
-        pool.apply_async(put_num,(i, d,))
-        # pool.apply_async(printi,(i,))
-    pool.close()
-    pool.join() 
-    print(d)
-
+    lis=[1]
+    fun1(lis)
+    print(lis)
+    # test_random()
     # test_get_time()
     # testlog()
     # assert_diff_func(8)

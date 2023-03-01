@@ -161,12 +161,12 @@ def greedy_k_way_opt(graph: Graph, ctrl: Ctrl, n_iter, f_factor, mode):
         if mode == BALANCE and max(graph.graph['p_vals']) > max_p_wgt:
             break
         old_cut = graph.graph['cut']
-        np.random.seed(i)
+        # np.random.seed(i)
         node_kr_info = graph.graph['node_kr_info']
         node_ed = graph.graph['node_ed']
         node_id = graph.graph['node_id']
         p_vals = graph.graph['p_vals']
-        for node in np.random.choice(graph.graph['boundary'], len(graph.graph['boundary']), replace=False):
+        for node in ctrl.rng.choice(graph.graph['boundary'], len(graph.graph['boundary']), replace=False):
             p = graph.nodes[node]['belong']
             queue.append(NodeGain(node, get_refine_gain(graph, node)))
             node_status[node] = PRESENT

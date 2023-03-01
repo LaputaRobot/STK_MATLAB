@@ -2,10 +2,11 @@ import math
 import os
 import json
 
-from config import Rewrite, result_base
+from config import *
 from repart.repart import get_pre_ass
 from util import getIndex
 
+result_base = '/home/ygb/result_new'
 
 def get_base_dir(scheme):
     scheme_dir = ''
@@ -39,12 +40,17 @@ def get_sum_result(scheme,t_range):
                 args = {}
                 if scheme == 'metis':
                     args = {"part": args_list[0], "ufactor": args_list[1],"seed":args_list[2], "contig": 'contig' in file}
-                    # if int(args['seed'])>0:
-                    #     continue
+                    if int(args['seed'])>0:
+                        continue
                 if scheme == 'balcon' or scheme == 'balcon-re':
                     args = {"MCS": args_list[0], "MSSLS": args_list[1]}
                 if scheme == 'pymetis':
-                    args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3], "contig": 'contig' in file}
+                    # args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3], "contig": 'contig' in file}
+                    args = {"part": args_list[0], "ufactor": args_list[1],'match_order': args_list[2],'match_scheme':args_list[3],'seed': args_list[4] , "contig": 'contig' in file}
+                    # if args['match_order'] != MO_Wei:
+                    if int(args['seed'])>0:
+                        continue
+                    #     continue
                 if scheme == 'parmetis':
                     args = {"ubvec":args_list[0],"itr":args_list[1],"seed":args_list[2]}
                     if not (16<=int(args['ubvec'])<=22 and 10<=int(args['itr'])<=300 and 1<=int(args['seed'])<=10):
@@ -205,9 +211,12 @@ def get_repart_cost(t,pre_t,scheme,args, node_loads):
 
     
 
-def repart_compare(schemes):
+def repart_compare(schemes,t_range):
     files = os.listdir(os.path.join(result_base, 'repart/newpart'))
+    pre_files = os.listdir(os.path.join(result_base, 'repart/prepart'))
     files.sort(key=lambda x: int(x.split('.')[0]))
+    pre_files.sort(key=lambda x: int(x.split('.')[0]))
+
     print('{:>12} {:>12}, {:>12}, {:>12}'.format(
         '', 'sum_load', 'max_load', 'delay'))
     avg_result = {}
@@ -218,10 +227,9 @@ def repart_compare(schemes):
         sum_result[scheme] = 0
         sum_cost[scheme] =0
     t_index = 0
-    files=files[1:]
     slot_num =len(files)
-    for t in files:
-        pre_t = files[t_index]
+    for t in files[t_range[0]:t_range[1]]:
+        pre_t = pre_files[t_index]
         t_index += 1
         node_loads=get_node_loads(t)
         best_scheme = ''
@@ -254,10 +262,10 @@ def repart_compare(schemes):
 
 
 if __name__ == '__main__':
-    schemes = ['metis','pymetis']
+    # schemes = ['balcon','metis','pymetis']
     t_range = [0,50]
-    # schemes = ['parmetis','balcon-re']
-    # for scheme in schemes:
-    #     get_sum_result(scheme,t_range)
-    # repart_compare(schemes)
-    compare(schemes,t_range)
+    schemes = ['balcon-re','parmetis']
+    for scheme in schemes[0:1]:
+        get_sum_result(scheme,t_range)
+    repart_compare(schemes, t_range)
+    # compare(schemes,t_range)

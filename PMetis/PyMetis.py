@@ -39,10 +39,13 @@ def init_KWay_partition(graph: Graph, ctrl: Ctrl):
     ctrl.coarsenTo = 20
     ctrl.niter = 10
     ctrl.ubfactors = pow(ctrl.un_factor, 1/math.log(ctrl.nparts))
+    rng_defore = copy.deepcopy(ctrl.rng) 
+    ctrl.rng = np.random.default_rng(0)
     graph.graph['sum_val'] = sum(graph.nodes[node]['load'] for node in graph)
     cut = M_level_recur_bisect(graph, graph, ctrl, ctrl.nparts, 0)
     log.info('finish init part, cut: {:7.4f}, bal: {:4.3f}'.format(
         cut, compute_load_imbalance(graph, ctrl.nparts, ctrl)))
+    ctrl.rng = rng_defore
     log.info('*'*40+' finish init kway partion '+'*'*40)
 
 
@@ -84,14 +87,3 @@ def run_metis_main(common: Common, ctrl: Ctrl):
         origin_graph.graph['p_vals'], compact=True)))
 
     return origin_graph.graph['part']
-    # plt.figure(dpi=200)
-    # pos = nx.drawing.layout.spring_layout(coarsest_graph,seed=1)
-    # labels = {n: '{}'.format(n.split('-')[1]) for n in pos}
-    # nx.draw(coarsest_graph, pos,labels=labels, with_labels=True)
-    # edge_weight = nx.get_edge_attributes(coarsest_graph, 'wei')
-    # short_wei={}
-    # for edge in edge_weight:
-    #     short_wei[edge]='{:>3.2f}'.format(edge_weight[edge])
-    # print(short_wei)
-    # nx.draw_networkx_edge_labels(coarsest_graph, pos=pos, edge_labels=short_wei)
-    # plt.show()

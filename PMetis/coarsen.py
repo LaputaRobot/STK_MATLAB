@@ -107,9 +107,9 @@ def match_graph(graph: Graph, ctrl: Ctrl):
     log.debug("# {}, max degree: {}, min: {}, avg: {:3.1f}".format(graph.number_of_nodes(), max(degrees, key=lambda x: x[1])[1],
                                                                    min(degrees, key=lambda x: x[1])[1], mean([d[1] for d in degrees]),))
     # unmatched_nodes = {}
-    rng = np.random.default_rng(ctrl.seed)
+    # rng = np.random.default_rng(ctrl.seed)
     nodes = list(graph.nodes)
-    rng.shuffle(nodes)  # 具有相同值的节点，多次迭代时，被选择的顺序不固定
+    ctrl.rng.shuffle(nodes)  # 具有相同值的节点，多次迭代时，被选择的顺序不固定
     unmatched_nodes = []
     unmatched_node_set = set()
     for node in nodes:

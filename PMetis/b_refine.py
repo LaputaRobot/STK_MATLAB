@@ -25,8 +25,8 @@ def FM_2WayRefine(graph: Graph, ctrl: Ctrl):
         min_cut_order = -1
         new_cut = min_cut = init_cut = graph.graph['cut']
         min_diff = abs(sum_val / 2 - graph.graph['p_vals'][0])
-        np.random.seed(i)
-        for node in np.random.choice(graph.graph['boundary'], len(graph.graph['boundary']), replace=False):
+        # np.random.seed(i)
+        for node in ctrl.rng.choice(graph.graph['boundary'], len(graph.graph['boundary']), replace=False):
             p = graph.nodes[node]['belong']
             queues[p].append(NodeGain(node, graph.graph['node_ed']
                              [node] - graph.graph['node_id'][node]))

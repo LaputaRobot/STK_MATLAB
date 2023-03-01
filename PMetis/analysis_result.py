@@ -177,4 +177,4 @@ def draw_log_result(t, scheme, log_file):
 
 if __name__ == "__main__":
     # draw_log_result(0, 'metis', '8-700-3-contig.log')
-    draw_log_result(0, 'pymetis', '8-1400-Wei-WeiDif-contig.log')
+    draw_log_result(93, 'pymetis', '8-1100-Wei-WeiLoad-0-contig.log')

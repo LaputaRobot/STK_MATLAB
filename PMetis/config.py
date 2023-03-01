@@ -1,12 +1,13 @@
 import sys
 import logging
 
-result_base = '/home/ygb/result'
+result_base = '/home/ygb/result_new'
+# result_base = '/home/ygb/result'
 # AssignScheme = 'SamePlane'
-# AssignScheme = 'BalCon'
+AssignScheme = 'BalCon'
 # AssignScheme = 'Greedy'
 # AssignScheme = 'METIS'
-AssignScheme = 'PyMetis'
+# AssignScheme = 'PyMetis'
 
 Rewrite = True
 # Rewrite = False
@@ -37,15 +38,15 @@ COARSEN_LOG_LEVEL = logging.DEBUG
 INIT_PART_LOG_LEVEL = logging.DEBUG
 K_REFINE_LOG_LEVEL = logging.DEBUG
 TWO_REFINE_LOG_LEVEL = logging.DEBUG
-CONTIGUOUS_LOG_LEVEL = logging.INFO
+CONTIGUOUS_LOG_LEVEL = logging.DEBUG
 
 # BalCon 算法参数配置
 MCS = 3
 MSSLS = 24
 
-RepartScheme = 'parmetis'
+# RepartScheme = 'parmetis'
 # RepartScheme = 'parmetis_vsize'
-# RepartScheme = 'balcon'
+RepartScheme = 'balcon'
 
 assignment1 = {'LEO11': ['LEO11', 'LEO12', 'LEO13', 'LEO14', 'LEO15', 'LEO16', 'LEO17', 'LEO18', 'LEO19'],
                'LEO21': ['LEO21', 'LEO22', 'LEO23', 'LEO24', 'LEO25', 'LEO26', 'LEO27', 'LEO28', 'LEO29'],

@@ -4,6 +4,7 @@ import shutil
 import sys
 import time
 import multiprocessing
+import numpy as np
 
 from PyMetis import run_metis_main, pymetis_parallel
 from analysis_result import deploy_in_area, apply_partition, get_avg_flow_setup_time, analysis
@@ -57,7 +58,7 @@ if __name__ == '__main__':
                         # f.write(assignment.__str__())
                         # f.close()
         elif AssignScheme == 'METIS':
-            metisFile = '/home/ygb/result/part/MetisTopos/{}'.format(t)
+            metisFile = os.path.join(result_base,'part/MetisTopos/{}'.format(t))
             common = None
             if not os.path.exists(metisFile):
                 common = Common(t)
@@ -65,18 +66,18 @@ if __name__ == '__main__':
             scheme = 'src'
             ass_set = set()
             for p in range(8, 9):
-                for ufactor in range(100, 3000, 100):
+                for ufactor in range(500, 1700, 100):
                     for contig in ['-contig', '']:
                         # for minconn in ['-minconn', '']:
                         for seed in range(10):
-                            part_file = '/home/ygb/result/part/metis/part/{}/{}-{}-{}{}.part'.format(
-                                t, p, ufactor, seed, contig)
+                            part_file = os.path.join(result_base,'part/metis/part/{}/{}-{}-{}{}.part'.format(
+                                t, p, ufactor, seed, contig)) 
                             if os.path.exists(part_file) and not Rewrite:
                                 continue
                             if common is None:
                                 common = Common(t)
-                            log_file = '/home/ygb/result/part/metis/log/{}/{}-{}-{}{}.log'.format(
-                                t, p, ufactor, seed, contig)
+                            log_file = os.path.join(result_base,'part/metis/log/{}/{}-{}-{}{}.log'.format(
+                                t, p, ufactor, seed, contig))
                             new_file(log_file)
                             new_file(part_file)
                             logger = logging.getLogger(
@@ -100,30 +101,34 @@ if __name__ == '__main__':
         elif AssignScheme == 'PyMetis':
             common = Common(t)
             for p in range(8, 9):
-                for ufactor in range(700, 3000, 100):
+                for ufactor in range(500, 1700, 100):
                     for match_order in [MO_SRC, MO_LoadWeiLoad, MO_SumWei, MO_Wei]:
+                    # for match_order in [MO_SRC]:
                         for match_scheme in [MS_SRC, MS_WeiDif, MS_WeiLoad]:
+                        # for match_scheme in [MS_SRC]:
                             for contig in ['-contig', '']:
-                                log_file = '/home/ygb/result/part/pymetis/{}/{}-{}-{}-{}{}.log'.format(
-                                    t, p, ufactor, match_order, match_scheme, contig)
-                                if os.path.exists(log_file) and not Rewrite:
-                                    continue
-                                new_file(log_file)
-                                ctrl = Ctrl()
-                                ctrl.contiguous = True if contig == '-contig' else False
-                                ctrl.nparts = p
-                                ctrl.un_factor = 1 + ufactor/1000
-                                ctrl.match_order = match_order
-                                ctrl.match_scheme = match_scheme
-                                # tasks.append(executor.submit(run_py_metis_con, common, ctrl, logger,task_id))
-                                pool.apply_async(pymetis_parallel, (common, ctrl, log_file,))
-                                # pymetis_parallel(common, ctrl, log_file)
-                                # run_metis_main(common, ctrl)
-                                # parts=run_metis_main(common, ctrl)
-                                # assignment = {}
-                                # for part in parts:
-                                #     assignment['LEO'+parts[part][0]]=['LEO{}'.format(n) for n in parts[part]]
-                                # analysis(common, assignment, logger)
+                                for seed in range(10):
+                                    log_file = os.path.join(result_base,'part/pymetis/{}/{}-{}-{}-{}-{}{}.log'.format(
+                                        t, p, ufactor, match_order, match_scheme, seed, contig))
+                                    if os.path.exists(log_file) and not Rewrite:
+                                        continue
+                                    new_file(log_file)
+                                    ctrl = Ctrl()
+                                    ctrl.contiguous = True if contig == '-contig' else False
+                                    ctrl.nparts = p
+                                    ctrl.un_factor = 1 + ufactor/1000
+                                    ctrl.match_order = match_order
+                                    ctrl.match_scheme = match_scheme
+                                    ctrl.rng= np.random.default_rng(seed)
+                                    # tasks.append(executor.submit(run_py_metis_con, common, ctrl, logger,task_id))
+                                    pool.apply_async(pymetis_parallel, (common, ctrl, log_file,))
+                                    # pymetis_parallel(common, ctrl, log_file)
+                                    # run_metis_main(common, ctrl)
+                                    # parts=run_metis_main(common, ctrl)
+                                    # assignment = {}
+                                    # for part in parts:
+                                    #     assignment['LEO'+parts[part][0]]=['LEO{}'.format(n) for n in parts[part]]
+                                    # analysis(common, assignment, logger)
     pool.close()
     pool.join()   #调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束
     print("Sub-process(es) done. cost: {}".format(time.time()-start_t))

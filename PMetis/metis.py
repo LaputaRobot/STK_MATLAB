@@ -12,7 +12,7 @@ def gen_metis_file(common: Common):
     :param time: 时间戳
     """
     time = common.time
-    f = open(os.path.join(result_base, 'partMetisTopos/{}'.format(time)), 'w')
+    f = open(os.path.join(result_base, 'part/MetisTopos/{}'.format(time)), 'w')
     G = common.graph
     link_load = common.link_load
     f.write('{} {} 011\n'.format(len(G.nodes), len(G.edges)))
